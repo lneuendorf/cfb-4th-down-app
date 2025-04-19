@@ -13,7 +13,7 @@ app = Dash(
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}]
 )
 
-app.title = "4th Down Decision App"
+app.title = "CFB 4th Down Decisions"
 
 app.layout = html.Div([
     navbar,
