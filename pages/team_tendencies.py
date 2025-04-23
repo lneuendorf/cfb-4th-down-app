@@ -1,93 +1,125 @@
 import dash
-from dash import html, dcc, Input, Output
+from dash import html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from config.config import CONFIG
 
-
 dash.register_page(__name__, path="/team-tendencies", name="Team Tendencies")
 
-# Load data once
-df = (
-    pd.read_parquet("data/team_tendencies.parquet")
-    .replace(
-        {
-            "offense_color": {
-                "#null": "#FFFFFF",
-            },
-            "offense_alternate_color": {
-                "#null": "#000",
-            },
-        }
-    )
-)
+df = pd.read_parquet("data/team_tendencies.parquet")
 
-# Fix: make the the darker color the bourder color column, and the lighter color the fill color
-df["fill_color"] = np.where(
-    df.offense_color > df.offense_alternate_color,
-    df.offense_alternate_color,
-    df.offense_color
-)
-df["border_color"] = np.where(
-    df.offense_color < df.offense_alternate_color, 
-    df.offense_alternate_color, 
-    df.offense_color
-)
-
-# if bourder color is white, make light grey
-df["border_color"] = np.where(
-    df["border_color"] > "#fafafa",
-    "#ebebeb",
-    df["border_color"]
-)
+SAMPLE_SIZE_ON = False
 
 layout = dbc.Container([
-    html.H4("Team Tendencies", className="mt-4", style={'color': '#000'}),
-    html.P("Explore how different teams behave on 4th down."),
-
+    html.Div([
+        html.H5(html.B("Team Tendencies"), className="mt-4", style={'color': '#000'}),
+        html.P("Explore how different teams behave on 4th down."),
+    ], style={"overflow": "hidden"}), 
+    
     dbc.Row([
+        # Conference Dropdown
         dbc.Col([
-            dcc.Dropdown(
-                id='start-season',
-                options=[{'label': str(s), 'value': s} for s in sorted(df['season'].unique())],
-                value=df['season'].min(),
-                placeholder="Start Season"
+            dbc.InputGroup(
+                [
+                    dbc.InputGroupText("Conference:", style={"height": "36px"}),
+                    dcc.Dropdown(
+                        id='conference-dropdown',
+                        options=[{'label': conf, 'value': conf} for conf in 
+                                 ['All'] + sorted(df['offense_conference'].dropna().unique())],
+                        placeholder="Select Conference",
+                        value='Big Ten',
+                        style={"minWidth": "200px", "height": "36px"}
+                    ),
+                ],
+                className="justify-content-xl-end justify-content-center"
             )
-        ], xs=12, md=4),
+        ], xs=12, sm=12, md=12, lg=12, xl=4),
+
+        # From Season
         dbc.Col([
-            dcc.Dropdown(
-                id='end-season',
-                options=[{'label': str(s), 'value': s} for s in sorted(df['season'].unique())],
-                value=df['season'].max(),
-                placeholder="End Season"
+            dbc.InputGroup(
+                [
+                    dbc.InputGroupText("From:", style={"height": "36px"}),
+                    dcc.Dropdown(
+                        id='start-season',
+                        options=[{'label': str(s), 'value': s} for s in 
+                                 sorted(df['season'].unique())],
+                        value=df['season'].min(),
+                        placeholder="Start",
+                        style={"minWidth": "100px", "height": "36px"}
+                    ),
+                ],
+                className="justify-content-end"
             )
-        ], xs=12, md=4),
+        ], xs=6, sm=6, md=6, lg=6, xl=2),
+
+        # To Season
         dbc.Col([
-            dcc.Dropdown(
-                id='conference-dropdown',
-                options=[{'label': conf, 'value': conf} for conf in sorted(df['offense_conference'].dropna().unique())],
-                placeholder="Select Conference",
-                multi=False,
-                value='Big Ten',
+            dbc.InputGroup(
+                [
+                    dbc.InputGroupText("To:", style={"height": "36px"}),
+                    dcc.Dropdown(
+                        id='end-season',
+                        options=[{'label': str(s), 'value': s} for s in 
+                                 sorted(df['season'].unique())],
+                        value=df['season'].max(),
+                        placeholder="End",
+                        style={"minWidth": "100px", "height": "36px"}
+                    ),
+                ],
+                className="justify-content-start"
             )
-        ], xs=12, md=4)
-    ], className="mb-4 g-2"),  # g-2 adds gutter spacing
+        ], xs=6, sm=6, md=6, lg=6, xl=2),
+
+        # Show Sample Size
+        dbc.Col([
+            dbc.Row([
+                dbc.Col(
+                    dbc.Label(
+                        "Show Sample Size:", 
+                        html_for="toggle-sample-size", 
+                        className="my-auto"),
+                    width="auto"
+                ),
+                dbc.Col(
+                    dbc.Switch(
+                        id="toggle-sample-size",
+                        label=None,
+                        value=False,
+                        className="my-auto"
+                    ),
+                    width="auto"
+                )
+            ], className="g-2 align-items-center justify-content-xl-start justify-content-center")
+        ], xs=12, sm=12, md=12, lg=12, xl=4),
+    ], className="mb-4 g-3 align-items-center"),
 
     dbc.Row([
         dbc.Col([
             dbc.Container(
-                dcc.Graph(id="team-tendency-graph", config={"displayModeBar": False}),
+                dcc.Graph(
+                    id="team-tendency-graph", 
+                    config={"displayModeBar": False, "responsive": True},
+                    style={"height": "100%"}
+                ),
                 className="bg-white p-3",
-                style={"border-radius": "16px", "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)"}
+                style={
+                    "border-radius": "16px", 
+                    "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
+                    "height": "100%"
+                }
             )
         ], xs=12, xl=6, className="mb-4"),
         dbc.Col([
             dbc.Container(
                 dcc.Graph(id="wp-lost-graph", config={"displayModeBar": False}),
                 className="bg-white p-3",
-                style={"border-radius": "16px", "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)"}
+                style={"border-radius": "16px", 
+                       "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
+                       "height": "100%"
+                }
             )
         ], xs=12, xl=6, className="mb-4")
     ])
@@ -96,10 +128,37 @@ fluid=True,
 style={
     "padding-left": CONFIG['padding-left'],
     "padding-right": CONFIG['padding-right'],
-    "max-width": CONFIG['max-width'],
-})
+},
+className="responsive-container"
+)
 
+@dash.callback(
+    Output("team-tendency-graph", "figure", allow_duplicate=True),
+    Output("wp-lost-graph", "figure", allow_duplicate=True),
+    Input("toggle-sample-size", "value"),
+    State("team-tendency-graph", "figure"),
+    State("wp-lost-graph", "figure"),
+    prevent_initial_call=True
+)
+def toggle_sample_size(show_sample, fig1, fig2):
+    # Update first figure
+    fig1['data'][1]['visible'] = show_sample
+    fig1['layout']['annotations'][0]['visible'] = show_sample
+    
+    # Update second figure
+    fig2['data'][1]['visible'] = show_sample
+    fig2['layout']['annotations'][0]['visible'] = show_sample
 
+    # show the vertical grid lines
+    fig1['layout']['xaxis']['showgrid'] = True
+    fig2['layout']['xaxis']['showgrid'] = True
+
+    global SAMPLE_SIZE_ON
+    SAMPLE_SIZE_ON = show_sample
+    
+    return fig1, fig2
+
+# Keep your original update_graphs callback (unchanged)
 @dash.callback(
     Output("team-tendency-graph", "figure"),
     Output("wp-lost-graph", "figure"),
@@ -109,7 +168,7 @@ style={
 )
 def update_graphs(start_season, end_season, selected_conference):
     dff = df[(df["season"] >= start_season) & (df["season"] <= end_season)]
-    if selected_conference:
+    if selected_conference != "All":
         dff = dff[dff["offense_conference"] == selected_conference]
 
     grouped = (
@@ -145,8 +204,8 @@ def update_graphs(start_season, end_season, selected_conference):
         textposition="inside",
         insidetextanchor="end",
         textfont=dict(color="white", size=12),
-        hoverinfo="skip",
-        hovertemplate=None,
+        hoverinfo="text",
+        hovertemplate="<b>%{y}</b>",
         name="",
         showlegend=False
     ))
@@ -168,10 +227,12 @@ def update_graphs(start_season, end_season, selected_conference):
 
     # Calculate dynamic right margin based on max value
     max_x1 = grouped_sorted1["go_for_it_rate"].max()
-    logo_sizex = 0.03 * (1 + (14 / len(grouped_sorted1)))  # Dynamic logo size based on number of teams
     
     # Calculate bottom margin based on number of teams
-    bottom_margin = 80 + (10 if len(grouped_sorted1) > 10 else 0)
+    bottom_margin = 80
+    BAR_HEIGHT = 20
+    BAR_GAP = 10  
+    x_range_multiplier = 1.15
 
     for _, row in grouped_sorted1.iterrows():
         fig1.add_layout_image(dict(
@@ -180,16 +241,19 @@ def update_graphs(start_season, end_season, selected_conference):
             y=row["offense_team"],
             xref="x",
             yref="y",
-            sizex=logo_sizex,
-            sizey=0.8,  # Slightly reduced sizey for better mobile display
+            sizex=1,
+            sizey=0.8,
             xanchor="left",
             yanchor="middle",
             layer="above"
         ))
 
+    plot_height = len(grouped_sorted1) * (BAR_HEIGHT + BAR_GAP) + 150  # 150 for margins/title
+    
     fig1.update_layout(
         title=dict(
-            text="Go-For-It Rate When Recommended<br><sub>Plays in final 30 seconds excluded. 'Optimal' defined as +1.5% WP over kicking</sub>",
+            text=("Go-For-It Rate When Recommended<br>"
+                  "<sub>Plays in final 30 seconds excluded. 'Optimal' defined as +1.5% WP over kicking</sub>"),
             xanchor='left',
             x=0
         ),
@@ -202,25 +266,25 @@ def update_graphs(start_season, end_season, selected_conference):
         ),
         xaxis=dict(
             tickformat=".0%",
-            range=[0, max_x1 * 1.15]
+            range=[0, max_x1 * x_range_multiplier]
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
-        height= 40 * len(grouped_sorted1),
+        height=plot_height, 
         template="plotly_white",
         barmode="overlay",
-        bargap=0.2,  # Increased gap between bars
-        bargroupgap=0.05
+        bargap=0.2,
+        bargroupgap=0.05,
     )
     
     # Add annotation for sample size
     fig1.add_annotation(
-        x=0.5, y=-0.08,  # Adjusted y position to be below axis label
+        x=0.5, y=1/len(grouped_sorted1) * -1.7,
         xref="paper", yref="paper",
         text="(n = number of plays where going for it was recommended)",
         showarrow=False,
         font=dict(size=10),
         xanchor="center",
-        yanchor="top"  # Changed to top anchor
+        yanchor="top"
     )
 
     ### PLOT 2
@@ -235,12 +299,12 @@ def update_graphs(start_season, end_season, selected_conference):
         marker_color=grouped_sorted2["fill_color"],
         marker_line_color=grouped_sorted2["border_color"],
         marker_line_width=3,
-        text=[f"{wp:.2f}%" for wp in grouped_sorted2["avg_wp_lost_per_season"]],
+        text=[f"{wp * 100:.1f}%" for wp in grouped_sorted2["avg_wp_lost_per_season"]],
         textposition="inside",
         insidetextanchor="end",
         textfont=dict(color="white", size=12),
-        hoverinfo="skip",
-        hovertemplate=None,
+        hoverinfo="text",
+        hovertemplate="<b>%{y}</b>",
         name="",
         showlegend=False
     ))
@@ -260,9 +324,8 @@ def update_graphs(start_season, end_season, selected_conference):
         cliponaxis=False
     ))
 
-    # Calculate dynamic right margin based on max value
     max_x2 = grouped_sorted2["avg_wp_lost_per_season"].max()
-    
+
     for _, row in grouped_sorted2.iterrows():
         fig2.add_layout_image(dict(
             source=row["offense_logos"],
@@ -270,16 +333,19 @@ def update_graphs(start_season, end_season, selected_conference):
             y=row["offense_team"],
             xref="x",
             yref="y",
-            sizex=logo_sizex,
-            sizey=0.8,  # Slightly reduced sizey for better mobile display
+            sizex=1,
+            sizey=0.8, 
             xanchor="left",
             yanchor="middle",
             layer="above"
         ))
 
+    plot_height2 = len(grouped_sorted2) * (BAR_HEIGHT + BAR_GAP) + 150
+    
     fig2.update_layout(
         title=dict(
-            text="Average Win Probability Lost Per Season<br><sub>Due to not going for it when recommended</sub>",
+            text=("Average Win Probability Lost Per Season<br>"
+                  "<sub>Due to not going for it when recommended</sub>"),
             xanchor='left',
             x=0
         ),
@@ -291,25 +357,27 @@ def update_graphs(start_season, end_season, selected_conference):
             showticklabels=False,
         ),
         xaxis=dict(
-            tickformat=".1f",  # Changed to show decimal points instead of percentage
-            range=[0, max_x2 * 1.15]
+            tickformat=".0%",
+            range=[0, max_x2 * x_range_multiplier]
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
-        height= 40 * len(grouped_sorted2),
+        height=plot_height2, 
         template="plotly_white",
         barmode="overlay",
-        bargap=0.2,  # Increased gap between bars
-        bargroupgap=0.05
+        bargap=0.2,
+        bargroupgap=0.05,
     )
 
     fig2.add_annotation(
-        x=0.5, y=-0.08,  # Adjusted y position to be below axis label
+        x=0.5, y=1/len(grouped_sorted2) * -1.7,
         xref="paper", yref="paper",
         text="(n = number of seasons across selected years)",
         showarrow=False,
         font=dict(size=10),
         xanchor="center",
-        yanchor="top"  # Changed to top anchor
+        yanchor="top"
     )
 
+    fig1, fig2 = toggle_sample_size(SAMPLE_SIZE_ON, fig1, fig2)
+    
     return fig1, fig2
