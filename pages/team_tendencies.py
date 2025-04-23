@@ -104,8 +104,9 @@ layout = dbc.Container([
                     config={"displayModeBar": False, "responsive": True},
                     style={"height": "100%"}
                 ),
-                className="bg-white p-3",
+                className="bg-white",
                 style={
+                    "padding-left": "20px",
                     "border-radius": "16px", 
                     "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
                     "height": "100%"
@@ -115,10 +116,12 @@ layout = dbc.Container([
         dbc.Col([
             dbc.Container(
                 dcc.Graph(id="wp-lost-graph", config={"displayModeBar": False}),
-                className="bg-white p-3",
-                style={"border-radius": "16px", 
-                       "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
-                       "height": "100%"
+                className="bg-white",
+                style={
+                    "padding-left": "20px",
+                    "border-radius": "16px", 
+                    "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
+                    "height": "100%"
                 }
             )
         ], xs=12, xl=6, className="mb-4")
