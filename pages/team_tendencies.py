@@ -295,12 +295,14 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Percent of time team went for it when recommended</span>",
         yaxis=dict(
+            fixedrange=True,  # Prevents zoom/pan on x-axis
             automargin=True,
             categoryorder="array",
             categoryarray=grouped_sorted1["offense_team"].tolist(),
             showticklabels=False,
         ),
         xaxis=dict(
+            fixedrange=True,  # Prevents zoom/pan on x-axis
             tickformat=".0%",
             range=[0, max_x1 * x_range_multiplier]
         ),
@@ -393,12 +395,14 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Avg WP Lost per Season (percentage points)</span>",
         yaxis=dict(
+            fixedrange=True,  # Prevents zoom/pan on x-axis
             automargin=True,
             categoryorder="array",
             categoryarray=grouped_sorted2["offense_team"].tolist(),
             showticklabels=False,
         ),
         xaxis=dict(
+            fixedrange=True,  # Prevents zoom/pan on x-axis
             tickformat=".0%",
             range=[0, max_x2 * x_range_multiplier]
         ),
