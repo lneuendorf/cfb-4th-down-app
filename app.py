@@ -13,6 +13,8 @@ app = Dash(
     external_stylesheets=[dbc.themes.ZEPHYR],  
 )
 
+server = app.server
+
 app.title = "CFB 4th Down Decisions"
 
 app.layout = html.Div([
