@@ -311,6 +311,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         bargap=0.2,
         bargroupgap=0.05,
         autosize=True,
+        dragmode=False,
     )
     
     # Add annotation for sample size
@@ -407,6 +408,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         barmode="overlay",
         bargap=0.2,
         bargroupgap=0.05,
+        dragmode=False,
     )
 
     fig2.add_annotation(
