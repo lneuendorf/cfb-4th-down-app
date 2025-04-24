@@ -11,6 +11,7 @@ dash.register_page(__name__, path="/team-tendencies", name="Team Tendencies")
 df = pd.read_parquet("data/team_tendencies.parquet")
 
 SAMPLE_SIZE_ON = False
+PLOT_HEIGHT = 400
 
 layout = dbc.Container([
     html.Div([
@@ -102,30 +103,43 @@ layout = dbc.Container([
                 dcc.Graph(
                     id="team-tendency-graph", 
                     config={"displayModeBar": False, "responsive": True},
-                    style={"height": "100%"}
+                    style={"height": "100%", "min-height": "400px"}  # Add min-height
                 ),
                 className="bg-white",
                 style={
                     "padding-left": "20px",
                     "border-radius": "16px", 
                     "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
-                    "height": "100%"
+                    "height": "100%",
+                    "min-height": "400px"  # Add min-height to container
                 }
             )
         ], xs=12, xl=6, className="mb-4"),
         dbc.Col([
             dbc.Container(
-                dcc.Graph(id="wp-lost-graph", config={"displayModeBar": False}),
+                dcc.Graph(
+                    id="wp-lost-graph", 
+                    config={"displayModeBar": False, "responsive": True},
+                    style={"height": "100%", "min-height": "400px"}  # Add min-height
+                ),
                 className="bg-white",
                 style={
                     "padding-left": "20px",
                     "border-radius": "16px", 
                     "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
-                    "height": "100%"
+                    "height": "100%",
+                    "min-height": "400px"  # Add min-height to container
                 }
             )
         ], xs=12, xl=6, className="mb-4")
-    ])
+    ]),
+
+    html.Div([
+        html.P(
+            "Note: Plays in final 30 seconds of the game are excluded.",
+            style={"font-size": "12px", "color": "#555"}
+        )
+    ], className="text-center mt-2")
 ], 
 fluid=True,
 style={
@@ -144,18 +158,24 @@ className="responsive-container"
     prevent_initial_call=True
 )
 def toggle_sample_size(show_sample, fig1, fig2):
-    # Update first figure
+    # Store current heights
+    global PLOT_HEIGHT
+    
+    # Update visibility
     fig1['data'][1]['visible'] = show_sample
     fig1['layout']['annotations'][0]['visible'] = show_sample
-    
-    # Update second figure
     fig2['data'][1]['visible'] = show_sample
     fig2['layout']['annotations'][0]['visible'] = show_sample
-
-    # show the vertical grid lines
+    
+    # Ensure grid lines are visible
     fig1['layout']['xaxis']['showgrid'] = True
     fig2['layout']['xaxis']['showgrid'] = True
+    
+    # Maintain heights
+    fig1['layout']['height'] = PLOT_HEIGHT
+    fig2['layout']['height'] = PLOT_HEIGHT
 
+    
     global SAMPLE_SIZE_ON
     SAMPLE_SIZE_ON = show_sample
     
@@ -167,12 +187,20 @@ def toggle_sample_size(show_sample, fig1, fig2):
     Output("wp-lost-graph", "figure"),
     Input("start-season", "value"),
     Input("end-season", "value"),
-    Input("conference-dropdown", "value")
+    Input("conference-dropdown", "value"),
+    Input('screen-width-store', 'data')
 )
-def update_graphs(start_season, end_season, selected_conference):
+def update_graphs(start_season, end_season, selected_conference, screen_width):
     dff = df[(df["season"] >= start_season) & (df["season"] <= end_season)]
     if selected_conference != "All":
         dff = dff[dff["offense_conference"] == selected_conference]
+
+    if screen_width < 768:  
+        axis_fontsize = 11
+        axis_subtext_fontsize = 8
+    else:
+        axis_fontsize = 13
+        axis_subtext_fontsize = 9
 
     grouped = (
         dff.groupby(["offense_team", "fill_color", "border_color", "offense_logos"], as_index=False)
@@ -225,7 +253,8 @@ def update_graphs(start_season, end_season, selected_conference):
         hoverinfo="skip",
         marker=dict(color="rgba(0,0,0,0)"),
         showlegend=False,
-        cliponaxis=False
+        cliponaxis=False,
+        visible=SAMPLE_SIZE_ON
     ))
 
     # Calculate dynamic right margin based on max value
@@ -233,9 +262,13 @@ def update_graphs(start_season, end_season, selected_conference):
     
     # Calculate bottom margin based on number of teams
     bottom_margin = 80
+    min_height = 400
     BAR_HEIGHT = 20
     BAR_GAP = 10  
     x_range_multiplier = 1.15
+    calculated_height = len(grouped_sorted1) * (BAR_HEIGHT + BAR_GAP) + 150
+    global PLOT_HEIGHT
+    PLOT_HEIGHT = max(calculated_height, min_height)
 
     for _, row in grouped_sorted1.iterrows():
         fig1.add_layout_image(dict(
@@ -250,17 +283,17 @@ def update_graphs(start_season, end_season, selected_conference):
             yanchor="middle",
             layer="above"
         ))
-
-    plot_height = len(grouped_sorted1) * (BAR_HEIGHT + BAR_GAP) + 150  # 150 for margins/title
     
     fig1.update_layout(
         title=dict(
-            text=("Go-For-It Rate When Recommended<br>"
-                  "<sub>Plays in final 30 seconds excluded. 'Optimal' defined as +1.5% WP over kicking</sub>"),
+            text=(
+                "<span style='font-size:16px'><b>Go-For-It Rate When Recommended</b></span><br>"
+                "<span style='font-size:16px'><sub>'Recommended' when going for it is +1.5% WP over kicking</sub></span>"
+            ),
             xanchor='left',
-            x=0
+            x=0,
         ),
-        xaxis_title="Percentage of times team went for it when recommended",
+        xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Percent of time team went for it when recommended</span>",
         yaxis=dict(
             automargin=True,
             categoryorder="array",
@@ -272,22 +305,24 @@ def update_graphs(start_season, end_season, selected_conference):
             range=[0, max_x1 * x_range_multiplier]
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
-        height=plot_height, 
+        height=PLOT_HEIGHT, 
         template="plotly_white",
         barmode="overlay",
         bargap=0.2,
         bargroupgap=0.05,
+        autosize=True,
     )
     
     # Add annotation for sample size
     fig1.add_annotation(
         x=0.5, y=1/len(grouped_sorted1) * -1.7,
         xref="paper", yref="paper",
-        text="(n = number of plays where going for it was recommended)",
+        text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of plays where going for it was recommended)</span>",
         showarrow=False,
         font=dict(size=10),
         xanchor="center",
-        yanchor="top"
+        yanchor="top",
+        visible=SAMPLE_SIZE_ON
     )
 
     ### PLOT 2
@@ -324,7 +359,8 @@ def update_graphs(start_season, end_season, selected_conference):
         hoverinfo="skip",
         marker=dict(color="rgba(0,0,0,0)"),
         showlegend=False,
-        cliponaxis=False
+        cliponaxis=False,
+        visible=SAMPLE_SIZE_ON
     ))
 
     max_x2 = grouped_sorted2["avg_wp_lost_per_season"].max()
@@ -343,16 +379,18 @@ def update_graphs(start_season, end_season, selected_conference):
             layer="above"
         ))
 
-    plot_height2 = len(grouped_sorted2) * (BAR_HEIGHT + BAR_GAP) + 150
     
     fig2.update_layout(
         title=dict(
-            text=("Average Win Probability Lost Per Season<br>"
-                  "<sub>Due to not going for it when recommended</sub>"),
+            text=(
+                "<span style='font-size:16px'><b>Win Probability Lost Per Season</b></span><br>"
+                "<span style='font-size:16px'><sub>Due to not going for it on 4th down when recommended</sub></span>"
+            ),
             xanchor='left',
             x=0
+
         ),
-        xaxis_title="Avg WP Lost per Season (percentage points)",
+        xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Avg WP Lost per Season (percentage points)</span>",
         yaxis=dict(
             automargin=True,
             categoryorder="array",
@@ -364,7 +402,7 @@ def update_graphs(start_season, end_season, selected_conference):
             range=[0, max_x2 * x_range_multiplier]
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
-        height=plot_height2, 
+        height=PLOT_HEIGHT, 
         template="plotly_white",
         barmode="overlay",
         bargap=0.2,
@@ -374,11 +412,12 @@ def update_graphs(start_season, end_season, selected_conference):
     fig2.add_annotation(
         x=0.5, y=1/len(grouped_sorted2) * -1.7,
         xref="paper", yref="paper",
-        text="(n = number of seasons across selected years)",
+        text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of seasons across selected years)</span>",
         showarrow=False,
         font=dict(size=10),
         xanchor="center",
-        yanchor="top"
+        yanchor="top",
+        visible=SAMPLE_SIZE_ON
     )
 
     fig1, fig2 = toggle_sample_size(SAMPLE_SIZE_ON, fig1, fig2)
