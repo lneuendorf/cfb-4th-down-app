@@ -10,13 +10,12 @@ dash.register_page(__name__, path="/team-tendencies", name="Team Tendencies")
 
 df = pd.read_parquet("data/team_tendencies.parquet")
 
-SAMPLE_SIZE_ON = False
 PLOT_HEIGHT = 400
 
 layout = dbc.Container([
     html.Div([
         html.H5(html.B("Team Tendencies"), className="mt-4", style={'color': '#000'}),
-        html.P("Explore how different teams behave on 4th down."),
+        html.P("Explore how different teams behave on 4th down. Plays in final 30 seconds of the game are excluded."),
     ], style={"overflow": "hidden"}), 
     
     dbc.Row([
@@ -34,9 +33,10 @@ layout = dbc.Container([
                         style={"minWidth": "200px", "height": "36px"}
                     ),
                 ],
-                className="justify-content-xl-end justify-content-center"
+                # add right padding
+                className="justify-content-xl-end justify-content-center px-xl-3"
             )
-        ], xs=12, sm=12, md=12, lg=12, xl=4),
+        ], xs=12, sm=12, md=12, lg=12, xl=6),
 
         # From Season
         dbc.Col([
@@ -73,28 +73,6 @@ layout = dbc.Container([
                 className="justify-content-start"
             )
         ], xs=6, sm=6, md=6, lg=6, xl=2),
-
-        # Show Sample Size
-        dbc.Col([
-            dbc.Row([
-                dbc.Col(
-                    dbc.Label(
-                        "Show Sample Size:", 
-                        html_for="toggle-sample-size", 
-                        className="my-auto"),
-                    width="auto"
-                ),
-                dbc.Col(
-                    dbc.Switch(
-                        id="toggle-sample-size",
-                        label=None,
-                        value=False,
-                        className="my-auto"
-                    ),
-                    width="auto"
-                )
-            ], className="g-2 align-items-center justify-content-xl-start justify-content-center")
-        ], xs=12, sm=12, md=12, lg=12, xl=4),
     ], className="mb-4 g-3 align-items-center"),
 
     dbc.Row([
@@ -133,13 +111,49 @@ layout = dbc.Container([
             )
         ], xs=12, xl=6, className="mb-4")
     ]),
-
+    # Team selection dropdown row (add this new row)
     html.Div([
-        html.P(
-            "Note: Plays in final 30 seconds of the game are excluded.",
-            style={"font-size": "12px", "color": "#555"}
-        )
-    ], className="text-center mt-2")
+        html.H5(html.B("Team Tendencies Over Time"), className="mt-4", style={'color': '#000'}),
+        html.P("Explore the rate at which teams go for it on 4th down when recommended over the years."),
+    ], style={"overflow": "hidden"}),
+    
+    dbc.Row([
+        dbc.Col([
+            dbc.InputGroup(
+                [
+                    dbc.InputGroupText("Team:", style={"height": "36px"}),
+                    dcc.Dropdown(
+                        id='team-dropdown',
+                        options=[{'label': team, 'value': team} for team in 
+                                 sorted(df['offense_team'].unique())],
+                        placeholder="Select Team",
+                        value='Army',
+                        style={"minWidth": "200px", "height": "36px"}
+                    ),
+                ],
+                className="justify-content-center"
+            )
+        ], xs=12, className="mb-4"),
+    ]),
+    dbc.Row([
+        dbc.Col([
+            dbc.Container(
+                dcc.Graph(
+                    id="team-trend-graph", 
+                    config={"displayModeBar": False, "responsive": True},
+                    style={"height": "100%", "min-height": "400px"}
+                ),
+                className="bg-white",
+                style={
+                    "padding-left": "20px",
+                    "border-radius": "16px", 
+                    "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
+                    "height": "100%",
+                    "min-height": "400px"
+                }
+            )
+        ], xs=12, className="mb-4")
+    ]),
 ], 
 fluid=True,
 style={
@@ -148,38 +162,6 @@ style={
 },
 className="responsive-container"
 )
-
-@dash.callback(
-    Output("team-tendency-graph", "figure", allow_duplicate=True),
-    Output("wp-lost-graph", "figure", allow_duplicate=True),
-    Input("toggle-sample-size", "value"),
-    State("team-tendency-graph", "figure"),
-    State("wp-lost-graph", "figure"),
-    prevent_initial_call=True
-)
-def toggle_sample_size(show_sample, fig1, fig2):
-    # Store current heights
-    global PLOT_HEIGHT
-    
-    # Update visibility
-    fig1['data'][1]['visible'] = show_sample
-    fig1['layout']['annotations'][0]['visible'] = show_sample
-    fig2['data'][1]['visible'] = show_sample
-    fig2['layout']['annotations'][0]['visible'] = show_sample
-    
-    # Ensure grid lines are visible
-    fig1['layout']['xaxis']['showgrid'] = True
-    fig2['layout']['xaxis']['showgrid'] = True
-    
-    # Maintain heights
-    fig1['layout']['height'] = PLOT_HEIGHT
-    fig2['layout']['height'] = PLOT_HEIGHT
-
-    
-    global SAMPLE_SIZE_ON
-    SAMPLE_SIZE_ON = show_sample
-    
-    return fig1, fig2
 
 # Keep your original update_graphs callback (unchanged)
 @dash.callback(
@@ -236,25 +218,10 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         insidetextanchor="end",
         textfont=dict(color="white", size=12),
         hoverinfo="text",
-        hovertemplate="<b>%{y}</b>",
+        hovertemplate="<b>%{y}</b> (n=%{customdata[0]})",
         name="",
-        showlegend=False
-    ))
-    
-    # Add invisible trace for the n= values on the left
-    fig1.add_trace(go.Bar(
-        x=[0.0001] * len(grouped_sorted1),
-        y=grouped_sorted1["offense_team"],
-        orientation="h",
-        text=[f"n={n}" for n in grouped_sorted1["n_go_rec"]],
-        textposition="outside",
-        insidetextanchor="start",
-        textfont=dict(color="white", size=8),
-        hoverinfo="skip",
-        marker=dict(color="rgba(0,0,0,0)"),
         showlegend=False,
-        cliponaxis=False,
-        visible=SAMPLE_SIZE_ON
+        customdata=grouped_sorted1[["n_go_rec"]].values
     ))
 
     # Calculate dynamic right margin based on max value
@@ -318,14 +285,13 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
     
     # Add annotation for sample size
     fig1.add_annotation(
-        x=0.5, y=1/len(grouped_sorted1) * -1.7,
+        x=0.5, y=1/len(grouped_sorted1) * -2,
         xref="paper", yref="paper",
         text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of plays where going for it was recommended)</span>",
         showarrow=False,
-        font=dict(size=10),
+        font=dict(size=9),
         xanchor="center",
-        yanchor="top",
-        visible=SAMPLE_SIZE_ON
+        yanchor="middle",
     )
 
     ### PLOT 2
@@ -345,25 +311,10 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         insidetextanchor="end",
         textfont=dict(color="white", size=12),
         hoverinfo="text",
-        hovertemplate="<b>%{y}</b>",
+        hovertemplate="<b>%{y}</b> (n=%{customdata[0]})",
         name="",
-        showlegend=False
-    ))
-    
-    # Add invisible trace for the n= values on the left
-    fig2.add_trace(go.Bar(
-        x=[0.0001] * len(grouped_sorted2),
-        y=grouped_sorted2["offense_team"],
-        orientation="h",
-        text=[f"n={n}" for n in grouped_sorted2["n_season"]],
-        textposition="outside",
-        insidetextanchor="start",
-        textfont=dict(color="white", size=8),
-        hoverinfo="skip",
-        marker=dict(color="rgba(0,0,0,0)"),
         showlegend=False,
-        cliponaxis=False,
-        visible=SAMPLE_SIZE_ON
+        customdata=grouped_sorted2[["n_season"]].values
     ))
 
     max_x2 = grouped_sorted2["avg_wp_lost_per_season"].max()
@@ -416,16 +367,101 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
     )
 
     fig2.add_annotation(
-        x=0.5, y=1/len(grouped_sorted2) * -1.7,
+        x=0.5, y=1/len(grouped_sorted1) * -2,
         xref="paper", yref="paper",
         text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of seasons across selected years)</span>",
         showarrow=False,
-        font=dict(size=10),
+        font=dict(size=9),
         xanchor="center",
-        yanchor="top",
-        visible=SAMPLE_SIZE_ON
+        yanchor="middle",
     )
-
-    fig1, fig2 = toggle_sample_size(SAMPLE_SIZE_ON, fig1, fig2)
     
     return fig1, fig2
+
+@dash.callback(
+    Output("team-trend-graph", "figure"),
+    Input("team-dropdown", "value"),
+    Input('screen-width-store', 'data')
+)
+def update_trend_graph(selected_team, screen_width):
+    if selected_team is None:
+        return go.Figure()
+    
+    # Get team data
+    team_df = df[df['offense_team'] == selected_team]
+    team_data = team_df.groupby('season').agg(
+        n_go=('n_go', 'sum'),
+        n_go_rec=('n_go_rec', 'sum'),
+        fill_color=('fill_color', 'first'),
+        border_color=('border_color', 'first'),
+        offense_logos=('offense_logos', 'first')
+    ).reset_index()
+    
+    team_data['go_rate'] = team_data['n_go'] / team_data['n_go_rec']
+    
+    if screen_width < 768:  
+        axis_fontsize = 11
+        title_fontsize = 14
+        logo_size = 0.8
+    else:
+        axis_fontsize = 13
+        title_fontsize = 16
+        logo_size = 1
+    
+    # Get team colors and logo
+    fill_color = team_data['fill_color'].iloc[0]
+    border_color = team_data['border_color'].iloc[0]
+    logo = team_data['offense_logos'].iloc[0]
+    
+    fig = go.Figure()
+    
+    # Add line trace
+    fig.add_trace(go.Scatter(
+        x=team_data['season'],
+        y=team_data['go_rate'],
+        mode='lines+markers',
+        line=dict(color=fill_color, width=3),
+        marker=dict(color=border_color, size=10, line=dict(width=2, color='black')),
+        hoverinfo='text',
+        hovertemplate='<b>Season %{x}</b><br>Go Rate: %{y:.1%}<extra></extra>',
+        name=''
+    ))
+    
+    # Add team logo
+    fig.add_layout_image(dict(
+        source=logo,
+        x=1,
+        y=1,
+        xref="paper",
+        yref="paper",
+        xanchor="right",
+        yanchor="top",
+        sizex=logo_size,
+        sizey=logo_size,
+        layer="below",
+        opacity=0.5,
+    ))
+    
+    fig.update_layout(
+        title=dict(
+            text=f"<span style='font-size:{title_fontsize}px'><b>{selected_team} Go-For-It Rate Over Time</b></span>",
+            x=0.5,
+        ),
+        xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Season</span>",
+        yaxis_title=f"<span style='font-size:{axis_fontsize}px'>Go-For-It Rate When Recommended</span>",
+        yaxis=dict(
+            tickformat=".0%",
+            range=[0, min(1.1, max(team_data['go_rate']) * 1.1)]
+        ),
+        xaxis=dict(
+            tickmode='linear',
+            dtick=1
+        ),
+        margin=dict(l=20, r=60, t=80, b=60),
+        height=400,
+        template="plotly_white",
+        showlegend=False,
+        hovermode="x unified"
+    )
+    
+    return fig

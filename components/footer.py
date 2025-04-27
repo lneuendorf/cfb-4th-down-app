@@ -29,11 +29,11 @@ footer = html.Footer(
                 href="https://github.com/lneuendorf",
                 target="_blank"
             ),
-        ], style={"marginBottom": "10px"}),
+        ], style={"marginBottom": "18px"}),
         html.P(
-            "Built with Dash & Plotly",
-            style={"paddingBottom": "20px", "marginTop": "10px"}
-        )
+            "Built with Dash & Plotly by Luke Neuendorf",
+            style={"marginTop": "10px"}
+        ),
     ],
     style={
         "backgroundColor": "white",
