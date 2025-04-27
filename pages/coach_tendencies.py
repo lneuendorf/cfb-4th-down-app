@@ -10,8 +10,17 @@ dash.register_page(__name__, path="/coach-tendencies", name="Coach Tendencies")
 
 df = pd.read_parquet("data/coach_tendencies.parquet")
 
+# Get unique coaches for dropdown
+all_coaches = sorted(df['coach_name'].unique())
+# Preselected coaches
+preselected_coaches = [
+    'Nick Saban', 'Luke Fickell', 'Ryan Day', 'Lincoln Riley', 
+    'Urban Meyer', 'Dan Lanning', 'Dabo Swinney', 'Brian Kelly', 'Kirby Smart'
+]
+
 SAMPLE_SIZE_ON = False
 PLOT_HEIGHT = 400
+MAX_SELECTED_COACHES = 10
 
 layout = dbc.Container([
     html.Div([
@@ -20,23 +29,24 @@ layout = dbc.Container([
     ], style={"overflow": "hidden"}), 
     
     dbc.Row([
-        # Conference Dropdown
+        # Coach Selection Dropdown
         dbc.Col([
             dbc.InputGroup(
                 [
-                    dbc.InputGroupText("Conference:", style={"height": "36px"}),
+                    dbc.InputGroupText("Coaches:", style={"height": "36px"}),
                     dcc.Dropdown(
-                        id='conference-dropdown',
-                        options=[{'label': conf, 'value': conf} for conf in 
-                                 ['All'] + sorted(df['offense_conference'].dropna().unique())],
-                        placeholder="Select Conference",
-                        value='Big Ten',
-                        style={"minWidth": "200px", "height": "36px"}
+                        id='coach-dropdown',
+                        options=[{'label': coach, 'value': coach} for coach in all_coaches],
+                        placeholder="Select Coaches...",
+                        value=preselected_coaches,
+                        multi=True,
+                        style={"minWidth": "200px", "height": "36px"},
+                        searchable=True
                     ),
                 ],
                 className="justify-content-xl-end justify-content-center"
             )
-        ], xs=12, sm=12, md=12, lg=12, xl=4),
+        ], xs=12, sm=12, md=12, lg=12, xl=6),
 
         # From Season
         dbc.Col([
@@ -94,7 +104,7 @@ layout = dbc.Container([
                     width="auto"
                 )
             ], className="g-2 align-items-center justify-content-xl-start justify-content-center")
-        ], xs=12, sm=12, md=12, lg=12, xl=4),
+        ], xs=12, sm=12, md=12, lg=12, xl=2),
     ], className="mb-4 g-3 align-items-center"),
 
     dbc.Row([
@@ -133,6 +143,27 @@ layout = dbc.Container([
             )
         ], xs=12, xl=6, className="mb-4")
     ]),
+    
+    # New time series plot
+    dbc.Row([
+        dbc.Col([
+            dbc.Container(
+                dcc.Graph(
+                    id="coach-trend-graph",
+                    config={"displayModeBar": False, "responsive": True},
+                    style={"height": "100%", "min-height": "400px"}
+                ),
+                className="bg-white",
+                style={
+                    "padding-left": "20px",
+                    "border-radius": "16px", 
+                    "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
+                    "height": "100%",
+                    "min-height": "400px"
+                }
+            )
+        ], xs=12, className="mb-4")
+    ]),
 
     html.Div([
         html.P(
@@ -152,18 +183,26 @@ className="responsive-container"
 @dash.callback(
     Output("coach-tendency-graph", "figure", allow_duplicate=True),
     Output("coach-wp-lost-graph", "figure", allow_duplicate=True),
+    Output("coach-trend-graph", "figure", allow_duplicate=True),
     Input("toggle-sample-size", "value"),
     State("coach-tendency-graph", "figure"),
     State("coach-wp-lost-graph", "figure"),
+    State("coach-trend-graph", "figure"),
     prevent_initial_call=True
 )
-def toggle_sample_size(show_sample, fig1, fig2):
+def toggle_sample_size(show_sample, fig1, fig2, fig3):
     global PLOT_HEIGHT
     
-    fig1['data'][1]['visible'] = show_sample
-    fig1['layout']['annotations'][0]['visible'] = show_sample
-    fig2['data'][1]['visible'] = show_sample
-    fig2['layout']['annotations'][0]['visible'] = show_sample
+    # For bar charts
+    if 'data' in fig1 and len(fig1['data']) > 1:
+        fig1['data'][1]['visible'] = show_sample
+    if 'annotations' in fig1 and len(fig1['annotations']) > 0:
+        fig1['layout']['annotations'][0]['visible'] = show_sample
+        
+    if 'data' in fig2 and len(fig2['data']) > 1:
+        fig2['data'][1]['visible'] = show_sample
+    if 'annotations' in fig2 and len(fig2['annotations']) > 0:
+        fig2['layout']['annotations'][0]['visible'] = show_sample
     
     fig1['layout']['xaxis']['showgrid'] = True
     fig2['layout']['xaxis']['showgrid'] = True
@@ -174,20 +213,34 @@ def toggle_sample_size(show_sample, fig1, fig2):
     global SAMPLE_SIZE_ON
     SAMPLE_SIZE_ON = show_sample
     
-    return fig1, fig2
+    return fig1, fig2, fig3
+
+@dash.callback(
+    Output("coach-dropdown", "value"),
+    Input("coach-dropdown", "value"),
+    prevent_initial_call=True
+)
+def limit_coach_selections(selected_coaches):
+    if len(selected_coaches) > MAX_SELECTED_COACHES:
+        return selected_coaches[:MAX_SELECTED_COACHES]
+    return selected_coaches
 
 @dash.callback(
     Output("coach-tendency-graph", "figure"),
     Output("coach-wp-lost-graph", "figure"),
+    Output("coach-trend-graph", "figure"),
     Input("start-season", "value"),
     Input("end-season", "value"),
-    Input("conference-dropdown", "value"),
-    Input('screen-width-store', 'data')
+    Input("coach-dropdown", "value"),
+    Input('screen-width-store', 'data'),
+    Input("toggle-sample-size", "value")
 )
-def update_graphs(start_season, end_season, selected_conference, screen_width):
+def update_graphs(start_season, end_season, selected_coaches, screen_width, show_sample):
+    if not selected_coaches:
+        selected_coaches = preselected_coaches
+    
     dff = df[(df["season"] >= start_season) & (df["season"] <= end_season)]
-    if selected_conference != "All":
-        dff = dff[dff["offense_conference"] == selected_conference]
+    dff = dff[dff["coach_name"].isin(selected_coaches)]
 
     if screen_width < 768:  
         axis_fontsize = 11
@@ -196,15 +249,16 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         axis_fontsize = 13
         axis_subtext_fontsize = 9
 
+    # Aggregate data for bar charts
     grouped = (
         dff.groupby(["coach_name", "offense_team", "fill_color", "border_color"], as_index=False)
         .agg({"n_go": "sum", "n_go_rec": "sum", "net_wp_lost": "sum"})
     )
     grouped = (
         grouped.merge(
-            (dff.groupby(['coach_name', 'offense_team'])
+            dff.groupby(['coach_name', 'offense_team'])
             .agg(n_season=('season', 'count'))
-            .reset_index()),
+            .reset_index(),
             on=['coach_name', 'offense_team'],
             how='left'
         )
@@ -212,15 +266,12 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
     grouped = grouped[grouped["n_go_rec"] > 0]
     grouped["go_for_it_rate"] = grouped["n_go"] / grouped["n_go_rec"]
     grouped["avg_wp_lost_per_season"] = grouped["net_wp_lost"] / grouped["n_season"]
-    
-    # Create a label combining coach name and team
     grouped["coach_label"] = grouped["coach_name"]
 
-    ### PLOT 1
+    ### PLOT 1: Go-For-It Rate
     grouped_sorted1 = grouped.sort_values("go_for_it_rate", ascending=True)
     fig1 = go.Figure()
     
-    # Add main bar trace with the metric on the right
     fig1.add_trace(go.Bar(
         x=grouped_sorted1["go_for_it_rate"],
         y=grouped_sorted1["coach_label"],
@@ -238,7 +289,6 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         showlegend=False
     ))
     
-    # Add invisible trace for the n= values on the left
     fig1.add_trace(go.Bar(
         x=[0.0001] * len(grouped_sorted1),
         y=grouped_sorted1["coach_label"],
@@ -251,7 +301,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         marker=dict(color="rgba(0,0,0,0)"),
         showlegend=False,
         cliponaxis=False,
-        visible=SAMPLE_SIZE_ON
+        visible=show_sample
     ))
 
     max_x1 = grouped_sorted1["go_for_it_rate"].max()
@@ -280,7 +330,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
             automargin=True,
             categoryorder="array",
             categoryarray=grouped_sorted1["coach_label"].tolist(),
-            showticklabels=True,  # Show coach names as y-axis labels
+            showticklabels=True,
         ),
         xaxis=dict(
             fixedrange=True,
@@ -305,10 +355,10 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         font=dict(size=10),
         xanchor="center",
         yanchor="top",
-        visible=SAMPLE_SIZE_ON
+        visible=show_sample
     )
 
-    ### PLOT 2
+    ### PLOT 2: WP Lost
     grouped_sorted2 = grouped.sort_values("avg_wp_lost_per_season", ascending=True)
     fig2 = go.Figure()
     
@@ -341,7 +391,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         marker=dict(color="rgba(0,0,0,0)"),
         showlegend=False,
         cliponaxis=False,
-        visible=SAMPLE_SIZE_ON
+        visible=show_sample
     ))
 
     max_x2 = grouped_sorted2["avg_wp_lost_per_season"].max()
@@ -361,7 +411,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
             automargin=True,
             categoryorder="array",
             categoryarray=grouped_sorted2["coach_label"].tolist(),
-            showticklabels=True,  # Show coach names as y-axis labels
+            showticklabels=True,
         ),
         xaxis=dict(
             fixedrange=True,
@@ -385,9 +435,66 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         font=dict(size=10),
         xanchor="center",
         yanchor="top",
-        visible=SAMPLE_SIZE_ON
+        visible=show_sample
     )
 
-    fig1, fig2 = toggle_sample_size(SAMPLE_SIZE_ON, fig1, fig2)
+    ### PLOT 3: Trend Over Time
+    # Prepare data for trend plot
+    trend_data = dff.groupby(['coach_name', 'season', 'fill_color', 'border_color'], as_index=False).agg({
+        'n_go': 'sum',
+        'n_go_rec': 'sum'
+    })
+    trend_data = trend_data[trend_data['n_go_rec'] > 0]
+    trend_data['go_for_it_rate'] = trend_data['n_go'] / trend_data['n_go_rec']
     
-    return fig1, fig2
+    fig3 = go.Figure()
+    
+    # Add a line for each coach
+    for coach in selected_coaches:
+        coach_data = trend_data[trend_data['coach_name'] == coach]
+        if not coach_data.empty:
+            color = coach_data.iloc[0]['fill_color']
+            fig3.add_trace(go.Scatter(
+                x=coach_data['season'],
+                y=coach_data['go_for_it_rate'],
+                mode='lines+markers',
+                name=coach,
+                line=dict(color=color, width=3),
+                marker=dict(size=8),
+                hovertemplate="<b>%{fullData.name}</b><br>" +
+                             "Season: %{x}<br>" +
+                             "Go Rate: %{y:.1%}<br>" +
+                             "Plays: %{text}",
+                text=[f"{n}" for n in coach_data['n_go_rec']]
+            ))
+    
+    fig3.update_layout(
+        title=dict(
+            text="<span style='font-size:16px'><b>Go-For-It Rate Trend Over Time</b></span>",
+            xanchor='left',
+            x=0
+        ),
+        xaxis_title="Season",
+        yaxis_title="Go-For-It Rate When Recommended",
+        yaxis=dict(
+            tickformat=".0%",
+            range=[0, 1.1]
+        ),
+        xaxis=dict(
+            tickmode='linear',
+            dtick=1
+        ),
+        margin=dict(l=20, r=20, t=60, b=60),
+        height=500,
+        template="plotly_white",
+        hovermode="x unified",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
+    )
+    
+    return fig1, fig2, fig3
