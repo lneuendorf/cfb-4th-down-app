@@ -185,7 +185,7 @@ layout = dbc.Container([
                         {"name": ["Play Outcome", "Decision"], "id": "Decision"},
                         {"name": ["Play Outcome", "Play Desc"], "id": "Desc"},
                     ],
-                    page_size=50,
+                    page_size=10,
                     page_action='native',
                     sort_action='native',
                     filter_action='none',  # Disable the built-in filtering
