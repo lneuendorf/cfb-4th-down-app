@@ -23,11 +23,11 @@ layout = dbc.Container([
     html.P("Column Descriptions:"),
     html.Ul([
         html.Li([
-            html.U("ELO:"),
+            html.I("ELO:"),
             " Pregame team Elo rating, representing estimated team strength."
         ]),
         html.Li([
-            html.U("YTG (Yards to Goal):"),
+            html.I("YTG (Yards to Goal):"),
             " Distance from the line of scrimmage to the end zone."
         ]),
     ]),
