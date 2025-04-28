@@ -270,8 +270,17 @@ layout = dbc.Container([
                     # Removed tooltip_data and tooltip_duration to disable hover interactivity
                     markdown_options={"html": True}
                 )
-            ], fluid=True, className="p-0"),
-        ], xs=12, className="mb-4")
+            ],
+            fluid=True, 
+            className="p-0", 
+            style={
+                "borderRadius": "16px",  # Changed from 10px to match your other containers
+                "boxShadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",  # Matched your plot container shadow
+                "padding": "15px",
+                "backgroundColor": "white",
+                "overflow": "hidden"  # This ensures the corners stay rounded
+            })
+        ], xs=12, className="mb-4", style={"overflow": "hidden"}),
     ])
 ], 
 fluid=True,

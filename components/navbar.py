@@ -9,7 +9,7 @@ navbar = dbc.NavbarSimple(
         dbc.NavItem(dbc.NavLink("Teams", href="/team-tendencies")),
         dbc.NavItem(dbc.NavLink("Coachs", href="/coach-tendencies")),
         dbc.NavItem(dbc.NavLink("Plays", href="/game-decisions")),
-        dbc.NavItem(dbc.NavLink("About", href="/about")),
+        dbc.NavItem(dbc.NavLink("About", href="/")),
     ],
     sticky="top",
     # add box shadow

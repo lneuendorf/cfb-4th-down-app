@@ -127,7 +127,7 @@ layout = dbc.Container([
                         options=[{'label': team, 'value': team} for team in 
                                  sorted(df['offense_team'].unique())],
                         placeholder="Select Team",
-                        value='Army',
+                        value='LSU',
                         style={"minWidth": "200px", "height": "36px"}
                     ),
                 ],
