@@ -218,7 +218,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         insidetextanchor="end",
         textfont=dict(color="white", size=12),
         hoverinfo="text",
-        hovertemplate="<b>%{y}</b> (n=%{customdata[0]})",
+        hovertemplate="<b>%{y}</b> (%{customdata[0]} play(s))",
         name="",
         showlegend=False,
         customdata=grouped_sorted1[["n_go_rec"]].values
@@ -284,15 +284,15 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
     )
     
     # Add annotation for sample size
-    fig1.add_annotation(
-        x=0.5, y=1/len(grouped_sorted1) * -2,
-        xref="paper", yref="paper",
-        text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of plays where going for it was recommended)</span>",
-        showarrow=False,
-        font=dict(size=9),
-        xanchor="center",
-        yanchor="middle",
-    )
+    # fig1.add_annotation(
+    #     x=0.5, y=1/len(grouped_sorted1) * -2,
+    #     xref="paper", yref="paper",
+    #     text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of plays where going for it was recommended)</span>",
+    #     showarrow=False,
+    #     font=dict(size=9),
+    #     xanchor="center",
+    #     yanchor="middle",
+    # )
 
     ### PLOT 2
     grouped_sorted2 = grouped.sort_values("avg_wp_lost_per_season", ascending=True)
@@ -311,7 +311,7 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         insidetextanchor="end",
         textfont=dict(color="white", size=12),
         hoverinfo="text",
-        hovertemplate="<b>%{y}</b> (n=%{customdata[0]})",
+        hovertemplate="<b>%{y}</b> (%{customdata[0]} season(s))",
         name="",
         showlegend=False,
         customdata=grouped_sorted2[["n_season"]].values
@@ -366,15 +366,15 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         dragmode=False,
     )
 
-    fig2.add_annotation(
-        x=0.5, y=1/len(grouped_sorted1) * -2,
-        xref="paper", yref="paper",
-        text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of seasons across selected years)</span>",
-        showarrow=False,
-        font=dict(size=9),
-        xanchor="center",
-        yanchor="middle",
-    )
+    # fig2.add_annotation(
+    #     x=0.5, y=1/len(grouped_sorted1) * -2,
+    #     xref="paper", yref="paper",
+    #     text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of seasons across selected years)</span>",
+    #     showarrow=False,
+    #     font=dict(size=9),
+    #     xanchor="center",
+    #     yanchor="middle",
+    # )
     
     return fig1, fig2
 
@@ -461,7 +461,8 @@ def update_trend_graph(selected_team, screen_width):
         height=400,
         template="plotly_white",
         showlegend=False,
-        hovermode="x unified"
+        hovermode="x unified",
+        dragmode=False,
     )
     
     return fig
