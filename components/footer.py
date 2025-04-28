@@ -29,9 +29,17 @@ footer = html.Footer(
                 href="https://github.com/lneuendorf",
                 target="_blank"
             ),
+            html.A(
+                html.Img(
+                    src="/assets/logos/linkedin.png",
+                    style={"height": "24px", "margin": "0 10px"}
+                ),
+                href="https://www.linkedin.com/in/luke-neuendorf/",
+                target="_blank"
+            ),
         ], style={"marginBottom": "18px"}),
         html.P(
-            "Built with Dash & Plotly by Luke Neuendorf",
+            "Built with Dash & Plotly",
             style={"marginTop": "10px"}
         ),
     ],
