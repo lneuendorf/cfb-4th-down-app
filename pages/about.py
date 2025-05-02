@@ -57,7 +57,7 @@ layout = dbc.Container([
 
                         This section dives into each of the models used to generate the recommendations.
 
-                        #### 1. Elo Model
+                        ##### 1. Elo Model
 
                         The Elo model is a simple but effective rating system originally developed to rank chess players. 
                         In this project, it has been adapted to estimate the relative strength of college football teams.
@@ -79,7 +79,6 @@ layout = dbc.Container([
                         ),
                         html.Br(),
                                 
-
                         dcc.Markdown("""
                         Each team starts the season with an initial Elo rating based on their division:
                         - **FBS**: 1500  
@@ -109,6 +108,60 @@ layout = dbc.Container([
 
                         These parameters were chosen by minimizing the log loss in score predictions across historical games, 
                         using data dating back to 1930.
+                                     
+                        ##### 2. Win Probability Model (WP)
+                        The win probability model estimates a team's chance of winning at any moment during the game, given the current game state.
+                        To capture this, the model uses the following features:
+                        - Current score differential  
+                        - Pregame Elo rating difference between offense and defense  
+                        - Game location (home, away, or neutral)  
+                        - Percentage of game elapsed (excluding potential overtime)  
+                        - Offense’s yards to goal  
+                        - Number of timeouts remaining for both offense and defense  
+
+                        These features are input into an XGBoost model, with hyperparameters optimized using Optuna.
+                        The result is a well-calibrated model, as illustrated below:
+                        """),
+
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/wp_calibration.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "max-width": "500px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+                        html.Br(),
+
+
+                        dcc.Markdown("""
+                        Among all features, the current score differential and pregame Elo difference are the most influential in shaping the model’s predictions.
+                        This is reflected in the feature importance plot below:
+                        """),
+
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/wp_feat_importance.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "max-width": "600px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+                        html.Br(),
+
+                        dcc.Markdown("""
+                        ##### 2. Field Goal Model
+                        
                         """),
 
                     ], style={"padding": "0rem", "margin": "0rem"})
@@ -124,6 +177,7 @@ layout = dbc.Container([
 ], 
 fluid=True,
 style={
+    "max-width": "1000px",
     "padding-left": CONFIG['padding-left'],
     "padding-right": CONFIG['padding-right'],
     "padding-bottom": "1rem",
