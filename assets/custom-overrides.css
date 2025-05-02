@@ -15,7 +15,21 @@ body {
     color: #252626;
 }
 
-/* assets/style.css */
-body {
-    overflow-x: hidden;
+/* Prevent horizontal scrolling on ALL devices */
+html, body {
+    overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Ensure child elements don't cause overflow */
+body * {
+    box-sizing: border-box; /* Prevents padding/margin from expanding width */
+}
+
+/* Optional: Force containers to stay within bounds */
+.container, .row, [class*="col-"] {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
 }
