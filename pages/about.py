@@ -160,9 +160,163 @@ layout = dbc.Container([
                         html.Br(),
 
                         dcc.Markdown("""
-                        ##### 2. Field Goal Model
-                        
+                        ##### 3. Field Goal Model (Heckman Two-Stage Approach)
+                        This model uses a **Heckman selection framework** to account for selection bias—teams don't attempt field goals at random (*p = 0.041*), so modeling only attempted kicks would skew results.
+
+                        **Stage 1: Attempt Probability**  
+                        A **probit regression** estimates the likelihood of a field goal attempt based on:
+                        - **Game context**: Score differential, time remaining, pressure situations  
+                        - **Field position**: Yards to goal (strong negative predictor)  
+                        - **Environment**: Wind speed, playing surface, elevation  
+
+                        **Stage 2: Make Probability**  
+                        A **linear regression**, corrected using the **inverse Mills ratio** from stage 1. Key predictors include:
+                        - **Distance** to goal (strongest negative effect)  
+                        - **Pressure** situations (slightly reduce accuracy)  
+                        - **Wind speed** (noticeably reduces accuracy)  
+
+                        **Calibration**: The model is well-calibrated overall, though slightly underestimates success in low-probability scenarios (<35%) due to sparse data.
                         """),
+
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/fg_calibration.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "max-width": "500px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+                        html.Br(),
+
+                        dcc.Markdown("""
+                        **Key Insight**: Distance is the dominant factor in predicting field goal success. However, incorporating contextual variables like pressure, wind, and elevation improves overall model performance, especially in edge cases.
+                        """),
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/fg_proba.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "max-width": "600px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+
+                        dcc.Markdown("""
+                        ##### 4. Punt Return Yards Model (XGBoost with Optuna Tuning)
+
+                        This model predicts the **expected return yardline** after a punt using **XGBoost**, with hyperparameters optimized via **Optuna**. The goal is to learn how field position and game context influence where the receiving team takes over after a punt.
+
+                        **Feature Categories**:
+                        - **Field position**: Where the punting team ends the play  
+                        - **Game context**: Score differential, percent of game elapsed, home/away  
+                        - **Environment**: Surface type (e.g. grass), wind speed, precipitation, temperature, elevation, indoors/outdoors  
+                        - **Team strength**: Pre-game Elo ratings of both teams  
+
+                        The model performs well in capturing non-linear relationships between **punt location** and **return location**.
+                        """),
+                        
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/punt_feat_importance.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "maxWidth": "500px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+                        html.Br(),
+
+                        dcc.Markdown("""
+                        **Key Insight**:  
+                        The **end yardline of the punt by the kicking team** is by far the most important feature, dominating the model’s decisions. However, adding context such as weather and team strength modestly improves predictions in edge cases.
+                        """),
+
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/punt_plot.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "maxWidth": "600px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+                        html.Br(),
+
+                        dcc.Markdown("""
+                        The model clearly learns the relationship between **punt depth** and **return yardline**, closely capturing real-world patterns. This helps inform downstream decisions about expected field position when choosing to punt.
+                        """),
+
+                        dcc.Markdown("""
+                        ##### 5. Fourth Down Conversion Probability Model (XGBoost + Optuna)
+
+                        This model estimates the probability of converting a **fourth down attempt**, trained using **XGBoost** with **Optuna** hyperparameter optimization. It helps assess when going for it on fourth down is a smart decision, factoring in field position, game context, and environmental variables.
+
+                        **Feature Categories**:
+                        - **Play context**: Yards to go, field position (yards to goal), game time elapsed  
+                        - **Game situation**: Score differential, home vs. away, pregame Elo difference  
+                        - **Environment**: Wind speed, precipitation, and temperature  
+
+                        The model leverages non-linear relationships between these features to accurately estimate conversion chances in a variety of scenarios.
+                        """),
+
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/4th_down_feat_importance.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "maxWidth": "500px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+                        html.Br(),
+
+                        dcc.Markdown("""
+                        **Key Insight**:  
+                        **Yards to go** and **field position** are the strongest drivers of conversion probability. However, contextual features like **score differential**, **Elo ratings**, and **weather** refine predictions in edge cases—especially in late-game or extreme weather situations.
+                        """),
+
+                        html.Div(
+                            html.Img(
+                                src="/assets/writeup/4th_down_calibration.png",
+                                style={
+                                    "width": "100%",
+                                    "height": "auto",
+                                    "maxWidth": "600px",
+                                    "borderRadius": "8px",
+                                    "boxShadow": "0px 0px 6px rgba(0, 0, 0, 0.15)"
+                                }
+                            ),
+                            style={"display": "flex", "justifyContent": "center", "alignItems": "center"}
+                        ),
+                        html.Br(),
+
+                        dcc.Markdown("""
+                        The model is well-calibrated across the probability spectrum, providing reliable estimates that are suitable for integration into decision models (e.g., win probability maximization).
+                        """)
+
+
+
 
                     ], style={"padding": "0rem", "margin": "0rem"})
                 ]),
