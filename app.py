@@ -3,7 +3,7 @@ from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 from dash import Input, Output
 
-from components.navbar import navbar
+from components.navbar import header
 from components.footer import footer
 
 app = Dash(
@@ -20,7 +20,7 @@ app.title = "CFB 4th Down Decisions"
 app.layout = html.Div([
     dcc.Store(id='screen-width-store'),
     dcc.Interval(id='resize-listener', interval=100000, n_intervals=1),
-    navbar,
+    header,
     dcc.Location(id="url"),
     html.Div(
         dash.page_container,

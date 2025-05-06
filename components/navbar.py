@@ -12,9 +12,25 @@ navbar = dbc.NavbarSimple(
         dbc.NavItem(dbc.NavLink("About", href="/")),
     ],
     sticky="top",
-    # add box shadow
     style={
         "boxShadow": "0 1px 5px rgba(0,0,0,0.1)", 
-        # "marginBottom": "20px",  # Ensure spacing from content
     },
 )
+
+disclaimer_bar = dbc.Alert(
+    "⚠️ Beta Release Disclaimer: Please note this is an early version and there may be data inconsistencies (yards to goal not matching play text). Use with caution.",
+    color="secondary",
+    style={
+        "padding": "8px",
+        "marginBottom": "0",
+        "borderRadius": "0",
+        "textAlign": "center",
+        "fontSize": "14px"
+    }
+)
+
+# Combine both components in a container
+header = html.Div([
+    navbar,
+    disclaimer_bar
+], style={"position": "sticky", "top": 0, "zIndex": 1000})
