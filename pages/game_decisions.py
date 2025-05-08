@@ -41,13 +41,25 @@ layout = dbc.Container([
                     dbc.Col(
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("Conference:", style={"height": "36px"}),
+                                dbc.InputGroupText(
+                                    "Conference:", 
+                                    style={
+                                        "height": "36px",
+                                        "border-top-right-radius": "0",
+                                        "border-bottom-right-radius": "0",
+                                    }
+                                ),
                                 dcc.Dropdown(
                                     id='conference-dropdown',
                                     options=[{'label': conf, 'value': conf} for conf in all_conferences],
                                     value='Big Ten',
                                     placeholder="Select Conference",
-                                    style={"minWidth": "200px", "height": "36px"}
+                                    style={
+                                        "minWidth": "200px",
+                                        "height": "36px",
+                                        "border-top-left-radius": "0",
+                                        "border-bottom-left-radius": "0",
+                                    }
                                 ),
                             ],
                             className="me-2"  # Add right margin to separate from next group
@@ -60,13 +72,25 @@ layout = dbc.Container([
                     dbc.Col(
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("Season:", style={"height": "36px"}),
+                                dbc.InputGroupText(
+                                    "Season:", 
+                                    style={
+                                        "height": "36px",
+                                        "border-top-right-radius": "0",
+                                        "border-bottom-right-radius": "0",
+                                    }
+                                ),
                                 dcc.Dropdown(
                                     id='year-dropdown',
                                     options=[{'label': str(year), 'value': year} for year in all_years],
                                     value=2024,
                                     placeholder="Select Season",
-                                    style={"minWidth": "100px", "height": "36px"}
+                                    style={
+                                        "minWidth": "100px",
+                                        "height": "36px",
+                                        "border-top-left-radius": "0",
+                                        "border-bottom-left-radius": "0",
+                                    }
                                 ),
                             ]
                         ),
@@ -89,12 +113,25 @@ layout = dbc.Container([
                     dbc.Col(
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("Offense Team:", style={"height": "36px"}),
+                                dbc.InputGroupText(
+                                    "Offense Team:",
+                                    style={
+                                        "height": "36px",
+                                        "border-top-right-radius": "0",
+                                        "border-bottom-right-radius": "0",
+                                    }
+                                ),
                                 dcc.Dropdown(
                                     id='offense-team-dropdown',
                                     placeholder="Select Offense Team",
-                                    style={"minWidth": "200px", "height": "36px"},
-                                    multi=False
+                                    style={
+                                        "minWidth": "200px",
+                                        "height": "36px",
+                                        "border-top-left-radius": "0",
+                                        "border-bottom-left-radius": "0",
+                                    },
+                                    multi=False,
+                                    value='Wisconsin',
                                 ),
                             ],
                             className="me-2"  # Add right margin to separate from next group
@@ -107,11 +144,23 @@ layout = dbc.Container([
                     dbc.Col(
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("Week:", style={"height": "36px"}),
+                                dbc.InputGroupText(
+                                    "Week:", 
+                                    style={
+                                        "height": "36px",
+                                        "border-top-right-radius": "0",
+                                        "border-bottom-right-radius": "0",
+                                    }
+                                ),
                                 dcc.Dropdown(
                                     id='week-dropdown',
                                     placeholder="Select Week",
-                                    style={"minWidth": "100px", "height": "36px"},
+                                    style={
+                                        "minWidth": "100px",
+                                        "height": "36px",
+                                        "border-top-left-radius": "0",
+                                        "border-bottom-left-radius": "0",
+                                    },
                                     multi=False
                                 ),
                             ],
@@ -125,11 +174,23 @@ layout = dbc.Container([
                     dbc.Col(
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("Recommendation:", style={"height": "36px"}),
+                                dbc.InputGroupText(
+                                    "Recommendation:", 
+                                    style={
+                                        "height": "36px",
+                                        "border-top-right-radius": "0",
+                                        "border-bottom-right-radius": "0",
+                                    }
+                                ),
                                 dcc.Dropdown(
                                     id='recommendation-dropdown',
                                     placeholder="Select Recommendation",
-                                    style={"minWidth": "150px", "height": "36px"},
+                                    style={
+                                        "minWidth": "150px",
+                                        "height": "36px",
+                                        "border-top-left-radius": "0",
+                                        "border-bottom-left-radius": "0",
+                                    },
                                     multi=False,
                                     optionHeight=100,
                                 ),
@@ -144,11 +205,23 @@ layout = dbc.Container([
                     dbc.Col(
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("Decision:", style={"height": "36px"}),
+                                dbc.InputGroupText(
+                                    "Decision:",
+                                    style={
+                                        "height": "36px",
+                                        "border-top-right-radius": "0",
+                                        "border-bottom-right-radius": "0",
+                                    }
+                                ),
                                 dcc.Dropdown(
                                     id='decision-dropdown',
                                     placeholder="Select Decision",
-                                    style={"minWidth": "150px", "height": "36px"},
+                                    style={
+                                        "minWidth": "150px",
+                                        "height": "36px",
+                                        "border-top-left-radius": "0",
+                                        "border-bottom-left-radius": "0",
+                                    },
                                     multi=False
                                 ),
                             ]

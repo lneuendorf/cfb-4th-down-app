@@ -18,7 +18,8 @@ navbar = dbc.NavbarSimple(
 )
 
 disclaimer_bar = dbc.Alert(
-    "⚠️ Beta Release Disclaimer: Please note this is an early version and there may be data inconsistencies (yards to goal not matching play text). Use with caution.",
+    "⚠️ Beta Release: This early version may contain data inconsistencies (e.g. yards to goal inaccuracy). "
+    "Use with caution. Final release expected by end of June.",
     color="secondary",
     style={
         "padding": "8px",

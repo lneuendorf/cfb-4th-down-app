@@ -23,14 +23,26 @@ layout = dbc.Container([
         dbc.Col([
             dbc.InputGroup(
                 [
-                    dbc.InputGroupText("Conference:", style={"height": "36px"}),
+                    dbc.InputGroupText(
+                        "Conference:",
+                        style={
+                            "height": "36px",
+                            "border-top-right-radius": "0",
+                            "border-bottom-right-radius": "0",
+                        }
+                    ),
                     dcc.Dropdown(
                         id='conference-dropdown',
                         options=[{'label': conf, 'value': conf} for conf in 
                                  ['All'] + sorted(df['offense_conference'].dropna().unique())],
                         placeholder="Select Conference",
                         value='Big Ten',
-                        style={"minWidth": "200px", "height": "36px"}
+                        style={
+                            "minWidth": "200px",
+                            "height": "36px",
+                            "border-top-left-radius": "0",
+                            "border-bottom-left-radius": "0",
+                        }
                     ),
                 ],
                 # add right padding
@@ -42,14 +54,26 @@ layout = dbc.Container([
         dbc.Col([
             dbc.InputGroup(
                 [
-                    dbc.InputGroupText("From:", style={"height": "36px"}),
+                    dbc.InputGroupText(
+                        "From:",
+                        style={
+                            "height": "36px",
+                            "border-top-right-radius": "0",
+                            "border-bottom-right-radius": "0",
+                        }
+                    ),
                     dcc.Dropdown(
                         id='start-season',
                         options=[{'label': str(s), 'value': s} for s in 
                                  sorted(df['season'].unique())],
                         value=df['season'].min(),
                         placeholder="Start",
-                        style={"minWidth": "100px", "height": "36px"}
+                        style={
+                            "minWidth": "100px",
+                            "height": "36px",
+                            "border-top-left-radius": "0",
+                            "border-bottom-left-radius": "0",
+                        }
                     ),
                 ],
                 className="justify-content-end"
@@ -60,14 +84,26 @@ layout = dbc.Container([
         dbc.Col([
             dbc.InputGroup(
                 [
-                    dbc.InputGroupText("To:", style={"height": "36px"}),
+                    dbc.InputGroupText(
+                        "To:", 
+                        style={
+                            "height": "36px",
+                            "border-top-right-radius": "0",
+                            "border-bottom-right-radius": "0",
+                        }
+                    ),
                     dcc.Dropdown(
                         id='end-season',
                         options=[{'label': str(s), 'value': s} for s in 
                                  sorted(df['season'].unique())],
                         value=df['season'].max(),
                         placeholder="End",
-                        style={"minWidth": "100px", "height": "36px"}
+                        style={
+                            "minWidth": "100px",
+                            "height": "36px",
+                            "border-top-left-radius": "0",
+                            "border-bottom-left-radius": "0",
+                        }
                     ),
                 ],
                 className="justify-content-start"
@@ -121,14 +157,26 @@ layout = dbc.Container([
         dbc.Col([
             dbc.InputGroup(
                 [
-                    dbc.InputGroupText("Team:", style={"height": "36px"}),
+                    dbc.InputGroupText(
+                        "Team:", 
+                        style={
+                            "height": "36px",
+                            "border-top-right-radius": "0",
+                            "border-bottom-right-radius": "0",
+                        }
+                    ),
                     dcc.Dropdown(
                         id='team-dropdown',
                         options=[{'label': team, 'value': team} for team in 
                                  sorted(df['offense_team'].unique())],
                         placeholder="Select Team",
                         value='LSU',
-                        style={"minWidth": "200px", "height": "36px"}
+                        style={
+                            "minWidth": "200px",
+                            "height": "36px",
+                            "border-top-left-radius": "0",
+                            "border-bottom-left-radius": "0",
+                        }
                     ),
                 ],
                 className="justify-content-center"
