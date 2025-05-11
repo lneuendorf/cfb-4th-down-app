@@ -42,12 +42,14 @@ layout = dbc.Container([
                             "height": "36px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
-                            "fontSize": "13px"
+                            "fontSize": "13px",
+                            "whiteSpace": "nowrap",
                         }
                     ),
                 ],
                 # add right padding
-                className="justify-content-xl-end justify-content-center px-xl-3"
+                className="justify-content-xl-end justify-content-center px-xl-3",
+                style={"flexWrap": "nowrap"}
             )
         ], xs=12, sm=12, md=12, lg=12, xl=6),
 
@@ -74,11 +76,13 @@ layout = dbc.Container([
                             "height": "36px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
-                            "fontSize": "13px"
+                            "fontSize": "13px",
+                            "whiteSpace": "nowrap",
                         }
                     ),
                 ],
-                className="justify-content-end"
+                className="justify-content-end",
+                style={"flexWrap": "nowrap"}
             )
         ], xs=6, sm=6, md=6, lg=6, xl=2),
 
@@ -105,11 +109,13 @@ layout = dbc.Container([
                             "height": "36px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
-                            "fontSize": "13px"
+                            "fontSize": "13px",
+                            "whiteSpace": "nowrap",
                         }
                     ),
                 ],
-                className="justify-content-start"
+                className="justify-content-start",
+                style={"flexWrap": "nowrap"}
             )
         ], xs=6, sm=6, md=6, lg=6, xl=2),
     ], className="mb-4 g-3 align-items-center"),
@@ -179,11 +185,13 @@ layout = dbc.Container([
                             "height": "36px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
-                            "fontSize": "13px"
+                            "fontSize": "13px",
+                            "whiteSpace": "nowrap",
                         }
                     ),
                 ],
-                className="justify-content-center"
+                className="justify-content-center",
+                style={"flexWrap": "nowrap"}
             )
         ], xs=12, className="mb-4"),
     ]),
