@@ -45,7 +45,8 @@ layout = dbc.Container([
                             "minWidth": "180px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
-                            "border-left": "none"  # Remove left border to prevent double border
+                            "border-left": "none",
+                            "fontSize": "13px",
                         }
                     ),
                 ], 
@@ -71,10 +72,12 @@ layout = dbc.Container([
                             "height": "36px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
+                            "fontSize": "13px",
                         }
                     ),
                 ],
-                className="justify-content-end"
+                className="justify-content-end",
+                style={"flexWrap": "nowrap"}
             ),
         ],xs=6, sm=6, md=6, lg=6, xl=2),
 
@@ -94,10 +97,12 @@ layout = dbc.Container([
                             "height": "36px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
+                            "fontSize": "13px",
                         }
                     ),
                 ],
-                className="justify-content-start"
+                className="justify-content-start",
+                style={"flexWrap": "nowrap"}
             )
         ], xs=6, sm=6, md=6, lg=6, xl=2),
     ], className="mb-4 g-3 align-items-top"),
@@ -119,7 +124,7 @@ layout = dbc.Container([
                     "min-height": "400px"
                 }
             )
-        ], xs=12, xl=6, className="mb-4"),
+        ], xs=12, xl=6, className="mb-4 px-1 pb-1 pt-1"),
         dbc.Col([
             dbc.Container(
                 dcc.Graph(
@@ -136,7 +141,7 @@ layout = dbc.Container([
                     "min-height": "400px"
                 }
             )
-        ], xs=12, xl=6, className="mb-4")
+        ], xs=12, xl=6, className="mb-4 px-1 pb-1 pt-1")
     ]),
     
     # Coach selection dropdown row for trend plot
@@ -155,6 +160,7 @@ layout = dbc.Container([
                             "height": "100%",
                             "border-top-right-radius": "0",
                             "border-bottom-right-radius": "0",
+                            "height": "36px",
                         }
                     ),
                     dcc.Dropdown(
@@ -167,10 +173,13 @@ layout = dbc.Container([
                             "height": "36px",
                             "border-top-left-radius": "0",
                             "border-bottom-left-radius": "0",
+                            "fontSize": "13px",
+                            "white-space": "nowrap",
                         }
                     ),
                 ],
-                className="justify-content-center"
+                className="justify-content-center",
+                style={"flexWrap": "nowrap"}
             )
         ], xs=12, className="mb-4"),
     ]),
@@ -192,7 +201,7 @@ layout = dbc.Container([
                     "min-height": "400px"
                 }
             )
-        ], xs=12, className="mb-4")
+        ], xs=12, className="mb-4 px-1 pb-1 pt-1")
     ]),
 ], 
 fluid=True,

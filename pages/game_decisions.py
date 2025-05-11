@@ -37,16 +37,18 @@ layout = dbc.Container([
         dbc.Row(
             dbc.Col(
                 dbc.Row([
-                    # Conference Dropdown
+                    # Conference Dropdown - make width responsive
                     dbc.Col(
                         dbc.InputGroup(
                             [
                                 dbc.InputGroupText(
-                                    "Conference:", 
+                                    "Conference:",
                                     style={
                                         "height": "36px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
+                                        "fontSize": "14px",
+                                        "whiteSpace": "nowrap",
                                     }
                                 ),
                                 dcc.Dropdown(
@@ -55,17 +57,20 @@ layout = dbc.Container([
                                     value='Big Ten',
                                     placeholder="Select Conference",
                                     style={
-                                        "minWidth": "200px",
+                                        "minWidth": "150px",  # Reduced min width
+                                        "width": "100%",
                                         "height": "36px",
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
+                                        "fontSize": "13px",
                                     }
                                 ),
                             ],
-                            className="me-2"  # Add right margin to separate from next group
+                            className="me-2",
+                            style={"flexWrap": "nowrap"}
                         ),
                         width="auto",
-                        className="pe-1"  # Add right padding
+                        className="pe-1"
                     ),
                     
                     # Season Dropdown
@@ -78,6 +83,8 @@ layout = dbc.Container([
                                         "height": "36px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
+                                        "whiteSpace": "nowrap",
+                                        "fontSize": "14px"
                                     }
                                 ),
                                 dcc.Dropdown(
@@ -87,21 +94,24 @@ layout = dbc.Container([
                                     placeholder="Select Season",
                                     style={
                                         "minWidth": "100px",
+                                        "width": "100%",  # Make it fill available space
                                         "height": "36px",
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
+                                        "fontSize": "13px",
                                     }
                                 ),
-                            ]
+                            ],
+                            style={"flexWrap": "nowrap"},
                         ),
                         width="auto",
-                        className="ps-1"  # Add left padding
+                        className="ps-1"
                     ),
                 ], 
                 justify="center",
-                className="g-2"  # Reduced gap between items
+                className="g-1"  # Reduce gap further
                 ),
-                className="mb-4"
+                className="mb-2"
             )
         ),
         
@@ -109,38 +119,44 @@ layout = dbc.Container([
         dbc.Row(
             dbc.Col(
                 dbc.Row([
-                    # Offense Team Dropdown
+                    # Offense Team Dropdown - make more compact
                     dbc.Col(
                         dbc.InputGroup(
                             [
                                 dbc.InputGroupText(
-                                    "Offense Team:",
+                                    "Offense:",
                                     style={
                                         "height": "36px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
+                                        "whiteSpace": "nowrap",
+                                        "padding": "0 8px",
+                                        "fontSize": "14px"
                                     }
                                 ),
                                 dcc.Dropdown(
                                     id='offense-team-dropdown',
-                                    placeholder="Select Offense Team",
+                                    placeholder="Team",
                                     style={
-                                        "minWidth": "200px",
+                                        "minWidth": "150px",
+                                        "width": "100%",
                                         "height": "36px",
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
+                                        "fontSize": "13px",
                                     },
                                     multi=False,
                                     value='Wisconsin',
                                 ),
                             ],
-                            className="me-2"  # Add right margin to separate from next group
+                            className="me-1",  # Reduced margin
+                            style={"flexWrap": "nowrap"}
                         ),
                         width="auto",
-                        className="pe-1"  # Add right padding
+                        className="pe-1"
                     ),
                     
-                    # Week Dropdown
+                    # Week Dropdown - make more compact
                     dbc.Col(
                         dbc.InputGroup(
                             [
@@ -150,58 +166,68 @@ layout = dbc.Container([
                                         "height": "36px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
+                                        "padding": "0 8px",
+                                        "whiteSpace": "nowrap",
+                                        "fontSize": "14px"
                                     }
                                 ),
                                 dcc.Dropdown(
                                     id='week-dropdown',
-                                    placeholder="Select Week",
+                                    placeholder="Week",
                                     style={
-                                        "minWidth": "100px",
+                                        "minWidth": "70px",  # Reduced
+                                        "width": "100%",
                                         "height": "36px",
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
+                                        "fontSize": "13px",
                                     },
                                     multi=False
                                 ),
                             ],
-                            className="me-2"  # Add right margin to separate from next group
+                            className="me-1",
+                            style={"flexWrap": "nowrap"},
                         ),
                         width="auto",
-                        className="px-1"  # Add horizontal padding
+                        className="px-1"
                     ),
                     
-                    # Recommendation Dropdown
+                    # Recommendation Dropdown - make more compact
                     dbc.Col(
                         dbc.InputGroup(
                             [
                                 dbc.InputGroupText(
-                                    "Recommendation:", 
+                                    "Recommendation:",
                                     style={
                                         "height": "36px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
-                                    }
+                                        "whiteSpace": "nowrap",
+                                        "padding": "0 6px",
+                                        "fontSize": "14px"
+                                    },
                                 ),
                                 dcc.Dropdown(
                                     id='recommendation-dropdown',
-                                    placeholder="Select Recommendation",
+                                    placeholder="Select",
                                     style={
-                                        "minWidth": "150px",
+                                        "minWidth": "100px",  # Reduced
+                                        "width": "100%",
                                         "height": "36px",
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
+                                        "fontSize": "13px",
                                     },
-                                    multi=False,
-                                    optionHeight=100,
                                 ),
                             ],
-                            className="me-2"  # Add right margin to separate from next group
+                            className="me-1",
+                            style={"flexWrap": "nowrap"}
                         ),
                         width="auto",
-                        className="px-1"  # Add horizontal padding
+                        className="pe-1"
                     ),
                     
-                    # Decision Dropdown
+                    # Decision Dropdown - make more compact
                     dbc.Col(
                         dbc.InputGroup(
                             [
@@ -211,32 +237,38 @@ layout = dbc.Container([
                                         "height": "36px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
+                                        "padding": "0 6px",
+                                        "whiteSpace": "nowrap",
+                                        "fontSize": "14px"
                                     }
                                 ),
                                 dcc.Dropdown(
                                     id='decision-dropdown',
-                                    placeholder="Select Decision",
+                                    placeholder="Select",
                                     style={
-                                        "minWidth": "150px",
+                                        "minWidth": "100px",  # Reduced
+                                        "width": "100%",
                                         "height": "36px",
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
+                                        "fontSize": "13px",
                                     },
                                     multi=False
                                 ),
-                            ]
+                            ],
+                            style={"flexWrap": "nowrap"},
                         ),
                         width="auto",
-                        className="ps-1"  # Add left padding
+                        className="ps-1"
                     ),
                 ], 
                 justify="center",
-                className="g-2"  # Reduced gap between items
+                className="g-1"  # Minimal gap
                 ),
                 className="mb-4"
             )
         )
-    ], fluid=True),
+    ], fluid=True, className="px-0"),
     
     dbc.Row([
         dbc.Col([
@@ -348,19 +380,23 @@ layout = dbc.Container([
             className="p-0", 
             style={
                 "borderRadius": "16px",  # Changed from 10px to match your other containers
-                "boxShadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",  # Matched your plot container shadow
-                "padding": "15px",
+                "boxShadow": "0 0 5px rgba(0,0,0,0.1)",
+                "padding": "0px",
                 "backgroundColor": "white",
                 "overflow": "hidden"  # This ensures the corners stay rounded
             })
-        ], xs=12, className="mb-4", style={"overflow": "hidden"}),
+        ], xs=12, className="mb-4 px-1 pb-1 pt-1", style={"overflow": "hidden"}),
     ])
 ], 
 fluid=True,
 style={
-    "padding-left": CONFIG['padding-left'],
-    "padding-right": CONFIG['padding-right'],
-    "fontFamily": "Arial, sans-serif"
+    "paddingLeft": CONFIG['padding-left'],
+    "paddingRight": CONFIG['padding-right'],
+    "fontFamily": "Arial, sans-serif",
+    "@media (max-width: 480px)": {
+        "paddingLeft": "8px",
+        "paddingRight": "8px"
+    }
 },
 className="responsive-container"
 )
@@ -379,7 +415,14 @@ def update_dropdown_options(selected_conference, selected_year):
     
     offense_teams = [{'label': team, 'value': team} for team in sorted(dff['Offense Team'].unique())]
     weeks = [{'label': week, 'value': week} for week in sorted(dff['Week'].unique())]
-    recommendations = [{'label': rec, 'value': rec} for rec in sorted(dff['Recommendation'].unique())]
+    
+    # Only show these three options in recommendation dropdown
+    recommendations = [
+        {'label': 'Field Goal', 'value': 'Field Goal'},
+        {'label': 'Go', 'value': 'Go'},
+        {'label': 'Punt', 'value': 'Punt'}
+    ]
+    
     decisions = [{'label': dec, 'value': dec} for dec in sorted(dff['Decision'].unique())]
     
     return offense_teams, weeks, recommendations, decisions
@@ -403,7 +446,13 @@ def update_table(selected_conference, selected_year, selected_team, selected_wee
     if selected_week:
         dff = dff[dff['Week'] == selected_week]
     if selected_recommendation:
-        dff = dff[dff['Recommendation'] == selected_recommendation]
+        # Special handling for each recommendation type
+        if selected_recommendation == 'Go':
+            dff = dff[dff['Recommendation'].str.contains(r'\bGo\b', case=False, regex=True)]
+        elif selected_recommendation == 'Field Goal':
+            dff = dff[dff['Recommendation'].str.contains('Field Goal', case=False)]
+        elif selected_recommendation == 'Punt':
+            dff = dff[dff['Recommendation'].str.contains('Punt', case=False)]
     if selected_decision:
         dff = dff[dff['Decision'] == selected_decision]
     
