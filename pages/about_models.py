@@ -9,6 +9,21 @@ layout = dbc.Container([
     html.Div([
         html.H3(html.B("About the Models"), className="mt-4", style={'color': '#000'}),
     ], style={"overflow": "hidden"}),
+    
+    # Add this note div
+    html.Div(
+        dbc.Alert(
+            "Note: This documentation is currently a work in progress.",
+            color="warning",
+            style={
+                "margin": "1rem 0",
+                "borderLeft": "5px solid #ffc107",
+                "backgroundColor": "#fff8e1",
+                "color": "#856404"
+            }
+        ),
+        className="mb-3"
+    ),
 
     html.Hr(style={"borderTop": "2px solid grey", "margin": "1rem 0"}, className="mb-4"),
     

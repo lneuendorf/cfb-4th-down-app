@@ -17,21 +17,21 @@ navbar = dbc.NavbarSimple(
     },
 )
 
-disclaimer_bar = dbc.Alert(
-    "⚠️ Beta Release: This early version may contain data inconsistencies (e.g. yards to goal inaccuracy). "
-    "Use with caution. Final release expected by end of June.",
-    color="secondary",
-    style={
-        "padding": "8px",
-        "marginBottom": "0",
-        "borderRadius": "0",
-        "textAlign": "center",
-        "fontSize": "14px"
-    }
-)
+# disclaimer_bar = dbc.Alert(
+#     "⚠️ Beta Release: This early version may contain data inconsistencies (e.g. yards to goal inaccuracy). "
+#     "Use with caution. Final release expected by end of June.",
+#     color="secondary",
+#     style={
+#         "padding": "8px",
+#         "marginBottom": "0",
+#         "borderRadius": "0",
+#         "textAlign": "center",
+#         "fontSize": "14px"
+#     }
+# )
 
 # Combine both components in a container
 header = html.Div([
     navbar,
-    disclaimer_bar
+    # disclaimer_bar
 ], style={"position": "sticky", "top": 0, "zIndex": 1000})

@@ -286,6 +286,11 @@ layout = dbc.Container([
                         {"name": ["Game State", "Time"], "id": "Time"},
                         {"name": ["Game State", "Down & Dist"], "id": "Down & Distance"},
                         {"name": ["Game State", "YTG"], "id": "Yards to Goal", "type": "numeric"},
+                        # New Win Probability columns
+                        {"name": ["Expected Win Prob", "Go"], "id": "Win Probability Go", "type": "numeric", "format": {"specifier": ".2%"}},
+                        {"name": ["Expected Win Prob", "Field Goal"], "id": "Win Probability Field Goal", "type": "numeric", "format": {"specifier": ".2%"}},
+                        {"name": ["Expected Win Prob", "Punt"], "id": "Win Probability Punt", "type": "numeric", "format": {"specifier": ".2%"}},
+                        # Play Outcome columns
                         {"name": ["Play Outcome", "Recommendation"], "id": "Recommendation"},
                         {"name": ["Play Outcome", "Decision"], "id": "Decision"},
                         {"name": ["Play Outcome", "Play Desc"], "id": "Desc"},
@@ -314,8 +319,8 @@ layout = dbc.Container([
                             'if': {'header_index': 0},
                             'fontWeight': 'bold',
                             'textAlign': 'center',
-                            'borderBottom': '1px solid #dee2e6'
-                        }
+                            'borderBottom': '2px solid black'
+                        },
                     ],
                     style_cell={
                         'textAlign': 'center',
@@ -359,6 +364,27 @@ layout = dbc.Container([
                             'if': {'column_id': ['Week', 'Pregame Offense Elo', 'Offense Score', 
                                             'Pregame Defense Elo', 'Defense Score', 'Yards to Goal']},
                             'textAlign': 'center'
+                        },
+                        # Add vertical borders between major sections
+                        {
+                            'if': {'column_id': 'Week'},
+                            'borderRight': '2px solid #dee2e6'
+                        },
+                        {
+                            'if': {'column_id': 'Offense Score'},
+                            'borderRight': '2px solid #dee2e6'
+                        },
+                        {
+                            'if': {'column_id': 'Defense Score'},
+                            'borderRight': '2px solid #dee2e6'
+                        },
+                        {
+                            'if': {'column_id': 'Yards to Goal'},
+                            'borderRight': '2px solid #dee2e6'
+                        },
+                        {
+                            'if': {'column_id': 'Win Probability Punt'},
+                            'borderRight': '2px solid #dee2e6'
                         }
                     ],
                     style_data={
@@ -372,18 +398,17 @@ layout = dbc.Container([
                             'backgroundColor': 'rgb(248, 248, 248)'
                         }
                     ],
-                    # Removed tooltip_data and tooltip_duration to disable hover interactivity
                     markdown_options={"html": True}
                 )
             ],
             fluid=True, 
             className="p-0", 
             style={
-                "borderRadius": "16px",  # Changed from 10px to match your other containers
+                "borderRadius": "16px",
                 "boxShadow": "0 0 5px rgba(0,0,0,0.1)",
                 "padding": "0px",
                 "backgroundColor": "white",
-                "overflow": "hidden"  # This ensures the corners stay rounded
+                "overflow": "hidden"
             })
         ], xs=12, className="mb-4 px-1 pb-1 pt-1", style={"overflow": "hidden"}),
     ])
