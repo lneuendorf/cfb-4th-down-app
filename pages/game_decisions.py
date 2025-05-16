@@ -418,7 +418,7 @@ style={
     "paddingLeft": CONFIG['padding-left'],
     "paddingRight": CONFIG['padding-right'],
     "fontFamily": "Arial, sans-serif",
-    "@media (max-width: 480px)": {
+    "@media (max-width: 1000px)": {
         "paddingLeft": "8px",
         "paddingRight": "8px"
     }
