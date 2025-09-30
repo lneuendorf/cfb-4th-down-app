@@ -15,7 +15,7 @@ PLOT_HEIGHT = 400
 layout = dbc.Container([
     html.Div([
         html.H5(html.B("Team Tendencies"), className="mt-4", style={'color': '#000'}),
-        html.P("Explore how different teams behave on 4th down. Plays in final 30 seconds of the game are excluded."),
+        html.P("Explore how different teams behave on 4th down."),
     ], style={"overflow": "hidden"}), 
     
     dbc.Row([
@@ -69,7 +69,7 @@ layout = dbc.Container([
                         id='start-season',
                         options=[{'label': str(s), 'value': s} for s in 
                                  sorted(df['season'].unique())],
-                        value=df['season'].min(),
+                        value=df['season'].max(),
                         placeholder="Start",
                         style={
                             "minWidth": "100px",

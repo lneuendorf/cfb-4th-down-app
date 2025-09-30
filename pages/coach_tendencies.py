@@ -17,7 +17,7 @@ MAX_SELECTED_COACHES = 10
 layout = dbc.Container([
     html.Div([
         html.H5(html.B("Coach Tendencies"), className="mt-4", style={'color': '#000'}),
-        html.P("Explore how different coaches behave on 4th down. Plays in final 30 seconds of the game are excluded."),
+        html.P("Explore how different coaches behave on 4th down."),
     ], style={"overflow": "hidden"}), 
     
     dbc.Row([
@@ -65,7 +65,7 @@ layout = dbc.Container([
                         id='start-season',
                         options=[{'label': str(s), 'value': s} for s in 
                                 sorted(df['season'].unique())],
-                        value=2013,
+                        value=df['season'].min(),
                         placeholder="Start",
                         style={
                             "minWidth": "100px", 
@@ -90,7 +90,7 @@ layout = dbc.Container([
                         id='end-season',
                         options=[{'label': str(s), 'value': s} for s in 
                                  sorted(df['season'].unique())],
-                        value=2024,
+                        value=df['season'].max(),
                         placeholder="End",
                         style={
                             "minWidth": "100px",
@@ -395,7 +395,7 @@ def update_trend_graph(selected_coach, start_season, end_season, screen_width):
         n_go_rec=('n_go_rec', 'sum'),
         fill_color=('fill_color', 'first'),
         border_color=('border_color', 'first')
-    ).reset_index()
+    ).reset_index().sort_values(['season'], ascending=True)
     
     coach_data['go_rate'] = coach_data['n_go'] / coach_data['n_go_rec']
     
@@ -407,8 +407,8 @@ def update_trend_graph(selected_coach, start_season, end_season, screen_width):
         title_fontsize = 16
     
     # Get coach colors
-    fill_color = coach_data['fill_color'].iloc[0]
-    border_color = coach_data['border_color'].iloc[0]
+    fill_color = coach_data['fill_color'].iloc[-1]
+    border_color = coach_data['border_color'].iloc[-1]
     
     fig = go.Figure()
     

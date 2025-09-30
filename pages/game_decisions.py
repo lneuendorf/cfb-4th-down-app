@@ -9,7 +9,7 @@ from config.config import CONFIG
 dash.register_page(__name__, path="/game-decisions", name="Game Decisions")
 
 # Load the data
-df = pd.read_parquet("data/plays_tendencies.parquet")
+df = pd.read_parquet("data/game_decisions.parquet")
 
 # Get unique conferences and years for dropdowns
 all_conferences = sorted(df['Offense Conference'].dropna().unique())
@@ -90,7 +90,7 @@ layout = dbc.Container([
                                 dcc.Dropdown(
                                     id='year-dropdown',
                                     options=[{'label': str(year), 'value': year} for year in all_years],
-                                    value=2024,
+                                    value=df['Season'].max(),
                                     placeholder="Select Season",
                                     style={
                                         "minWidth": "100px",
@@ -295,7 +295,7 @@ layout = dbc.Container([
                         {"name": ["Play Outcome", "Decision"], "id": "Decision"},
                         {"name": ["Play Outcome", "Play Desc"], "id": "Desc"},
                     ],
-                    page_size=10,
+                    page_size=20,
                     page_action='native',
                     sort_action='native',
                     filter_action='none',  # Disable the built-in filtering
@@ -305,7 +305,8 @@ layout = dbc.Container([
                         'height': '100%',
                         'minHeight': '400px',
                         'fontFamily': 'Arial, sans-serif',
-                        'width': '100%'
+                        'width': '100%',
+                        'minWidth': 'none',
                     },
                     style_header={
                         'backgroundColor': 'white',
@@ -404,11 +405,13 @@ layout = dbc.Container([
             fluid=True, 
             className="p-0", 
             style={
-                "borderRadius": "16px",
+                "borderRadius": "3px",
                 "boxShadow": "0 0 5px rgba(0,0,0,0.1)",
                 "padding": "0px",
                 "backgroundColor": "white",
-                "overflow": "hidden"
+                "overflow": "hidden",
+                "width": "100%",
+                "margin": "0 auto"
             })
         ], xs=12, className="mb-4 px-1 pb-1 pt-1", style={"overflow": "hidden"}),
     ])
@@ -418,7 +421,9 @@ style={
     "paddingLeft": CONFIG['padding-left'],
     "paddingRight": CONFIG['padding-right'],
     "fontFamily": "Arial, sans-serif",
-    "@media (max-width: 1000px)": {
+    "width": "100%",
+    "maxWidth": "none",
+    "@media (max-width: 480px)": {
         "paddingLeft": "8px",
         "paddingRight": "8px"
     }
