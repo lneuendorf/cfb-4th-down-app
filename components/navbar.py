@@ -6,10 +6,10 @@ navbar = dbc.NavbarSimple(
     color="white",
     dark=False,
     children=[
-        dbc.NavItem(dbc.NavLink("Teams", href="/team-tendencies")),
+        dbc.NavItem(dbc.NavLink("Teams", href="/")), #"/team-tendencies")),
         dbc.NavItem(dbc.NavLink("Coachs", href="/coach-tendencies")),
         dbc.NavItem(dbc.NavLink("Plays", href="/game-decisions")),
-        dbc.NavItem(dbc.NavLink("About", href="/")),
+        dbc.NavItem(dbc.NavLink("About", href="/about")),
     ],
     sticky="top",
     style={
