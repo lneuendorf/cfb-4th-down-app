@@ -17,8 +17,7 @@ layout = dbc.Container([
         html.P(
             "This section will host various analysis articles related to 4th down decisions, "
             "team tendencies, and model insights. Stay tuned for in-depth write-ups and visualizations "
-            "that explore different facets of college football strategy.",
-            style={"fontSize": "18px", "lineHeight": "1.6"}
+            "that explore different facets of college football strategy."
         ),
     ], className="mb-5"),
     
