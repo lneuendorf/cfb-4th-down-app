@@ -10,7 +10,8 @@ app = Dash(
     __name__,
     use_pages=True,
     suppress_callback_exceptions=True,
-    external_stylesheets=[dbc.themes.ZEPHYR],  
+    external_stylesheets=[dbc.themes.ZEPHYR],
+    update_title=None,
 )
 
 server = app.server
