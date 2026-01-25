@@ -6,7 +6,7 @@ import numpy as np
 import plotly.graph_objects as go
 from config.config import CONFIG
 
-dash.register_page(__name__, path="/", name="Team Tendencies")
+dash.register_page(__name__, path="/team-tendencies", name="Team Tendencies")
 
 df = pd.read_parquet("data/team_tendencies.parquet")
 

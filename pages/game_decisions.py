@@ -15,260 +15,270 @@ df = pd.read_parquet("data/game_decisions.parquet")
 all_conferences = sorted(df['Offense Conference'].dropna().unique())
 all_years = sorted(df['Season'].unique(), reverse=True)
 
-layout = dbc.Container([
-    html.Div([
-        html.H5(html.B("Game Decisions"), className="mt-4", style={'color': '#000'}),
-        html.P("Explore and evaluate in-game 4th down decisions."),
-    ], style={"overflow": "hidden"}),
-    html.P("Column Descriptions:"),
-    html.Ul([
-        html.Li([
-            html.I("ELO:"),
-            " Pregame team Elo rating, representing estimated team strength."
-        ]),
-        html.Li([
-            html.I("YTG (Yards to Goal):"),
-            " Distance from the line of scrimmage to the end zone."
-        ]),
-    ]),
-    
+layout = html.Div([
     dbc.Container([
-        # First row with Conference and Season dropdowns
-        dbc.Row(
-            dbc.Col(
-                dbc.Row([
-                    # Conference Dropdown - make width responsive
-                    dbc.Col(
-                        dbc.InputGroup(
-                            [
-                                dbc.InputGroupText(
-                                    "Conference:",
-                                    style={
-                                        "height": "36px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                        "fontSize": "14px",
-                                        "whiteSpace": "nowrap",
-                                    }
-                                ),
-                                dcc.Dropdown(
-                                    id='conference-dropdown',
-                                    options=[{'label': conf, 'value': conf} for conf in all_conferences],
-                                    value='Big Ten',
-                                    placeholder="Select Conference",
-                                    style={
-                                        "minWidth": "150px",  # Reduced min width
-                                        "width": "100%",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                    }
-                                ),
-                            ],
-                            className="me-2",
-                            style={"flexWrap": "nowrap"}
-                        ),
-                        width="auto",
-                        className="pe-1"
-                    ),
-                    
-                    # Season Dropdown
-                    dbc.Col(
-                        dbc.InputGroup(
-                            [
-                                dbc.InputGroupText(
-                                    "Season:", 
-                                    style={
-                                        "height": "36px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                        "whiteSpace": "nowrap",
-                                        "fontSize": "14px"
-                                    }
-                                ),
-                                dcc.Dropdown(
-                                    id='year-dropdown',
-                                    options=[{'label': str(year), 'value': year} for year in all_years],
-                                    value=df['Season'].max(),
-                                    placeholder="Select Season",
-                                    style={
-                                        "minWidth": "100px",
-                                        "width": "100%",  # Make it fill available space
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                    }
-                                ),
-                            ],
-                            style={"flexWrap": "nowrap"},
-                        ),
-                        width="auto",
-                        className="ps-1"
-                    ),
-                ], 
-                justify="center",
-                className="g-1"  # Reduce gap further
-                ),
-                className="mb-2"
-            )
-        ),
+        html.Div([
+            html.H5(html.B("Game Decisions"), className="mt-4", style={'color': '#000'}),
+            html.P("Explore and evaluate in-game 4th down decisions."),
+        ], style={"overflow": "hidden"}),
+        html.P("Column Descriptions:"),
+        html.Ul([
+            html.Li([
+                html.I("ELO:"),
+                " Pregame team Elo rating, representing estimated team strength."
+            ]),
+            html.Li([
+                html.I("YTG (Yards to Goal):"),
+                " Distance from the line of scrimmage to the end zone."
+            ]),
+        ]),
         
-        # Second row with the other dropdowns
-        dbc.Row(
-            dbc.Col(
-                dbc.Row([
-                    # Offense Team Dropdown - make more compact
-                    dbc.Col(
-                        dbc.InputGroup(
-                            [
-                                dbc.InputGroupText(
-                                    "Offense:",
-                                    style={
-                                        "height": "36px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                        "whiteSpace": "nowrap",
-                                        "padding": "0 8px",
-                                        "fontSize": "14px"
-                                    }
-                                ),
-                                dcc.Dropdown(
-                                    id='offense-team-dropdown',
-                                    placeholder="Team",
-                                    style={
-                                        "minWidth": "150px",
-                                        "width": "100%",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                    },
-                                    multi=False,
-                                    value='Wisconsin',
-                                ),
-                            ],
-                            className="me-1",  # Reduced margin
-                            style={"flexWrap": "nowrap"}
+        dbc.Container([
+            # First row with Conference and Season dropdowns
+            dbc.Row(
+                dbc.Col(
+                    dbc.Row([
+                        # Conference Dropdown - make width responsive
+                        dbc.Col(
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupText(
+                                        "Conference:",
+                                        style={
+                                            "height": "36px",
+                                            "border-top-right-radius": "0",
+                                            "border-bottom-right-radius": "0",
+                                            "fontSize": "14px",
+                                            "whiteSpace": "nowrap",
+                                        }
+                                    ),
+                                    dcc.Dropdown(
+                                        id='conference-dropdown',
+                                        options=[{'label': conf, 'value': conf} for conf in all_conferences],
+                                        value='Big Ten',
+                                        placeholder="Select Conference",
+                                        style={
+                                            "minWidth": "150px",  # Reduced min width
+                                            "width": "100%",
+                                            "height": "36px",
+                                            "border-top-left-radius": "0",
+                                            "border-bottom-left-radius": "0",
+                                            "fontSize": "13px",
+                                        }
+                                    ),
+                                ],
+                                className="me-2",
+                                style={"flexWrap": "nowrap"}
+                            ),
+                            width="auto",
+                            className="pe-1"
                         ),
-                        width="auto",
-                        className="pe-1"
-                    ),
-                    
-                    # Week Dropdown - make more compact
-                    dbc.Col(
-                        dbc.InputGroup(
-                            [
-                                dbc.InputGroupText(
-                                    "Week:", 
-                                    style={
-                                        "height": "36px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                        "padding": "0 8px",
-                                        "whiteSpace": "nowrap",
-                                        "fontSize": "14px"
-                                    }
-                                ),
-                                dcc.Dropdown(
-                                    id='week-dropdown',
-                                    placeholder="Week",
-                                    style={
-                                        "minWidth": "70px",  # Reduced
-                                        "width": "100%",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                    },
-                                    multi=False
-                                ),
-                            ],
-                            className="me-1",
-                            style={"flexWrap": "nowrap"},
+                        
+                        # Season Dropdown
+                        dbc.Col(
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupText(
+                                        "Season:", 
+                                        style={
+                                            "height": "36px",
+                                            "border-top-right-radius": "0",
+                                            "border-bottom-right-radius": "0",
+                                            "whiteSpace": "nowrap",
+                                            "fontSize": "14px"
+                                        }
+                                    ),
+                                    dcc.Dropdown(
+                                        id='year-dropdown',
+                                        options=[{'label': str(year), 'value': year} for year in all_years],
+                                        value=df['Season'].max(),
+                                        placeholder="Select Season",
+                                        style={
+                                            "minWidth": "100px",
+                                            "width": "100%",  # Make it fill available space
+                                            "height": "36px",
+                                            "border-top-left-radius": "0",
+                                            "border-bottom-left-radius": "0",
+                                            "fontSize": "13px",
+                                        }
+                                    ),
+                                ],
+                                style={"flexWrap": "nowrap"},
+                            ),
+                            width="auto",
+                            className="ps-1"
                         ),
-                        width="auto",
-                        className="px-1"
+                    ], 
+                    justify="center",
+                    className="g-1"  # Reduce gap further
                     ),
-                    
-                    # Recommendation Dropdown - make more compact
-                    dbc.Col(
-                        dbc.InputGroup(
-                            [
-                                dbc.InputGroupText(
-                                    "Recommendation:",
-                                    style={
-                                        "height": "36px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                        "whiteSpace": "nowrap",
-                                        "padding": "0 6px",
-                                        "fontSize": "14px"
-                                    },
-                                ),
-                                dcc.Dropdown(
-                                    id='recommendation-dropdown',
-                                    placeholder="Select",
-                                    style={
-                                        "minWidth": "100px",  # Reduced
-                                        "width": "100%",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                    },
-                                ),
-                            ],
-                            className="me-1",
-                            style={"flexWrap": "nowrap"}
+                    className="mb-2"
+                )
+            ),
+            
+            # Second row with the other dropdowns
+            dbc.Row(
+                dbc.Col(
+                    dbc.Row([
+                        # Offense Team Dropdown - make more compact
+                        dbc.Col(
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupText(
+                                        "Offense:",
+                                        style={
+                                            "height": "36px",
+                                            "border-top-right-radius": "0",
+                                            "border-bottom-right-radius": "0",
+                                            "whiteSpace": "nowrap",
+                                            "padding": "0 8px",
+                                            "fontSize": "14px"
+                                        }
+                                    ),
+                                    dcc.Dropdown(
+                                        id='offense-team-dropdown',
+                                        placeholder="Team",
+                                        style={
+                                            "minWidth": "150px",
+                                            "width": "100%",
+                                            "height": "36px",
+                                            "border-top-left-radius": "0",
+                                            "border-bottom-left-radius": "0",
+                                            "fontSize": "13px",
+                                        },
+                                        multi=False,
+                                        value='Wisconsin',
+                                    ),
+                                ],
+                                className="me-1",  # Reduced margin
+                                style={"flexWrap": "nowrap"}
+                            ),
+                            width="auto",
+                            className="pe-1"
                         ),
-                        width="auto",
-                        className="pe-1"
-                    ),
-                    
-                    # Decision Dropdown - make more compact
-                    dbc.Col(
-                        dbc.InputGroup(
-                            [
-                                dbc.InputGroupText(
-                                    "Decision:",
-                                    style={
-                                        "height": "36px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                        "padding": "0 6px",
-                                        "whiteSpace": "nowrap",
-                                        "fontSize": "14px"
-                                    }
-                                ),
-                                dcc.Dropdown(
-                                    id='decision-dropdown',
-                                    placeholder="Select",
-                                    style={
-                                        "minWidth": "100px",  # Reduced
-                                        "width": "100%",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                    },
-                                    multi=False
-                                ),
-                            ],
-                            style={"flexWrap": "nowrap"},
+                        
+                        # Week Dropdown - make more compact
+                        dbc.Col(
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupText(
+                                        "Week:", 
+                                        style={
+                                            "height": "36px",
+                                            "border-top-right-radius": "0",
+                                            "border-bottom-right-radius": "0",
+                                            "padding": "0 8px",
+                                            "whiteSpace": "nowrap",
+                                            "fontSize": "14px"
+                                        }
+                                    ),
+                                    dcc.Dropdown(
+                                        id='week-dropdown',
+                                        placeholder="Week",
+                                        style={
+                                            "minWidth": "70px",  # Reduced
+                                            "width": "100%",
+                                            "height": "36px",
+                                            "border-top-left-radius": "0",
+                                            "border-bottom-left-radius": "0",
+                                            "fontSize": "13px",
+                                        },
+                                        multi=False
+                                    ),
+                                ],
+                                className="me-1",
+                                style={"flexWrap": "nowrap"},
+                            ),
+                            width="auto",
+                            className="px-1"
                         ),
-                        width="auto",
-                        className="ps-1"
+                        
+                        # Recommendation Dropdown - make more compact
+                        dbc.Col(
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupText(
+                                        "Recommendation:",
+                                        style={
+                                            "height": "36px",
+                                            "border-top-right-radius": "0",
+                                            "border-bottom-right-radius": "0",
+                                            "whiteSpace": "nowrap",
+                                            "padding": "0 6px",
+                                            "fontSize": "14px"
+                                        },
+                                    ),
+                                    dcc.Dropdown(
+                                        id='recommendation-dropdown',
+                                        placeholder="Select",
+                                        style={
+                                            "minWidth": "100px",  # Reduced
+                                            "width": "100%",
+                                            "height": "36px",
+                                            "border-top-left-radius": "0",
+                                            "border-bottom-left-radius": "0",
+                                            "fontSize": "13px",
+                                        },
+                                    ),
+                                ],
+                                className="me-1",
+                                style={"flexWrap": "nowrap"}
+                            ),
+                            width="auto",
+                            className="pe-1"
+                        ),
+                        
+                        # Decision Dropdown - make more compact
+                        dbc.Col(
+                            dbc.InputGroup(
+                                [
+                                    dbc.InputGroupText(
+                                        "Decision:",
+                                        style={
+                                            "height": "36px",
+                                            "border-top-right-radius": "0",
+                                            "border-bottom-right-radius": "0",
+                                            "padding": "0 6px",
+                                            "whiteSpace": "nowrap",
+                                            "fontSize": "14px"
+                                        }
+                                    ),
+                                    dcc.Dropdown(
+                                        id='decision-dropdown',
+                                        placeholder="Select",
+                                        style={
+                                            "minWidth": "100px",  # Reduced
+                                            "width": "100%",
+                                            "height": "36px",
+                                            "border-top-left-radius": "0",
+                                            "border-bottom-left-radius": "0",
+                                            "fontSize": "13px",
+                                        },
+                                        multi=False
+                                    ),
+                                ],
+                                style={"flexWrap": "nowrap"},
+                            ),
+                            width="auto",
+                            className="ps-1"
+                        ),
+                    ], 
+                    justify="center",
+                    className="g-1"  # Minimal gap
                     ),
-                ], 
-                justify="center",
-                className="g-1"  # Minimal gap
-                ),
-                className="mb-4"
+                    className="mb-4"
+                )
             )
-        )
-    ], fluid=True, className="px-0"),
+        ], fluid=True, className="px-0"),
+    ],
+    fluid=True,
+    style={
+        "padding-left": CONFIG['padding-left'],
+        "padding-right": CONFIG['padding-right'],
+        "fontFamily": "Arial, sans-serif",
+    },
+    className="responsive-container"
+    ),
     
     dbc.Row([
         dbc.Col([
@@ -413,10 +423,9 @@ layout = dbc.Container([
                 "width": "100%",
                 "margin": "0 auto"
             })
-        ], xs=12, className="mb-4 px-1 pb-1 pt-1", style={"overflow": "hidden"}),
-    ])
+        ], xs=12, className="mb-4 px-0", style={"overflow": "hidden"}),
+    ], style={"margin": "0", "padding": "0", "width": "100%"})
 ], 
-fluid=True,
 style={
     "paddingLeft": CONFIG['padding-left'],
     "paddingRight": CONFIG['padding-right'],

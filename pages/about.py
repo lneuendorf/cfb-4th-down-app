@@ -3,7 +3,7 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 from config.config import CONFIG
 
-dash.register_page(__name__, path="/about", name="About")
+dash.register_page(__name__, path="/", name="About")
 
 layout = dbc.Container([
     html.Div([
@@ -12,95 +12,6 @@ layout = dbc.Container([
 
     # Grey horizontal line
     html.Hr(style={"borderTop": "2px solid grey", "margin": "1rem 0"}, className="mb-4"),
-    
-    # Card Grid
-    dbc.Row([
-        # Article 1: About the App
-        dbc.Col([
-            dbc.Card(
-                [
-                    dcc.Link(
-                        html.Img(
-                            src="/assets/writeup/4th_down.jpg",
-                            className="card-img-top",
-                            style={
-                                "height": "250px", 
-                                "objectFit": "cover",
-                                "cursor": "pointer",
-                                "borderRadius": "16px 16px 0 0"
-                            }
-                        ),
-                        href="/about-app",
-                        style={"textDecoration": "none"}
-                    ),
-                    dbc.CardBody([
-                        dcc.Link(
-                            html.H4("About the App", className="card-title"),
-                            href="/about-app",
-                            style={"textDecoration": "none", "color": "inherit"}
-                        ),
-                        html.P(
-                            "Learn about 4th down decisions in college football and how this app helps analyze team strategies.",
-                            className="card-text"
-                        ),
-                    ]),
-                ],
-                className="shadow-sm h-100",
-                style={
-                    "borderRadius": "16px",
-                    "border": "none",
-                    "transition": "transform 0.2s",
-                    ":hover": {
-                        "transform": "scale(1.02)",
-                        "boxShadow": "0 5px 15px rgba(0,0,0,0.1)"
-                    }
-                }
-            )
-        ], xs=12, md=6, className="mb-4"),
-        
-        # Article 2: About the Models
-        dbc.Col([
-            dbc.Card(
-                [
-                    dcc.Link(
-                        html.Img(
-                            src="/assets/writeup/wisco_elo.png",
-                            className="card-img-top",
-                            style={
-                                "height": "250px", 
-                                "objectFit": "cover",
-                                "cursor": "pointer",
-                                "borderRadius": "16px 16px 0 0"
-                            }
-                        ),
-                        href="/about-models",
-                        style={"textDecoration": "none"}
-                    ),
-                    dbc.CardBody([
-                        dcc.Link(
-                            html.H4("About the Models", className="card-title"),
-                            href="/about-models",
-                            style={"textDecoration": "none", "color": "inherit"}
-                        ),
-                        html.P(
-                            "Dive into the technical details of the five models powering the recommendations.",
-                            className="card-text"
-                        ),
-                    ]),
-                ],
-                className="shadow-sm h-100",
-                style={
-                    "borderRadius": "16px",
-                    "border": "none",
-                    "transition": "transform 0.2s",
-                    ":hover": {
-                        "transform": "scale(1.02)",
-                        "boxShadow": "0 5px 15px rgba(0,0,0,0.1)"
-                    }
-                }
-            )
-        ], xs=12, md=6, className="mb-4"),
-    ]),
 ], 
 fluid=True,
 style={
