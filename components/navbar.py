@@ -14,7 +14,7 @@ navbar = dbc.NavbarSimple(
     ],
     sticky="top",
     style={
-        "boxShadow": "0 1px 5px rgba(0,0,0,0.1)", 
+        "boxShadow": "0 1px 5px rgba(0,0,0,0.1)",
     },
 )
 
@@ -32,7 +32,10 @@ navbar = dbc.NavbarSimple(
 # )
 
 # Combine both components in a container
-header = html.Div([
-    navbar,
-    # disclaimer_bar
-], style={"position": "sticky", "top": 0, "zIndex": 1000})
+header = html.Div(
+    [
+        navbar,
+        # disclaimer_bar
+    ],
+    style={"position": "sticky", "top": 0, "zIndex": 1000},
+)
