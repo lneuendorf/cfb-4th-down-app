@@ -5,3 +5,5 @@ __pycache__/
 *.ipynb
 todo.txt
 deploy.sh
+.pre-commit-config.yaml
+pyproject.toml
