@@ -13,6 +13,7 @@ df = pd.read_parquet("data/coach_tendencies.parquet")
 all_coaches = sorted(df["coach_name"].unique())
 default_coaches = [
     "Lincoln Riley",
+    "Marcus Freeman",
     "Ryan Day",
     "Nick Saban",
     "Kirby Smart",
@@ -159,11 +160,64 @@ layout = dbc.Container(
                 dbc.Col(
                     [
                         dbc.Container(
-                            dcc.Graph(
-                                id="coach-tendency-graph",
-                                config={"displayModeBar": False, "responsive": True},
-                                style={"height": "100%", "min-height": "400px"},
-                            ),
+                            [
+                                # Container for the graph with info icon
+                                html.Div(
+                                    [
+                                        # Info icon positioned absolutely
+                                        html.Div(
+                                            html.Img(
+                                                src="/assets/logos/more_info.png",
+                                                style={
+                                                    "width": "15px",
+                                                    "height": "15px",
+                                                    "cursor": "pointer",
+                                                },
+                                                id="info-icon4",
+                                                className="info-icon",
+                                            ),
+                                            style={
+                                                "position": "absolute",
+                                                "top": "10px",
+                                                "right": "0px",
+                                                "width": "24px",
+                                                "height": "24px",
+                                                "display": "flex",
+                                                "alignItems": "center",
+                                                "justifyContent": "center",
+                                                "zIndex": "100",
+                                            },
+                                        ),
+                                        # The graph
+                                        dcc.Graph(
+                                            id="coach-tendency-graph",
+                                            config={
+                                                "displayModeBar": False,
+                                                "responsive": True,
+                                            },
+                                            style={
+                                                "height": "100%",
+                                                "min-height": "400px",
+                                            },
+                                        ),
+                                    ],
+                                    style={"position": "relative"},
+                                ),
+                                # Tooltip that appears on hover
+                                dbc.Tooltip(
+                                    "This chart shows the average go-for-it rate when recommended for the selected coach across the chosen date range, "
+                                    "summarizing how often the coach followed model recommendations. Higher rates indicate a greater tendency to go for "
+                                    "it when analytics suggest it is optimal.",
+                                    target="info-icon4",
+                                    placement="left",
+                                    style={
+                                        "maxWidth": "300px",
+                                        "fontSize": "13px",
+                                        "zIndex": "1000",
+                                        "whiteSpace": "pre-line",
+                                    },
+                                ),
+                            ],
                             className="bg-white",
                             style={
                                 "padding-left": "20px",
@@ -181,11 +235,64 @@ layout = dbc.Container(
                 dbc.Col(
                     [
                         dbc.Container(
-                            dcc.Graph(
-                                id="coach-wp-lost-graph",
-                                config={"displayModeBar": False, "responsive": True},
-                                style={"height": "100%", "min-height": "400px"},
-                            ),
+                            [
+                                # Container for the graph with info icon
+                                html.Div(
+                                    [
+                                        # Info icon positioned absolutely
+                                        html.Div(
+                                            html.Img(
+                                                src="/assets/logos/more_info.png",
+                                                style={
+                                                    "width": "15px",
+                                                    "height": "15px",
+                                                    "cursor": "pointer",
+                                                },
+                                                id="info-icon5",
+                                                className="info-icon",
+                                            ),
+                                            style={
+                                                "position": "absolute",
+                                                "top": "10px",
+                                                "right": "0px",
+                                                "width": "24px",
+                                                "height": "24px",
+                                                "display": "flex",
+                                                "alignItems": "center",
+                                                "justifyContent": "center",
+                                                "zIndex": "100",
+                                            },
+                                        ),
+                                        # The graph
+                                        dcc.Graph(
+                                            id="coach-wp-lost-graph",
+                                            config={
+                                                "displayModeBar": False,
+                                                "responsive": True,
+                                            },
+                                            style={
+                                                "height": "100%",
+                                                "min-height": "400px",
+                                            },
+                                        ),
+                                    ],
+                                    style={"position": "relative"},
+                                ),
+                                # Tooltip that appears on hover
+                                dbc.Tooltip(
+                                    "This chart summarizes the average win probability lost per season for the selected coach over the chosen date range. "
+                                    "Win probability is lost when a coach opts to punt or attempt a field goal despite going for it being recommended. "
+                                    "Higher values indicate a greater expected cost from conservative fourth down decisions across the selected seasons.",
+                                    target="info-icon5",
+                                    placement="left",
+                                    style={
+                                        "maxWidth": "300px",
+                                        "fontSize": "13px",
+                                        "zIndex": "1000",
+                                        "whiteSpace": "pre-line",
+                                    },
+                                ),
+                            ],
                             className="bg-white",
                             style={
                                 "padding-left": "20px",
@@ -263,11 +370,64 @@ layout = dbc.Container(
                 dbc.Col(
                     [
                         dbc.Container(
-                            dcc.Graph(
-                                id="coach-trend-graph",
-                                config={"displayModeBar": False, "responsive": True},
-                                style={"height": "100%", "min-height": "400px"},
-                            ),
+                            [
+                                # Container for the graph with info icon
+                                html.Div(
+                                    [
+                                        # Info icon positioned absolutely
+                                        html.Div(
+                                            html.Img(
+                                                src="/assets/logos/more_info.png",
+                                                style={
+                                                    "width": "15px",
+                                                    "height": "15px",
+                                                    "cursor": "pointer",
+                                                },
+                                                id="info-icon6",
+                                                className="info-icon",
+                                            ),
+                                            style={
+                                                "position": "absolute",
+                                                "top": "10px",
+                                                "right": "0px",
+                                                "width": "24px",
+                                                "height": "24px",
+                                                "display": "flex",
+                                                "alignItems": "center",
+                                                "justifyContent": "center",
+                                                "zIndex": "100",
+                                            },
+                                        ),
+                                        # The graph
+                                        dcc.Graph(
+                                            id="coach-trend-graph",
+                                            config={
+                                                "displayModeBar": False,
+                                                "responsive": True,
+                                            },
+                                            style={
+                                                "height": "100%",
+                                                "min-height": "400px",
+                                            },
+                                        ),
+                                    ],
+                                    style={"position": "relative"},
+                                ),
+                                # Tooltip that appears on hover
+                                dbc.Tooltip(
+                                    "This chart shows how often a coach follows go-for-it recommendations on fourth down across seasons. "
+                                    "Trends can reveal shifts in a coach’s decision-making philosophy, adaptation to analytics, or changes "
+                                    "in situational context as teams and roles evolve over time.",
+                                    target="info-icon6",
+                                    placement="left",
+                                    style={
+                                        "maxWidth": "300px",
+                                        "fontSize": "13px",
+                                        "zIndex": "1000",
+                                        "whiteSpace": "pre-line",
+                                    },
+                                ),
+                            ],
                             className="bg-white",
                             style={
                                 "padding-left": "20px",
