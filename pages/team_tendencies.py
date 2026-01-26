@@ -160,21 +160,72 @@ layout = dbc.Container(
                 dbc.Col(
                     [
                         dbc.Container(
-                            dcc.Graph(
-                                id="team-tendency-graph",
-                                config={"displayModeBar": False, "responsive": True},
-                                style={
-                                    "height": "100%",
-                                    "min-height": "400px",
-                                },  # Add min-height
-                            ),
+                            [
+                                # Container for the graph with info icon
+                                html.Div(
+                                    [
+                                        # Info icon positioned absolutely
+                                        html.Div(
+                                            html.Img(
+                                                src="/assets/logos/more_info.png",
+                                                style={
+                                                    "width": "15px",
+                                                    "height": "15px",
+                                                    "cursor": "pointer",
+                                                },
+                                                id="info-icon",
+                                                className="info-icon",
+                                            ),
+                                            style={
+                                                "position": "absolute",
+                                                "top": "10px",
+                                                "right": "0px",
+                                                "width": "24px",
+                                                "height": "24px",
+                                                "display": "flex",
+                                                "alignItems": "center",
+                                                "justifyContent": "center",
+                                                "zIndex": "100",
+                                            },
+                                        ),
+                                        # The graph
+                                        dcc.Graph(
+                                            id="team-tendency-graph",
+                                            config={
+                                                "displayModeBar": False,
+                                                "responsive": True,
+                                            },
+                                            style={
+                                                "height": "100%",
+                                                "min-height": "400px",
+                                            },
+                                        ),
+                                    ],
+                                    style={"position": "relative"},
+                                ),
+                                # Tooltip that appears on hover
+                                dbc.Tooltip(
+                                    "A higher value indicates that a team frequently follows recommendations on fourth down. Lower "
+                                    "values suggest a more conservative approach, even when going for it would increase expected win "
+                                    "probability. This metric does not account for situations where punting or kicking was recommended.",
+                                    target="info-icon",
+                                    placement="left",
+                                    style={
+                                        "maxWidth": "300px",
+                                        "fontSize": "13px",
+                                        "zIndex": "1000",
+                                        "whiteSpace": "pre-line",
+                                    },
+                                ),
+                            ],
                             className="bg-white",
                             style={
                                 "padding-left": "20px",
                                 "border-radius": "16px",
                                 "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
                                 "height": "100%",
-                                "min-height": "400px",  # Add min-height to container
+                                "min-height": "400px",
+                                "position": "relative",
                             },
                         )
                     ],
@@ -185,21 +236,72 @@ layout = dbc.Container(
                 dbc.Col(
                     [
                         dbc.Container(
-                            dcc.Graph(
-                                id="wp-lost-graph",
-                                config={"displayModeBar": False, "responsive": True},
-                                style={
-                                    "height": "100%",
-                                    "min-height": "400px",
-                                },  # Add min-height
-                            ),
+                            [
+                                # Container for the graph with info icon
+                                html.Div(
+                                    [
+                                        # Info icon positioned absolutely
+                                        html.Div(
+                                            html.Img(
+                                                src="/assets/logos/more_info.png",
+                                                style={
+                                                    "width": "15px",
+                                                    "height": "15px",
+                                                    "cursor": "pointer",
+                                                },
+                                                id="info-icon2",
+                                                className="info-icon",
+                                            ),
+                                            style={
+                                                "position": "absolute",
+                                                "top": "10px",
+                                                "right": "0px",
+                                                "width": "24px",
+                                                "height": "24px",
+                                                "display": "flex",
+                                                "alignItems": "center",
+                                                "justifyContent": "center",
+                                                "zIndex": "100",
+                                            },
+                                        ),
+                                        # The graph
+                                        dcc.Graph(
+                                            id="wp-lost-graph",
+                                            config={
+                                                "displayModeBar": False,
+                                                "responsive": True,
+                                            },
+                                            style={
+                                                "height": "100%",
+                                                "min-height": "400px",
+                                            },
+                                        ),
+                                    ],
+                                    style={"position": "relative"},
+                                ),
+                                # Tooltip that appears on hover
+                                dbc.Tooltip(
+                                    "This metric estimates how much win probability a team gives up over a season by choosing not to "
+                                    "go for it on fourth down when the model recommends doing so. Higher values indicate a greater "
+                                    "cumulative cost of conservative decisions, while lower values suggest teams are better at capitalizing "
+                                    "on high-leverage go-for-it opportunities.",
+                                    target="info-icon2",
+                                    placement="left",
+                                    style={
+                                        "maxWidth": "300px",
+                                        "fontSize": "13px",
+                                        "zIndex": "1000",
+                                        "whiteSpace": "pre-line",
+                                    },
+                                ),
+                            ],
                             className="bg-white",
                             style={
                                 "padding-left": "20px",
                                 "border-radius": "16px",
                                 "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
                                 "height": "100%",
-                                "min-height": "400px",  # Add min-height to container
+                                "min-height": "400px",
                             },
                         )
                     ],
@@ -269,11 +371,64 @@ layout = dbc.Container(
                 dbc.Col(
                     [
                         dbc.Container(
-                            dcc.Graph(
-                                id="team-trend-graph",
-                                config={"displayModeBar": False, "responsive": True},
-                                style={"height": "100%", "min-height": "400px"},
-                            ),
+                            [
+                                # Container for the graph with info icon
+                                html.Div(
+                                    [
+                                        # Info icon positioned absolutely
+                                        html.Div(
+                                            html.Img(
+                                                src="/assets/logos/more_info.png",
+                                                style={
+                                                    "width": "15px",
+                                                    "height": "15px",
+                                                    "cursor": "pointer",
+                                                },
+                                                id="info-icon3",
+                                                className="info-icon",
+                                            ),
+                                            style={
+                                                "position": "absolute",
+                                                "top": "10px",
+                                                "right": "0px",
+                                                "width": "24px",
+                                                "height": "24px",
+                                                "display": "flex",
+                                                "alignItems": "center",
+                                                "justifyContent": "center",
+                                                "zIndex": "100",
+                                            },
+                                        ),
+                                        # The graph
+                                        dcc.Graph(
+                                            id="team-trend-graph",
+                                            config={
+                                                "displayModeBar": False,
+                                                "responsive": True,
+                                            },
+                                            style={
+                                                "height": "100%",
+                                                "min-height": "400px",
+                                            },
+                                        ),
+                                    ],
+                                    style={"position": "relative"},
+                                ),
+                                # Tooltip that appears on hover
+                                dbc.Tooltip(
+                                    "This chart tracks how often a team follows go-for-it recommendations on fourth down across seasons. "
+                                    "Changes over time can reflect shifts in coaching philosophy, analytical adoption, league-wide "
+                                    "trends toward more aggressive decision-making, or season-to-season randomness.",
+                                    target="info-icon3",
+                                    placement="left",
+                                    style={
+                                        "maxWidth": "300px",
+                                        "fontSize": "13px",
+                                        "zIndex": "1000",
+                                        "whiteSpace": "pre-line",
+                                    },
+                                ),
+                            ],
                             className="bg-white",
                             style={
                                 "padding-left": "20px",
@@ -397,14 +552,14 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Percent of time team went for it when recommended</span>",
         yaxis=dict(
-            fixedrange=True,  # Prevents zoom/pan on x-axis
+            fixedrange=True,
             automargin=True,
             categoryorder="array",
             categoryarray=grouped_sorted1["offense_team"].tolist(),
             showticklabels=False,
         ),
         xaxis=dict(
-            fixedrange=True,  # Prevents zoom/pan on x-axis
+            fixedrange=True,
             tickformat=".0%",
             range=[0, max_x1 * x_range_multiplier],
         ),
@@ -417,17 +572,6 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         autosize=True,
         dragmode=False,
     )
-
-    # Add annotation for sample size
-    # fig1.add_annotation(
-    #     x=0.5, y=1/len(grouped_sorted1) * -2,
-    #     xref="paper", yref="paper",
-    #     text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of plays where going for it was recommended)</span>",
-    #     showarrow=False,
-    #     font=dict(size=9),
-    #     xanchor="center",
-    #     yanchor="middle",
-    # )
 
     ### PLOT 2
     grouped_sorted2 = grouped.sort_values("avg_wp_lost_per_season", ascending=True)
@@ -483,14 +627,14 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Avg WP Lost per Season (percentage points)</span>",
         yaxis=dict(
-            fixedrange=True,  # Prevents zoom/pan on x-axis
+            fixedrange=True,
             automargin=True,
             categoryorder="array",
             categoryarray=grouped_sorted2["offense_team"].tolist(),
             showticklabels=False,
         ),
         xaxis=dict(
-            fixedrange=True,  # Prevents zoom/pan on x-axis
+            fixedrange=True,
             tickformat=".0%",
             range=[0, max_x2 * x_range_multiplier],
         ),
@@ -502,16 +646,6 @@ def update_graphs(start_season, end_season, selected_conference, screen_width):
         bargroupgap=0.05,
         dragmode=False,
     )
-
-    # fig2.add_annotation(
-    #     x=0.5, y=1/len(grouped_sorted1) * -2,
-    #     xref="paper", yref="paper",
-    #     text=f"<span style='font-size:{axis_subtext_fontsize}px'>(n = number of seasons across selected years)</span>",
-    #     showarrow=False,
-    #     font=dict(size=9),
-    #     xanchor="center",
-    #     yanchor="middle",
-    # )
 
     return fig1, fig2
 
