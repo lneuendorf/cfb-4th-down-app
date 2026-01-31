@@ -188,6 +188,8 @@ layout = dbc.Container(
                         "max-width": "600px",
                         "height": "auto",
                         "display": "block",
+                        "margin": "0 auto",
+                        "box-sizing": "border-box",
                         "padding-left": CONFIG["padding-left"],
                         "padding-right": CONFIG["padding-right"],
                     },
