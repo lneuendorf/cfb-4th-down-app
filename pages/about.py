@@ -43,8 +43,17 @@ layout = dbc.Container(
         ),
         html.Img(
             src="/assets/images/architecture.png",
-            style={"width": "100%", "height": "auto"},
-            className="mb-4",
+            style={
+                "width": "100%",
+                "max-width": "900px",
+                "height": "auto",
+                "display": "block",
+                "margin": "0 auto",
+                "box-sizing": "border-box",
+                "padding-left": CONFIG["padding-left"],
+                "padding-right": CONFIG["padding-right"],
+            },
+            className="my-4",
         ),
         html.H3(html.B("Site Overview"), className="mt-4", style={"color": "#000"}),
         html.P(
