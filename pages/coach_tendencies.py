@@ -345,7 +345,7 @@ layout = dbc.Container(
                                         for coach in all_coaches
                                     ],
                                     placeholder="Select Coach...",
-                                    value="Lincoln Riley",
+                                    value="Lane Kiffin",
                                     style={
                                         "minWidth": "200px",
                                         "height": "36px",

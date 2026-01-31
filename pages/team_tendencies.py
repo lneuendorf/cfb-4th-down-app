@@ -346,7 +346,7 @@ layout = dbc.Container(
                                         for team in sorted(df["offense_team"].unique())
                                     ],
                                     placeholder="Select Team",
-                                    value="LSU",
+                                    value="Ohio",
                                     style={
                                         "minWidth": "200px",
                                         "height": "36px",
