@@ -22,7 +22,7 @@ layout = dbc.Container(
         ),
         html.P(
             html.Em(
-                "Did teams make the right call on fourth down? A data-driven look at decision-making through the lense of win probability."
+                "Did teams make the right call on fourth down? A data-driven look at decision-making through the lens of win probability."
             ),
             className="mb-4",
         ),
@@ -63,7 +63,7 @@ layout = dbc.Container(
             [
                 html.B("Key factors considered by the model:"),
                 html.Br(),
-                "The engine uses a variety of contextual and statistical inputs to estimate outcomes and win probability.",
+                "The engine utilizes a range of contextual and statistical inputs to estimate outcomes and determine win probability.",
             ]
         ),
         html.Ul(
@@ -271,7 +271,7 @@ layout = dbc.Container(
                     target="_blank",
                     style={"text-decoration": "none"},
                 ),
-                " API. This project is not affiliated with the NCAA or any athletic department.",
+                " API.",
             ]
         ),
         html.P(

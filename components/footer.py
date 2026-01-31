@@ -8,20 +8,20 @@ footer = html.Footer(
             [
                 html.A(
                     html.Img(
+                        src="/assets/logos/x.png",
+                        style={"height": "24px", "margin": "0 10px"},
+                    ),
+                    href="https://x.com/lukeneuendorf",
+                    target="_blank",
+                ),
+                html.A(
+                    html.Img(
                         src="/assets/logos/bluesky.png",
                         style={"height": "24px", "margin": "0 10px"},
                     ),
                     href="https://bsky.app/profile/lukeneuendorf.bsky.social",
                     target="_blank",
                 ),
-                # html.A(
-                #     html.Img(
-                #         src="/assets/logos/x.png",
-                #         style={"height": "24px", "margin": "0 10px"}
-                #     ),
-                #     href="https://x.com/luke_neuendorf",
-                #     target="_blank"
-                # ),
                 html.A(
                     html.Img(
                         src="/assets/logos/github.png",
