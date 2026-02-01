@@ -30,7 +30,7 @@ layout = dbc.Container(
         # Card Grid
         dbc.Row(
             [
-                # Article 1: About the App
+                # Article 1: 4th Down Decision Engine Overview
                 dbc.Col(
                     [
                         dbc.Card(
@@ -38,9 +38,8 @@ layout = dbc.Container(
                                 html.A(
                                     html.Img(
                                         src="/assets/images/4th_down_trends.png",
-                                        className="card-img-top",
+                                        className="card-img-top img-fluid",
                                         style={
-                                            "height": "250px",
                                             "objectFit": "cover",
                                             "cursor": "pointer",
                                             "borderRadius": "16px 16px 0 0",
@@ -87,48 +86,6 @@ layout = dbc.Container(
                     md=6,
                     className="mb-4",
                 ),
-                # Article 2: About the Models
-                #     dbc.Col([
-                #         dbc.Card(
-                #             [
-                #                 dcc.Link(
-                #                     html.Img(
-                #                         src="/assets/writeup/wisco_elo.png",
-                #                         className="card-img-top",
-                #                         style={
-                #                             "height": "250px",
-                #                             "objectFit": "cover",
-                #                             "cursor": "pointer",
-                #                             "borderRadius": "16px 16px 0 0"
-                #                         }
-                #                     ),
-                #                     href="/about-models",
-                #                     style={"textDecoration": "none"}
-                #                 ),
-                #                 dbc.CardBody([
-                #                     dcc.Link(
-                #                         html.H4("About the Models", className="card-title"),
-                #                         href="/about-models",
-                #                         style={"textDecoration": "none", "color": "inherit"}
-                #                     ),
-                #                     html.P(
-                #                         "Dive into the technical details of the five models powering the recommendations.",
-                #                         className="card-text"
-                #                     ),
-                #                 ]),
-                #             ],
-                #             className="shadow-sm h-100",
-                #             style={
-                #                 "borderRadius": "16px",
-                #                 "border": "none",
-                #                 "transition": "transform 0.2s",
-                #                 ":hover": {
-                #                     "transform": "scale(1.02)",
-                #                     "boxShadow": "0 5px 15px rgba(0,0,0,0.1)"
-                #                 }
-                #             }
-                #         )
-                #     ], xs=12, md=6, className="mb-4"),
             ]
         ),
     ],
