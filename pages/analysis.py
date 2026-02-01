@@ -20,7 +20,7 @@ layout = dbc.Container(
         html.Div(
             [
                 html.P(
-                    "This section will host various analysis articles related to 4th down decisions, "
+                    "This section hosts various analysis articles related to 4th down decisions, "
                     "team tendencies, and model insights. Stay tuned for in-depth write-ups and visualizations "
                     "that explore different facets of college football strategy."
                 ),
@@ -28,92 +28,109 @@ layout = dbc.Container(
             className="mb-5",
         ),
         # Card Grid
-        # dbc.Row([
-        #     # Article 1: About the App
-        #     dbc.Col([
-        #         dbc.Card(
-        #             [
-        #                 dcc.Link(
-        #                     html.Img(
-        #                         src="/assets/writeup/4th_down.jpg",
-        #                         className="card-img-top",
-        #                         style={
-        #                             "height": "250px",
-        #                             "objectFit": "cover",
-        #                             "cursor": "pointer",
-        #                             "borderRadius": "16px 16px 0 0"
-        #                         }
-        #                     ),
-        #                     href="/about-app",
-        #                     style={"textDecoration": "none"}
-        #                 ),
-        #                 dbc.CardBody([
-        #                     dcc.Link(
-        #                         html.H4("About the App", className="card-title"),
-        #                         href="/about-app",
-        #                         style={"textDecoration": "none", "color": "inherit"}
-        #                     ),
-        #                     html.P(
-        #                         "Learn about 4th down decisions in college football and how this app helps analyze team strategies.",
-        #                         className="card-text"
-        #                     ),
-        #                 ]),
-        #             ],
-        #             className="shadow-sm h-100",
-        #             style={
-        #                 "borderRadius": "16px",
-        #                 "border": "none",
-        #                 "transition": "transform 0.2s",
-        #                 ":hover": {
-        #                     "transform": "scale(1.02)",
-        #                     "boxShadow": "0 5px 15px rgba(0,0,0,0.1)"
-        #                 }
-        #             }
-        #         )
-        #     ], xs=12, md=6, className="mb-4"),
-        #     # Article 2: About the Models
-        #     dbc.Col([
-        #         dbc.Card(
-        #             [
-        #                 dcc.Link(
-        #                     html.Img(
-        #                         src="/assets/writeup/wisco_elo.png",
-        #                         className="card-img-top",
-        #                         style={
-        #                             "height": "250px",
-        #                             "objectFit": "cover",
-        #                             "cursor": "pointer",
-        #                             "borderRadius": "16px 16px 0 0"
-        #                         }
-        #                     ),
-        #                     href="/about-models",
-        #                     style={"textDecoration": "none"}
-        #                 ),
-        #                 dbc.CardBody([
-        #                     dcc.Link(
-        #                         html.H4("About the Models", className="card-title"),
-        #                         href="/about-models",
-        #                         style={"textDecoration": "none", "color": "inherit"}
-        #                     ),
-        #                     html.P(
-        #                         "Dive into the technical details of the five models powering the recommendations.",
-        #                         className="card-text"
-        #                     ),
-        #                 ]),
-        #             ],
-        #             className="shadow-sm h-100",
-        #             style={
-        #                 "borderRadius": "16px",
-        #                 "border": "none",
-        #                 "transition": "transform 0.2s",
-        #                 ":hover": {
-        #                     "transform": "scale(1.02)",
-        #                     "boxShadow": "0 5px 15px rgba(0,0,0,0.1)"
-        #                 }
-        #             }
-        #         )
-        #     ], xs=12, md=6, className="mb-4"),
-        # ]),
+        dbc.Row(
+            [
+                # Article 1: About the App
+                dbc.Col(
+                    [
+                        dbc.Card(
+                            [
+                                html.A(
+                                    html.Img(
+                                        src="/assets/images/4th_down_trends.png",
+                                        className="card-img-top",
+                                        style={
+                                            "height": "250px",
+                                            "objectFit": "cover",
+                                            "cursor": "pointer",
+                                            "borderRadius": "16px 16px 0 0",
+                                        },
+                                    ),
+                                    href="https://substack.com/home/post/p-186436522",
+                                    target="_blank",  # opens in new tab
+                                    style={"textDecoration": "none"},
+                                ),
+                                dbc.CardBody(
+                                    [
+                                        html.A(
+                                            html.H4(
+                                                "Building a College Football 4th Down Decision Engine",
+                                                className="card-title",
+                                            ),
+                                            href="https://substack.com/home/post/p-186436522",
+                                            target="_blank",
+                                            style={
+                                                "textDecoration": "none",
+                                                "color": "inherit",
+                                            },
+                                        ),
+                                        html.P(
+                                            "Learn about the motivation, data sources, and modeling techniques behind the 4th down decision engine.",
+                                            className="card-text",
+                                        ),
+                                    ]
+                                ),
+                            ],
+                            className="shadow-sm h-100",
+                            style={
+                                "borderRadius": "16px",
+                                "border": "none",
+                                "transition": "transform 0.2s",
+                                ":hover": {
+                                    "transform": "scale(1.02)",
+                                    "boxShadow": "0 5px 15px rgba(0,0,0,0.1)",
+                                },
+                            },
+                        )
+                    ],
+                    xs=12,
+                    md=6,
+                    className="mb-4",
+                ),
+                # Article 2: About the Models
+                #     dbc.Col([
+                #         dbc.Card(
+                #             [
+                #                 dcc.Link(
+                #                     html.Img(
+                #                         src="/assets/writeup/wisco_elo.png",
+                #                         className="card-img-top",
+                #                         style={
+                #                             "height": "250px",
+                #                             "objectFit": "cover",
+                #                             "cursor": "pointer",
+                #                             "borderRadius": "16px 16px 0 0"
+                #                         }
+                #                     ),
+                #                     href="/about-models",
+                #                     style={"textDecoration": "none"}
+                #                 ),
+                #                 dbc.CardBody([
+                #                     dcc.Link(
+                #                         html.H4("About the Models", className="card-title"),
+                #                         href="/about-models",
+                #                         style={"textDecoration": "none", "color": "inherit"}
+                #                     ),
+                #                     html.P(
+                #                         "Dive into the technical details of the five models powering the recommendations.",
+                #                         className="card-text"
+                #                     ),
+                #                 ]),
+                #             ],
+                #             className="shadow-sm h-100",
+                #             style={
+                #                 "borderRadius": "16px",
+                #                 "border": "none",
+                #                 "transition": "transform 0.2s",
+                #                 ":hover": {
+                #                     "transform": "scale(1.02)",
+                #                     "boxShadow": "0 5px 15px rgba(0,0,0,0.1)"
+                #                 }
+                #             }
+                #         )
+                #     ], xs=12, md=6, className="mb-4"),
+            ]
+        ),
     ],
     fluid=True,
     style={
