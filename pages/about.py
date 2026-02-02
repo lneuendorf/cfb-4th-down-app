@@ -261,7 +261,7 @@ layout = dbc.Container(
         # ======================
         # DATA + CTA
         # ======================
-        html.H3(html.B("Data and Feedback"), className="mt-4", style={"color": "#000"}),
+        html.H3(html.B("Data"), className="mt-4", style={"color": "#000"}),
         html.P(
             [
                 "All data used in this project is sourced from the ",
@@ -271,14 +271,14 @@ layout = dbc.Container(
                     target="_blank",
                     style={"text-decoration": "none"},
                 ),
-                " API.",
-            ]
-        ),
-        html.P(
-            [
-                "Feedback is always welcome. You can reach me at ",
-                html.Span("lneuendorf@proton.me", style={"text-decoration": "underline"}),
-                ", or via the linked social media accounts in the site footer.",
+                " API using the ",
+                html.A(
+                    "cfbd-python",
+                    href="https://github.com/CFBD/cfbd-python",
+                    target="_blank",
+                    style={"text-decoration": "none"},
+                ),
+                " Python package. Many thanks to the creators and maintainers of those resources.",
             ]
         ),
     ],
