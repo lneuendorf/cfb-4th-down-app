@@ -45,7 +45,7 @@ layout = dbc.Container(
                                             "borderRadius": "16px 16px 0 0",
                                         },
                                     ),
-                                    href="https://substack.com/home/post/p-186436522",
+                                    href="https://lukeneuendorf.substack.com/p/building-a-college-football-4th-down",
                                     target="_blank",  # opens in new tab
                                     style={"textDecoration": "none"},
                                 ),
@@ -56,7 +56,7 @@ layout = dbc.Container(
                                                 "Building a College Football 4th Down Decision Engine",
                                                 className="card-title",
                                             ),
-                                            href="https://substack.com/home/post/p-186436522",
+                                            href="https://lukeneuendorf.substack.com/p/building-a-college-football-4th-down",
                                             target="_blank",
                                             style={
                                                 "textDecoration": "none",
@@ -65,6 +65,62 @@ layout = dbc.Container(
                                         ),
                                         html.P(
                                             "Learn about the motivation, data sources, and modeling techniques behind the 4th down decision engine.",
+                                            className="card-text",
+                                        ),
+                                    ]
+                                ),
+                            ],
+                            className="shadow-sm h-100",
+                            style={
+                                "borderRadius": "16px",
+                                "border": "none",
+                                "transition": "transform 0.2s",
+                                ":hover": {
+                                    "transform": "scale(1.02)",
+                                    "boxShadow": "0 5px 15px rgba(0,0,0,0.1)",
+                                },
+                            },
+                        )
+                    ],
+                    xs=12,
+                    md=6,
+                    className="mb-4",
+                ),
+                # Article 2: Win Probability Model
+                dbc.Col(
+                    [
+                        dbc.Card(
+                            [
+                                html.A(
+                                    html.Img(
+                                        src="/assets/images/wp_chart.png",
+                                        className="card-img-top img-fluid",
+                                        style={
+                                            "objectFit": "cover",
+                                            "cursor": "pointer",
+                                            "borderRadius": "16px 16px 0 0",
+                                        },
+                                    ),
+                                    href="https://lukeneuendorf.substack.com/p/win-probability-model",
+                                    target="_blank",  # opens in new tab
+                                    style={"textDecoration": "none"},
+                                ),
+                                dbc.CardBody(
+                                    [
+                                        html.A(
+                                            html.H4(
+                                                "Win Probability Model",
+                                                className="card-title",
+                                            ),
+                                            href="https://lukeneuendorf.substack.com/p/win-probability-model",
+                                            target="_blank",
+                                            style={
+                                                "textDecoration": "none",
+                                                "color": "inherit",
+                                            },
+                                        ),
+                                        html.P(
+                                            "Discover how the win probability model was developed, its features, and evaluation results.",
                                             className="card-text",
                                         ),
                                     ]
