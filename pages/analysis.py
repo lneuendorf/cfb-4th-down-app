@@ -142,6 +142,62 @@ layout = dbc.Container(
                     md=6,
                     className="mb-4",
                 ),
+                # Article 3: 4th Down Conversion Probability Model
+                dbc.Col(
+                    [
+                        dbc.Card(
+                            [
+                                html.A(
+                                    html.Img(
+                                        src="/assets/images/feature_importance_4th_down_proba.png",
+                                        className="card-img-top img-fluid",
+                                        style={
+                                            "objectFit": "cover",
+                                            "cursor": "pointer",
+                                            "borderRadius": "16px 16px 0 0",
+                                        },
+                                    ),
+                                    href="https://lukeneuendorf.substack.com/p/4th-down-conversion-probability-model",
+                                    target="_blank",  # opens in new tab
+                                    style={"textDecoration": "none"},
+                                ),
+                                dbc.CardBody(
+                                    [
+                                        html.A(
+                                            html.H4(
+                                                "4th Down Conversion Probability Model",
+                                                className="card-title",
+                                            ),
+                                            href="https://lukeneuendorf.substack.com/p/4th-down-conversion-probability-model",
+                                            target="_blank",
+                                            style={
+                                                "textDecoration": "none",
+                                                "color": "inherit",
+                                            },
+                                        ),
+                                        html.P(
+                                            "Discover how the 4th down conversion probability model was developed, its features, and evaluation results.",
+                                            className="card-text",
+                                        ),
+                                    ]
+                                ),
+                            ],
+                            className="shadow-sm h-100",
+                            style={
+                                "borderRadius": "16px",
+                                "border": "none",
+                                "transition": "transform 0.2s",
+                                ":hover": {
+                                    "transform": "scale(1.02)",
+                                    "boxShadow": "0 5px 15px rgba(0,0,0,0.1)",
+                                },
+                            },
+                        )
+                    ],
+                    xs=12,
+                    md=6,
+                    className="mb-4",
+                ),
             ]
         ),
     ],
