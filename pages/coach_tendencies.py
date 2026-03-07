@@ -52,7 +52,7 @@ layout = dbc.Container(
                                                 "width": "90px",
                                                 "border-top-right-radius": "0",
                                                 "border-bottom-right-radius": "0",
-                                                "padding": "0.375rem 0.75rem",  # Match Bootstrap's default padding
+                                                "padding": "0.375rem 0.75rem",
                                             },
                                         ),
                                         dcc.Dropdown(
@@ -74,7 +74,7 @@ layout = dbc.Container(
                                         ),
                                     ],
                                     style={"alignItems": "flex-start"},
-                                    className="flex-nowrap g-0",  # g-0 removes gutters between elements
+                                    className="flex-nowrap g-0",
                                 )
                             ]
                         )
@@ -161,10 +161,8 @@ layout = dbc.Container(
                     [
                         dbc.Container(
                             [
-                                # Container for the graph with info icon
                                 html.Div(
                                     [
-                                        # Info icon positioned absolutely
                                         html.Div(
                                             html.Img(
                                                 src="/assets/logos/more_info.png",
@@ -188,7 +186,6 @@ layout = dbc.Container(
                                                 "zIndex": "100",
                                             },
                                         ),
-                                        # The graph
                                         dcc.Graph(
                                             id="coach-tendency-graph",
                                             config={
@@ -203,7 +200,6 @@ layout = dbc.Container(
                                     ],
                                     style={"position": "relative"},
                                 ),
-                                # Tooltip that appears on hover
                                 dbc.Tooltip(
                                     "This chart shows the average go-for-it rate when recommended for the selected coach across the chosen date range, "
                                     "summarizing how often the coach followed model recommendations. Higher rates indicate a greater tendency to go for "
@@ -236,10 +232,8 @@ layout = dbc.Container(
                     [
                         dbc.Container(
                             [
-                                # Container for the graph with info icon
                                 html.Div(
                                     [
-                                        # Info icon positioned absolutely
                                         html.Div(
                                             html.Img(
                                                 src="/assets/logos/more_info.png",
@@ -263,7 +257,6 @@ layout = dbc.Container(
                                                 "zIndex": "100",
                                             },
                                         ),
-                                        # The graph
                                         dcc.Graph(
                                             id="coach-wp-lost-graph",
                                             config={
@@ -278,7 +271,6 @@ layout = dbc.Container(
                                     ],
                                     style={"position": "relative"},
                                 ),
-                                # Tooltip that appears on hover
                                 dbc.Tooltip(
                                     "This chart summarizes the average win probability lost per season for the selected coach over the chosen date range. "
                                     "Win probability is lost when a coach opts to punt or attempt a field goal despite going for it being recommended. "
@@ -309,7 +301,6 @@ layout = dbc.Container(
                 ),
             ]
         ),
-        # Coach selection dropdown row for trend plot
         html.Div(
             [
                 html.H5(
@@ -318,7 +309,7 @@ layout = dbc.Container(
                     style={"color": "#000"},
                 ),
                 html.P(
-                    "Explore the rate at which coaches go for it on 4th down when recommended over the years."
+                    "Explore how coaches have performed over time on fourth down based on the selected metric."
                 ),
             ],
             style={"overflow": "hidden"},
@@ -332,10 +323,9 @@ layout = dbc.Container(
                                 dbc.InputGroupText(
                                     "Coach:",
                                     style={
-                                        "height": "100%",
+                                        "height": "34px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
-                                        "height": "34px",
                                     },
                                 ),
                                 dcc.Dropdown(
@@ -352,7 +342,7 @@ layout = dbc.Container(
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
                                         "fontSize": "13px",
-                                        "white-space": "nowrap",
+                                        "whiteSpace": "nowrap",
                                     },
                                 ),
                             ],
@@ -361,7 +351,32 @@ layout = dbc.Container(
                         )
                     ],
                     xs=12,
+                    md=6,
                     className="mb-4",
+                ),
+                dbc.Col(
+                    [
+                        dbc.RadioItems(
+                            id="trend-metric-radio",
+                            options=[
+                                {
+                                    "label": "Go-for-it rate when recommended",
+                                    "value": "go_rate",
+                                },
+                                {
+                                    "label": "Win probability lost",
+                                    "value": "wp_lost",
+                                },
+                            ],
+                            value="wp_lost",
+                            inline=True,
+                            className="d-flex justify-content-center justify-content-md-start gap-3 pt-2",
+                            inputCheckedClassName="border border-dark bg-dark",
+                        )
+                    ],
+                    xs=12,
+                    md=6,
+                    className="mb-4 d-flex align-items-center",
                 ),
             ]
         ),
@@ -371,10 +386,8 @@ layout = dbc.Container(
                     [
                         dbc.Container(
                             [
-                                # Container for the graph with info icon
                                 html.Div(
                                     [
-                                        # Info icon positioned absolutely
                                         html.Div(
                                             html.Img(
                                                 src="/assets/logos/more_info.png",
@@ -398,7 +411,6 @@ layout = dbc.Container(
                                                 "zIndex": "100",
                                             },
                                         ),
-                                        # The graph
                                         dcc.Graph(
                                             id="coach-trend-graph",
                                             config={
@@ -413,11 +425,10 @@ layout = dbc.Container(
                                     ],
                                     style={"position": "relative"},
                                 ),
-                                # Tooltip that appears on hover
                                 dbc.Tooltip(
-                                    "This chart shows how often a coach follows go-for-it recommendations on fourth down across seasons. "
-                                    "Trends can reveal shifts in a coach’s decision-making philosophy, adaptation to analytics, or changes "
-                                    "in situational context as teams and roles evolve over time.",
+                                    "This chart shows either how often a coach follows go-for-it recommendations on fourth down or how much "
+                                    "win probability they give up by not doing so across seasons. Trends can reveal shifts in a coach’s "
+                                    "decision-making philosophy, adaptation to analytics, or changes in situational context as teams and roles evolve over time.",
                                     target="info-icon6",
                                     placement="left",
                                     style={
@@ -464,6 +475,7 @@ layout = dbc.Container(
 def update_graphs(start_season, end_season, selected_coaches, screen_width):
     if not selected_coaches:
         return go.Figure(), go.Figure()
+
     dff = df[(df["season"] >= start_season) & (df["season"] <= end_season)]
 
     # Filter by selected coaches
@@ -471,10 +483,8 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
 
     if screen_width < 768:
         axis_fontsize = 11
-        axis_subtext_fontsize = 8
     else:
         axis_fontsize = 13
-        axis_subtext_fontsize = 9
 
     # Aggregate data for bar charts
     grouped = dff.groupby(["coach_name"], as_index=False).agg(
@@ -491,11 +501,11 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
         on="coach_name",
         how="left",
     )
-    grouped = grouped[grouped["n_go_rec"] > 0]
+    grouped = grouped[grouped["n_go_rec"] > 0].copy()
     grouped["go_for_it_rate"] = grouped["n_go"] / grouped["n_go_rec"]
     grouped["avg_wp_lost_per_season"] = grouped["net_wp_lost"] / grouped["n_season"]
 
-    ### PLOT 1: Go-For-It Rate - Sort from highest to lowest
+    ### PLOT 1
     grouped_sorted1 = grouped.sort_values("go_for_it_rate", ascending=True)
     fig1 = go.Figure()
     fig1.add_trace(
@@ -511,16 +521,15 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
             insidetextanchor="end",
             textfont=dict(color="white", size=12),
             hoverinfo="text",
-            hovertemplate="%{customdata[0]} play(s)",
+            hovertemplate="<b>%{y}</b><br>%{customdata[0]} play(s)<extra></extra>",
             name="",
             showlegend=False,
             customdata=grouped_sorted1[["n_go_rec"]].values,
         )
     )
 
-    max_x1 = grouped_sorted1["go_for_it_rate"].max()
+    max_x1 = grouped_sorted1["go_for_it_rate"].max() if not grouped_sorted1.empty else 1
 
-    # Calculate dynamic height based on number of coaches
     BAR_HEIGHT = 20
     BAR_GAP = 10
     bottom_margin = 80
@@ -529,7 +538,7 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
 
     num_coaches = len(grouped_sorted1)
     calculated_height = num_coaches * (BAR_HEIGHT + BAR_GAP) + 150
-    PLOT_HEIGHT = max(calculated_height, min_height)
+    plot_height = max(calculated_height, min_height)
 
     fig1.update_layout(
         title=dict(
@@ -549,10 +558,12 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
             showticklabels=True,
         ),
         xaxis=dict(
-            fixedrange=True, tickformat=".0%", range=[0, max_x1 * x_range_multiplier]
+            fixedrange=True,
+            tickformat=".0%",
+            range=[0, max_x1 * x_range_multiplier if max_x1 > 0 else 1],
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
-        height=PLOT_HEIGHT,
+        height=plot_height,
         template="plotly_white",
         barmode="overlay",
         bargap=0.2,
@@ -561,7 +572,7 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
         dragmode=False,
     )
 
-    ### PLOT 2: WP Lost - Sort from highest to lowest (most WP lost to least)
+    ### PLOT 2
     grouped_sorted2 = grouped.sort_values("avg_wp_lost_per_season", ascending=True)
     fig2 = go.Figure()
 
@@ -578,14 +589,18 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
             insidetextanchor="end",
             textfont=dict(color="white", size=12),
             hoverinfo="text",
-            hovertemplate="%{customdata[0]} season(s)",
+            hovertemplate="<b>%{y}</b><br>%{customdata[0]} season(s)<extra></extra>",
             name="",
             showlegend=False,
             customdata=grouped_sorted2[["n_season"]].values,
         )
     )
 
-    max_x2 = grouped_sorted2["avg_wp_lost_per_season"].max()
+    max_x2 = (
+        grouped_sorted2["avg_wp_lost_per_season"].max()
+        if not grouped_sorted2.empty
+        else 1
+    )
 
     fig2.update_layout(
         title=dict(
@@ -605,10 +620,12 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
             showticklabels=True,
         ),
         xaxis=dict(
-            fixedrange=True, tickformat=".0%", range=[0, max_x2 * x_range_multiplier]
+            fixedrange=True,
+            tickformat=".0%",
+            range=[0, max_x2 * x_range_multiplier if max_x2 > 0 else 1],
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
-        height=PLOT_HEIGHT,
+        height=plot_height,
         template="plotly_white",
         barmode="overlay",
         bargap=0.2,
@@ -622,22 +639,29 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
 @dash.callback(
     Output("coach-trend-graph", "figure"),
     Input("trend-coach-dropdown", "value"),
+    Input("trend-metric-radio", "value"),
     Input("start-season", "value"),
     Input("end-season", "value"),
     Input("screen-width-store", "data"),
 )
-def update_trend_graph(selected_coach, start_season, end_season, screen_width):
+def update_trend_graph(
+    selected_coach, selected_metric, start_season, end_season, screen_width
+):
     if selected_coach is None:
         return go.Figure()
 
-    # Get coach data
-    coach_df = df[df["coach_name"] == selected_coach]
+    coach_df = df[
+        (df["coach_name"] == selected_coach)
+        & (df["season"] >= start_season)
+        & (df["season"] <= end_season)
+    ]
 
     coach_data = (
         coach_df.groupby("season")
         .agg(
             n_go=("n_go", "sum"),
             n_go_rec=("n_go_rec", "sum"),
+            net_wp_lost=("net_wp_lost", "sum"),
             fill_color=("fill_color", "first"),
             border_color=("border_color", "first"),
         )
@@ -645,7 +669,12 @@ def update_trend_graph(selected_coach, start_season, end_season, screen_width):
         .sort_values(["season"], ascending=True)
     )
 
+    coach_data = coach_data[coach_data["n_go_rec"] > 0].copy()
     coach_data["go_rate"] = coach_data["n_go"] / coach_data["n_go_rec"]
+    coach_data["wp_lost"] = coach_data["net_wp_lost"]
+
+    if coach_data.empty:
+        return go.Figure()
 
     if screen_width < 768:
         axis_fontsize = 11
@@ -654,37 +683,54 @@ def update_trend_graph(selected_coach, start_season, end_season, screen_width):
         axis_fontsize = 13
         title_fontsize = 16
 
-    # Get coach colors
     fill_color = coach_data["fill_color"].iloc[-1]
     border_color = coach_data["border_color"].iloc[-1]
 
+    if selected_metric == "go_rate":
+        y_col = "go_rate"
+        y_title = "Go-For-It Rate When Recommended"
+        chart_title = f"{selected_coach} Go-For-It Rate Over Time"
+        hovertemplate = "<b>Season %{x}</b><br>Go Rate: %{y:.1%}<br>Plays: %{customdata}<extra></extra>"
+        yaxis_config = dict(
+            tickformat=".0%",
+            range=[0, min(1.1, max(coach_data[y_col].max() * 1.1, 0.1))],
+        )
+        customdata = coach_data["n_go_rec"]
+    else:
+        y_col = "wp_lost"
+        y_title = "Win Probability Lost"
+        chart_title = f"{selected_coach} Win Probability Lost Over Time"
+        hovertemplate = "<b>Season %{x}</b><br>WP Lost: %{y:.1%}<extra></extra>"
+        y_max = coach_data[y_col].max()
+        yaxis_config = dict(
+            tickformat=".0%",
+            range=[0, max(y_max * 1.15, 0.01)],
+        )
+        customdata = None
+
     fig = go.Figure()
 
-    # Add line trace
     fig.add_trace(
         go.Scatter(
             x=coach_data["season"],
-            y=coach_data["go_rate"],
+            y=coach_data[y_col],
             mode="lines+markers",
             line=dict(color=fill_color, width=3),
             marker=dict(color=border_color, size=10, line=dict(width=2, color="black")),
-            hoverinfo="text",
-            hovertemplate="<b>Season %{x}</b><br>Go Rate: %{y:.1%}<br>Plays: %{customdata}<extra></extra>",
+            hovertemplate=hovertemplate,
             name="",
-            customdata=coach_data["n_go_rec"],
+            customdata=customdata,
         )
     )
 
     fig.update_layout(
         title=dict(
-            text=f"<span style='font-size:{title_fontsize}px'><b>{selected_coach} Go-For-It Rate Over Time</b></span>",
+            text=f"<span style='font-size:{title_fontsize}px'><b>{chart_title}</b></span>",
             x=0.5,
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Season</span>",
-        yaxis_title=f"<span style='font-size:{axis_fontsize}px'>Go-For-It Rate When Recommended</span>",
-        yaxis=dict(
-            tickformat=".0%", range=[0, min(1.1, max(coach_data["go_rate"]) * 1.1)]
-        ),
+        yaxis_title=f"<span style='font-size:{axis_fontsize}px'>{y_title}</span>",
+        yaxis=yaxis_config,
         xaxis=dict(tickmode="linear", dtick=1),
         margin=dict(l=20, r=60, t=80, b=60),
         height=400,
