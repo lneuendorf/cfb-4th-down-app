@@ -689,7 +689,7 @@ def update_trend_graph(
     if selected_metric == "go_rate":
         y_col = "go_rate"
         y_title = "Go-For-It Rate When Recommended"
-        chart_title = f"{selected_coach} Go-For-It Rate Over Time"
+        chart_title = f"{selected_coach} Go-For-It Rate When Recommended Over Time"
         hovertemplate = "<b>Season %{x}</b><br>Go Rate: %{y:.1%}<br>Plays: %{customdata}<extra></extra>"
         yaxis_config = dict(
             tickformat=".0%",
