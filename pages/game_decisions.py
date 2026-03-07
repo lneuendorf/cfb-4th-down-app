@@ -61,7 +61,7 @@ layout = html.Div(
                                                     dbc.InputGroupText(
                                                         "Conference:",
                                                         style={
-                                                            "height": "34px",
+                                                            "height": "36px",
                                                             "border-top-right-radius": "0",
                                                             "border-bottom-right-radius": "0",
                                                             "fontSize": "14px",
@@ -99,7 +99,7 @@ layout = html.Div(
                                                     dbc.InputGroupText(
                                                         "Season:",
                                                         style={
-                                                            "height": "34px",
+                                                            "height": "36px",
                                                             "border-top-right-radius": "0",
                                                             "border-bottom-right-radius": "0",
                                                             "whiteSpace": "nowrap",
@@ -151,7 +151,7 @@ layout = html.Div(
                                                     dbc.InputGroupText(
                                                         "Offense:",
                                                         style={
-                                                            "height": "34px",
+                                                            "height": "36px",
                                                             "border-top-right-radius": "0",
                                                             "border-bottom-right-radius": "0",
                                                             "whiteSpace": "nowrap",
@@ -187,7 +187,7 @@ layout = html.Div(
                                                     dbc.InputGroupText(
                                                         "Week:",
                                                         style={
-                                                            "height": "34px",
+                                                            "height": "36px",
                                                             "border-top-right-radius": "0",
                                                             "border-bottom-right-radius": "0",
                                                             "padding": "0 8px",
@@ -222,7 +222,7 @@ layout = html.Div(
                                                     dbc.InputGroupText(
                                                         "Recommendation:",
                                                         style={
-                                                            "height": "34px",
+                                                            "height": "36px",
                                                             "border-top-right-radius": "0",
                                                             "border-bottom-right-radius": "0",
                                                             "whiteSpace": "nowrap",
@@ -256,7 +256,7 @@ layout = html.Div(
                                                     dbc.InputGroupText(
                                                         "Decision:",
                                                         style={
-                                                            "height": "34px",
+                                                            "height": "36px",
                                                             "border-top-right-radius": "0",
                                                             "border-bottom-right-radius": "0",
                                                             "padding": "0 6px",
