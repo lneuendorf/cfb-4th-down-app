@@ -2,6 +2,7 @@ import dash
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 from dash import Input, Output
+from flask import request
 
 from components.navbar import header
 from components.footer import footer
@@ -18,6 +19,30 @@ app = Dash(
 )
 
 server = app.server
+
+# Disable Flask/Dash response caching (prevents stale frontend after deploy)
+server.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+server.config["ETAG_DISABLED"] = True
+
+
+@server.after_request
+def add_cache_headers(response):
+    path = request.path
+
+    # Never cache dynamic app responses
+    if path == "/" or path.startswith("/_dash-") or path == "/favicon.ico":
+        response.headers[
+            "Cache-Control"
+        ] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+
+    # Cache static assets
+    elif path.startswith("/assets/"):
+        response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+
+    return response
+
 
 app.title = "CFB 4th Down Decisions"
 
