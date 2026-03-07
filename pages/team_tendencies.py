@@ -32,7 +32,7 @@ layout = dbc.Container(
                                 dbc.InputGroupText(
                                     "Conference:",
                                     style={
-                                        "height": "36px",
+                                        "height": "34px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
                                     },
@@ -76,7 +76,7 @@ layout = dbc.Container(
                                 dbc.InputGroupText(
                                     "Season:",
                                     style={
-                                        "height": "36px",
+                                        "height": "34px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
                                     },
@@ -284,7 +284,7 @@ layout = dbc.Container(
                                 dbc.InputGroupText(
                                     "Team:",
                                     style={
-                                        "height": "36px",
+                                        "height": "34px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
                                     },

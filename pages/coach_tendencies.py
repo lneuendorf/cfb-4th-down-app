@@ -91,7 +91,7 @@ layout = dbc.Container(
                     [
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("From:", style={"height": "36px"}),
+                                dbc.InputGroupText("From:", style={"height": "34px"}),
                                 dcc.Dropdown(
                                     id="start-season",
                                     options=[
@@ -124,7 +124,7 @@ layout = dbc.Container(
                     [
                         dbc.InputGroup(
                             [
-                                dbc.InputGroupText("To:", style={"height": "36px"}),
+                                dbc.InputGroupText("To:", style={"height": "34px"}),
                                 dcc.Dropdown(
                                     id="end-season",
                                     options=[
@@ -323,7 +323,7 @@ layout = dbc.Container(
                                 dbc.InputGroupText(
                                     "Coach:",
                                     style={
-                                        "height": "36px",
+                                        "height": "34px",
                                         "border-top-right-radius": "0",
                                         "border-bottom-right-radius": "0",
                                     },
