@@ -18,8 +18,25 @@ CARD_STYLE = {
 
 # Hover effect will be applied via custom CSS class
 # Add this to your assets/ folder as a .css file
-def create_model_card(image_path, title, description, link):
+def create_model_card(image_path, title, description, link, badge_text=None):
     """Helper function to create consistent model cards"""
+
+    # Add badge if provided
+    badge = None
+    if badge_text:
+        badge = html.Span(
+            badge_text,
+            className="badge mb-2",
+            style={
+                "backgroundColor": "#2c3e50",
+                "color": "white",
+                "fontSize": "0.75rem",
+                "padding": "0.35rem 0.75rem",
+                "borderRadius": "20px",
+                "marginBottom": "0.75rem",
+                "display": "inline-block",
+            },
+        )
 
     return dbc.Card(
         [
@@ -52,6 +69,8 @@ def create_model_card(image_path, title, description, link):
                     html.A(
                         html.Div(
                             [
+                                # Optional badge
+                                badge,
                                 # Title
                                 html.H5(
                                     title,
@@ -200,7 +219,7 @@ layout = dbc.Container(
                                                                         },
                                                                     ),
                                                                     html.P(
-                                                                        "Learn about the motivation, data sources, and modeling techniques behind the 4th down decision engine. This comprehensive overview explains how all the models work together.",
+                                                                        "This article explains the methodology behind the decision engine, walking through how four separate models work together to calculate expected win probability for going for it, punting, or attempting a field goal. Using a real example from Iowa-Indiana, it demonstrates how the engine processes game context to make recommendations while also acknowledging important limitations—from oversimplified outcome modeling to the lack of uncertainty quantification that would help coaches understand risk alongside reward.",
                                                                         className="card-text",
                                                                         style={
                                                                             "color": "#555",
@@ -215,7 +234,7 @@ layout = dbc.Container(
                                                                                     "fontSize": "0.8rem"
                                                                                 },
                                                                             ),
-                                                                            "Read the full overview",
+                                                                            "Read more",
                                                                         ],
                                                                         style={
                                                                             "color": "#2c3e50",
@@ -320,6 +339,44 @@ layout = dbc.Container(
                                 title="Punt Return Yards",
                                 description="Discover how the punt return yards model was developed, its features, and evaluation results.",
                                 link="https://lukeneuendorf.substack.com/p/punt-return-yards-model",
+                            ),
+                            xs=12,
+                            md=6,
+                            lg=4,
+                            className="mb-4",
+                        ),
+                    ]
+                ),
+            ],
+            className="mb-5",
+        ),
+        # Related Projects Section (New)
+        html.Div(
+            [
+                html.H4(
+                    [html.I(className="fas fa-project-diagram me-2"), "Related Projects"],
+                    className="mb-3",
+                    style={"color": "#333", "fontWeight": "600"},
+                ),
+                html.P(
+                    "Experimental approaches and alternative methodologies explored during development",
+                    className="text-muted mb-4",
+                    style={
+                        "fontSize": "0.95rem",
+                        "padding-left": CONFIG["padding-left"],
+                        "padding-right": CONFIG["padding-right"],
+                    },
+                ),
+                dbc.Row(
+                    [
+                        # New Monte Carlo Simulator Article
+                        dbc.Col(
+                            create_model_card(
+                                image_path="/assets/images/monte_carlo_sim.png",  # You'll need to add this image
+                                title="Building a Monte Carlo College Football Game Simulator (and Why I Stopped)",
+                                description="An exploration of Monte Carlo simulation for football games. Despite promising potential, the simulator faced significant computational challenges - running 1000 simulations took 16 minutes, and evaluating all 156,472 fourth down decisions would require ~1.7 years of compute time. Learn valuable lessons about computational limitations and optimization strategies.",
+                                link="https://lukeneuendorf.substack.com/p/building-a-monte-carlo-college-football",
+                                badge_text="Case Study",
                             ),
                             xs=12,
                             md=6,
