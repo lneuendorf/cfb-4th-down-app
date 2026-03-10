@@ -11,7 +11,7 @@ CARD_STYLE = {
     "border": "none",
     "transition": "all 0.3s ease",
     "height": "100%",
-    "backgroundColor": "white",
+    "backgroundColor": "var(--surface-bg)",
     "boxShadow": "0 4px 6px rgba(0,0,0,0.05)",
 }
 
@@ -79,6 +79,7 @@ def create_model_card(image_path, title, description, link, badge_text=None):
                                         "fontWeight": "600",
                                         "marginBottom": "0.75rem",
                                         "fontSize": "1.1rem",
+                                        "color": "var(--text-color)",
                                     },
                                 ),
                                 # Description
@@ -86,7 +87,7 @@ def create_model_card(image_path, title, description, link, badge_text=None):
                                     description,
                                     className="card-text small",
                                     style={
-                                        "color": "#666",
+                                        "color": "var(--muted-text-color)",
                                         "lineHeight": "1.5",
                                         "marginBottom": "1rem",
                                     },
@@ -97,7 +98,7 @@ def create_model_card(image_path, title, description, link, badge_text=None):
                                         html.Span(
                                             "Read more ",
                                             style={
-                                                "color": "#2c3e50",
+                                                "color": "var(--text-color)",
                                                 "fontWeight": "500",
                                                 "fontSize": "0.9rem",
                                             },
@@ -105,7 +106,7 @@ def create_model_card(image_path, title, description, link, badge_text=None):
                                         html.I(
                                             className="fas fa-arrow-right",
                                             style={
-                                                "color": "#2c3e50",
+                                                "color": "var(--text-color)",
                                                 "fontSize": "0.8rem",
                                             },
                                         ),
@@ -117,7 +118,7 @@ def create_model_card(image_path, title, description, link, badge_text=None):
                         target="_blank",
                         style={
                             "textDecoration": "none",
-                            "color": "#000",
+                            "color": "var(--text-color)",
                             "transition": "color 0.2s",
                         },
                     ),
@@ -135,7 +136,11 @@ layout = dbc.Container(
         # Header Section
         html.Div(
             [
-                html.H3(html.B("Analysis"), className="mt-4", style={"color": "#000"}),
+                html.H3(
+                    html.B("Analysis"),
+                    className="mt-4",
+                    style={"color": "var(--text-color)"},
+                ),
             ],
             style={"overflow": "hidden"},
         ),
@@ -161,7 +166,7 @@ layout = dbc.Container(
                 html.H4(
                     [html.I(className="fas fa-star me-2"), "Featured Overview"],
                     className="mb-3",
-                    style={"color": "#333", "fontWeight": "600"},
+                    style={"color": "var(--text-color)", "fontWeight": "600"},
                 ),
                 dbc.Row(
                     [
@@ -216,13 +221,14 @@ layout = dbc.Container(
                                                                         style={
                                                                             "fontWeight": "600",
                                                                             "marginBottom": "0.75rem",
+                                                                            "color": "var(--text-color)",
                                                                         },
                                                                     ),
                                                                     html.P(
                                                                         "This article explains the methodology behind the decision engine, walking through how four separate models work together to calculate expected win probability for going for it, punting, or attempting a field goal. Using a real example from Iowa-Indiana, it demonstrates how the engine processes game context to make recommendations while also acknowledging important limitations—from oversimplified outcome modeling to the lack of uncertainty quantification that would help coaches understand risk alongside reward.",
                                                                         className="card-text",
                                                                         style={
-                                                                            "color": "#555",
+                                                                            "color": "var(--muted-text-color)",
                                                                             "marginBottom": "1rem",
                                                                         },
                                                                     ),
@@ -237,7 +243,7 @@ layout = dbc.Container(
                                                                             "Read more",
                                                                         ],
                                                                         style={
-                                                                            "color": "#2c3e50",
+                                                                            "color": "var(--text-color)",
                                                                             "fontWeight": "500",
                                                                         },
                                                                     ),
@@ -247,7 +253,7 @@ layout = dbc.Container(
                                                             target="_blank",
                                                             style={
                                                                 "textDecoration": "none",
-                                                                "color": "#000",
+                                                                "color": "var(--text-color)",
                                                                 "transition": "color 0.2s",
                                                             },
                                                         ),
@@ -280,7 +286,7 @@ layout = dbc.Container(
                 html.H4(
                     [html.I(className="fas fa-chart-line me-2"), "Model Deep Dives"],
                     className="mb-3",
-                    style={"color": "#333", "fontWeight": "600"},
+                    style={"color": "var(--text-color)", "fontWeight": "600"},
                 ),
                 html.P(
                     "Detailed explanations of the individual models powering the decision engine",
@@ -356,7 +362,7 @@ layout = dbc.Container(
                 html.H4(
                     [html.I(className="fas fa-project-diagram me-2"), "Related Projects"],
                     className="mb-3",
-                    style={"color": "#333", "fontWeight": "600"},
+                    style={"color": "var(--text-color)", "fontWeight": "600"},
                 ),
                 html.P(
                     "Experimental approaches and alternative methodologies explored during development",

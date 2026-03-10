@@ -2,17 +2,47 @@
 
 :root {
     --bs-primary: var(--bs-success);
+    --app-bg: #f5f2f2;
+    --surface-bg: #ffffff;
+    --surface-alt-bg: #f8f9fa;
+    --surface-bg-darker: #ededed;
+    --text-color: #252626;
+    --muted-text-color: #5f6368;
+    --border-color: rgba(37, 38, 38, 0.12);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --table-stripe-bg: rgb(248, 248, 248);
+}
+
+.theme-light {
+    --app-bg: #f5f2f2;
+    --surface-bg: #ffffff;
+    --surface-alt-bg: #f8f9fa;
+    --surface-bg-darker: #ededed;
+    --text-color: #252626;
+    --muted-text-color: #5f6368;
+    --border-color: rgba(37, 38, 38, 0.12);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --table-stripe-bg: rgb(248, 248, 248);
+}
+
+.theme-dark {
+    --app-bg: #0f141a;
+    --surface-bg: #161b22;
+    --surface-alt-bg: #1f2630;
+    --surface-bg-darker: #0b1015;
+    --text-color: #f4f7fb;
+    --muted-text-color: #b7c0cb;
+    --border-color: rgba(244, 247, 251, 0.14);
+    --shadow-color: rgba(0, 0, 0, 0.35);
+    --table-stripe-bg: #1b222c;
 }
 
 /* General Background */
 body {
-    background-color: #f5f2f2;
+    background-color: var(--app-bg);
     font-family: 'Roboto', sans-serif;
-}
-
-/* General Text Color */
-body {
-    color: #252626;
+    color: var(--text-color);
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Prevent horizontal scrolling on ALL devices */
@@ -32,4 +62,123 @@ body * {
     max-width: 100%;
     margin-left: 0;
     margin-right: 0;
+}
+
+.app-shell {
+    background-color: var(--app-bg);
+    color: var(--text-color);
+}
+
+.theme-dark .bg-white,
+.theme-dark .card,
+.theme-dark .app-footer,
+.theme-dark .app-navbar.navbar,
+.theme-dark .dropdown-menu,
+.theme-dark .popover,
+.theme-dark .tooltip-inner {
+    background-color: var(--surface-bg) !important;
+    color: var(--text-color) !important;
+}
+
+.theme-dark .app-navbar.navbar.bg-white,
+.theme-dark .app-navbar.navbar[class*="bg-"] {
+    background-color: var(--surface-bg) !important;
+}
+
+.theme-dark .app-navbar .navbar-brand,
+.theme-dark .app-navbar .nav-link,
+.theme-dark .app-navbar .navbar-toggler {
+    color: var(--text-color) !important;
+}
+
+.theme-dark .navbar-toggler {
+    border-color: var(--border-color);
+}
+
+.theme-dark .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    box-shadow: 0 6px 18px var(--shadow-color);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus {
+    transform: translateY(-1px);
+}
+
+.theme-toggle-btn-light {
+    background-color: var(--surface-bg);
+    color: #1f2933;
+}
+
+.theme-toggle-btn-dark {
+    background-color: var(--surface-alt-bg);
+    color: #f4f7fb;
+}
+
+.theme-dark .theme-toggle-btn,
+.theme-dark .theme-toggle-btn:hover,
+.theme-dark .theme-toggle-btn:focus,
+.theme-dark .theme-toggle-btn:active {
+    color: #f4f7fb;
+    border-color: var(--border-color);
+    background-color: var(--surface-alt-bg);
+}
+
+.theme-light .theme-toggle-btn,
+.theme-light .theme-toggle-btn:hover,
+.theme-light .theme-toggle-btn:focus,
+.theme-light .theme-toggle-btn:active {
+    color: #1f2933;
+    border-color: var(--border-color);
+    background-color: var(--surface-bg);
+}
+
+.theme-dark .input-group-text {
+    background-color: var(--surface-alt-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.theme-dark .footer-divider {
+    border-top: 1px solid var(--border-color);
+}
+
+.theme-dark .social-icon-invertable,
+.theme-dark .info-icon {
+    filter: invert(1);
+}
+
+.theme-dark .hover-card,
+.theme-dark .card,
+.theme-dark .app-footer,
+.theme-dark .bg-white {
+    box-shadow: 0 10px 30px var(--shadow-color) !important;
+}
+
+.theme-dark .card-text,
+.theme-dark .lead,
+.theme-dark p,
+.theme-dark li,
+.theme-dark span,
+.theme-dark label,
+.theme-dark h1,
+.theme-dark h2,
+.theme-dark h3,
+.theme-dark h4,
+.theme-dark h5,
+.theme-dark h6 {
+    color: inherit;
 }

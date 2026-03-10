@@ -1,7 +1,6 @@
 import dash
-from dash import Dash, dcc, html
+from dash import Dash, Input, Output, State, ctx, dcc, html, no_update
 import dash_bootstrap_components as dbc
-from dash import Input, Output
 from flask import request
 
 from components.navbar import header
@@ -48,6 +47,7 @@ app.title = "CFB 4th Down Decisions"
 
 app.layout = html.Div(
     [
+        dcc.Store(id="theme-store", storage_type="local", data="light"),
         dcc.Store(id="screen-width-store"),
         dcc.Interval(id="resize-listener", interval=100000, n_intervals=1),
         header,
@@ -58,6 +58,8 @@ app.layout = html.Div(
         ),
         footer,
     ],
+    id="app-shell",
+    className="app-shell theme-light",
     style={"display": "flex", "flexDirection": "column", "minHeight": "100vh"},
 )
 
@@ -70,6 +72,76 @@ app.clientside_callback(
     Output("screen-width-store", "data"),
     Input("resize-listener", "n_intervals"),
 )
+
+app.clientside_callback(
+    """
+    function(theme) {
+        const mode = theme === "dark" ? "dark" : "light";
+        document.documentElement.setAttribute("data-bs-theme", mode);
+        document.body.setAttribute("data-bs-theme", mode);
+        return `app-shell theme-${mode}`;
+    }
+    """,
+    Output("app-shell", "className"),
+    Input("theme-store", "data"),
+)
+
+
+@app.callback(
+    Output("theme-store", "data"),
+    Input("theme-toggle-desktop", "n_clicks"),
+    Input("theme-toggle-mobile", "n_clicks"),
+    State("theme-store", "data"),
+    prevent_initial_call=True,
+)
+def toggle_theme(desktop_clicks, mobile_clicks, current_theme):
+    if ctx.triggered_id not in {"theme-toggle-desktop", "theme-toggle-mobile"}:
+        return no_update
+    return "light" if current_theme == "dark" else "dark"
+
+
+@app.callback(
+    Output("theme-toggle-desktop", "children"),
+    Output("theme-toggle-desktop", "className"),
+    Output("theme-toggle-mobile", "children"),
+    Output("theme-toggle-mobile", "className"),
+    Input("theme-store", "data"),
+)
+def update_theme_button(theme):
+    is_dark = theme == "dark"
+    desktop_icon = html.I(
+        id="theme-toggle-icon-desktop",
+        className=f"bi {'bi-sun-fill' if is_dark else 'bi-moon-stars-fill'}",
+    )
+    mobile_icon = html.I(
+        id="theme-toggle-icon-mobile",
+        className=f"bi {'bi-sun-fill' if is_dark else 'bi-moon-stars-fill'}",
+    )
+    desktop_class_name = (
+        "theme-toggle-btn theme-toggle-btn-dark d-none d-lg-inline-flex ms-lg-3"
+    )
+    mobile_class_name = "theme-toggle-btn theme-toggle-btn-dark d-inline-flex d-lg-none"
+    if not is_dark:
+        desktop_class_name = (
+            "theme-toggle-btn theme-toggle-btn-light d-none d-lg-inline-flex ms-lg-3"
+        )
+        mobile_class_name = (
+            "theme-toggle-btn theme-toggle-btn-light d-inline-flex d-lg-none"
+        )
+    return desktop_icon, desktop_class_name, mobile_icon, mobile_class_name
+
+
+@app.callback(
+    Output("navbar-collapse", "is_open"),
+    Input("navbar-toggler", "n_clicks"),
+    State("navbar-collapse", "is_open"),
+    prevent_initial_call=True,
+)
+def toggle_navbar(n_clicks, is_open):
+    if not n_clicks:
+        return no_update
+    return not is_open
+
 
 if __name__ == "__main__":
     app.run(debug=False)

@@ -24,7 +24,7 @@ layout = html.Div(
                         html.H5(
                             html.B("Game Decisions"),
                             className="mt-4",
-                            style={"color": "#000"},
+                            style={"color": "var(--text-color)"},
                         ),
                         html.P("Explore and evaluate in-game 4th down decisions."),
                     ],
@@ -83,6 +83,7 @@ layout = html.Div(
                                                             "border-top-left-radius": "0",
                                                             "border-bottom-left-radius": "0",
                                                             "fontSize": "13px",
+                                                            "color": "#252626",
                                                         },
                                                     ),
                                                 ],
@@ -124,6 +125,7 @@ layout = html.Div(
                                                             "border-top-left-radius": "0",
                                                             "border-bottom-left-radius": "0",
                                                             "fontSize": "13px",
+                                                            "color": "#252626",
                                                         },
                                                     ),
                                                 ],
@@ -161,7 +163,7 @@ layout = html.Div(
                                                     ),
                                                     dcc.Dropdown(
                                                         id="offense-team-dropdown",
-                                                        placeholder="Team",
+                                                        placeholder="Select",
                                                         style={
                                                             "minWidth": "150px",
                                                             "width": "100%",
@@ -169,6 +171,7 @@ layout = html.Div(
                                                             "border-top-left-radius": "0",
                                                             "border-bottom-left-radius": "0",
                                                             "fontSize": "13px",
+                                                            "color": "#252626",
                                                         },
                                                         multi=False,
                                                         value="Wisconsin",
@@ -197,7 +200,7 @@ layout = html.Div(
                                                     ),
                                                     dcc.Dropdown(
                                                         id="week-dropdown",
-                                                        placeholder="Week",
+                                                        placeholder="Select",
                                                         style={
                                                             "minWidth": "70px",  # Reduced
                                                             "width": "100%",
@@ -205,6 +208,7 @@ layout = html.Div(
                                                             "border-top-left-radius": "0",
                                                             "border-bottom-left-radius": "0",
                                                             "fontSize": "13px",
+                                                            "color": "#252626",
                                                         },
                                                         multi=False,
                                                     ),
@@ -240,6 +244,7 @@ layout = html.Div(
                                                             "border-top-left-radius": "0",
                                                             "border-bottom-left-radius": "0",
                                                             "fontSize": "13px",
+                                                            "color": "#252626",
                                                         },
                                                     ),
                                                 ],
@@ -274,6 +279,7 @@ layout = html.Div(
                                                             "border-top-left-radius": "0",
                                                             "border-bottom-left-radius": "0",
                                                             "fontSize": "13px",
+                                                            "color": "#252626",
                                                         },
                                                         multi=False,
                                                     ),
@@ -390,6 +396,7 @@ layout = html.Div(
                                             "id": "Desc",
                                         },
                                     ],
+                                    cell_selectable=False,
                                     page_size=20,
                                     page_action="native",
                                     sort_action="native",
@@ -404,7 +411,6 @@ layout = html.Div(
                                         "minWidth": "none",
                                     },
                                     style_header={
-                                        "backgroundColor": "white",
                                         "fontWeight": "bold",
                                         "border": "none",
                                         "fontFamily": "Arial, sans-serif",
@@ -415,10 +421,11 @@ layout = html.Div(
                                             "if": {"header_index": 0},
                                             "fontWeight": "bold",
                                             "textAlign": "center",
-                                            "borderBottom": "2px solid black",
+                                            "borderBottom": "2px solid var(--border-color)",
                                         },
                                     ],
                                     style_cell={
+                                        "backgroundColor": "var(--surface-bg-darker)",
                                         "textAlign": "center",
                                         "padding": "8px 10px",
                                         "whiteSpace": "normal",
@@ -472,26 +479,27 @@ layout = html.Div(
                                         # Add vertical borders between major sections
                                         {
                                             "if": {"column_id": "Week"},
-                                            "borderRight": "2px solid #dee2e6",
+                                            "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
                                             "if": {"column_id": "Offense Score"},
-                                            "borderRight": "2px solid #dee2e6",
+                                            "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
                                             "if": {"column_id": "Defense Score"},
-                                            "borderRight": "2px solid #dee2e6",
+                                            "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
                                             "if": {"column_id": "Yards to Goal"},
-                                            "borderRight": "2px solid #dee2e6",
+                                            "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
                                             "if": {"column_id": "Win Probability Punt"},
-                                            "borderRight": "2px solid #dee2e6",
+                                            "borderRight": "2px solid var(--border-color)",
                                         },
                                     ],
                                     style_data={
+                                        "backgroundColor": "var(--surface-bg)",
                                         "fontFamily": "Arial, sans-serif",
                                         "fontSize": "14px",
                                         "lineHeight": "1.3",
@@ -499,7 +507,7 @@ layout = html.Div(
                                     style_data_conditional=[
                                         {
                                             "if": {"row_index": "odd"},
-                                            "backgroundColor": "rgb(248, 248, 248)",
+                                            "backgroundColor": "var(--table-stripe-bg)",
                                         }
                                     ],
                                     markdown_options={"html": True},
@@ -511,7 +519,6 @@ layout = html.Div(
                                 "borderRadius": "3px",
                                 "boxShadow": "0 0 5px rgba(0,0,0,0.1)",
                                 "padding": "0px",
-                                "backgroundColor": "white",
                                 "overflow": "hidden",
                                 "width": "100%",
                                 "margin": "0 auto",

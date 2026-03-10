@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objects as go
 from config.config import CONFIG
+from components.theme import apply_plotly_theme
 
 dash.register_page(__name__, path="/coach-tendencies", name="Coach Tendencies")
 
@@ -30,7 +31,9 @@ layout = dbc.Container(
         html.Div(
             [
                 html.H5(
-                    html.B("Coach Tendencies"), className="mt-4", style={"color": "#000"}
+                    html.B("Coach Tendencies"),
+                    className="mt-4",
+                    style={"color": "var(--text-color)"},
                 ),
                 html.P("Explore how different coaches behave on 4th down."),
             ],
@@ -70,6 +73,7 @@ layout = dbc.Container(
                                                 "border-bottom-left-radius": "0",
                                                 "border-left": "none",
                                                 "fontSize": "13px",
+                                                "color": "#252626",
                                             },
                                         ),
                                     ],
@@ -106,6 +110,7 @@ layout = dbc.Container(
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
                                         "fontSize": "13px",
+                                        "color": "#252626",
                                     },
                                 ),
                             ],
@@ -139,6 +144,7 @@ layout = dbc.Container(
                                         "border-top-left-radius": "0",
                                         "border-bottom-left-radius": "0",
                                         "fontSize": "13px",
+                                        "color": "#252626",
                                     },
                                 ),
                             ],
@@ -306,7 +312,7 @@ layout = dbc.Container(
                 html.H5(
                     html.B("Coach Tendencies Over Time"),
                     className="mt-4",
-                    style={"color": "#000"},
+                    style={"color": "var(--text-color)"},
                 ),
                 html.P(
                     "Explore how coaches have performed over time on fourth down based on the selected metric."
@@ -343,6 +349,7 @@ layout = dbc.Container(
                                         "border-bottom-left-radius": "0",
                                         "fontSize": "13px",
                                         "whiteSpace": "nowrap",
+                                        "color": "#252626",
                                     },
                                 ),
                             ],
@@ -471,8 +478,10 @@ layout = dbc.Container(
     Input("end-season", "value"),
     Input("coach-dropdown", "value"),
     Input("screen-width-store", "data"),
+    Input("theme-store", "data"),
 )
-def update_graphs(start_season, end_season, selected_coaches, screen_width):
+def update_graphs(start_season, end_season, selected_coaches, screen_width, theme):
+    is_dark = theme == "dark"
     if not selected_coaches:
         return go.Figure(), go.Figure()
 
@@ -564,7 +573,6 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
         height=plot_height,
-        template="plotly_white",
         barmode="overlay",
         bargap=0.2,
         bargroupgap=0.05,
@@ -626,12 +634,14 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
         ),
         margin=dict(l=20, r=60, t=100, b=bottom_margin),
         height=plot_height,
-        template="plotly_white",
         barmode="overlay",
         bargap=0.2,
         bargroupgap=0.05,
         dragmode=False,
     )
+
+    apply_plotly_theme(fig1, is_dark)
+    apply_plotly_theme(fig2, is_dark)
 
     return fig1, fig2
 
@@ -643,10 +653,12 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width):
     Input("start-season", "value"),
     Input("end-season", "value"),
     Input("screen-width-store", "data"),
+    Input("theme-store", "data"),
 )
 def update_trend_graph(
-    selected_coach, selected_metric, start_season, end_season, screen_width
+    selected_coach, selected_metric, start_season, end_season, screen_width, theme
 ):
+    is_dark = theme == "dark"
     if selected_coach is None:
         return go.Figure()
 
@@ -716,7 +728,11 @@ def update_trend_graph(
             y=coach_data[y_col],
             mode="lines+markers",
             line=dict(color=fill_color, width=3),
-            marker=dict(color=border_color, size=10, line=dict(width=2, color="black")),
+            marker=dict(
+                color=border_color,
+                size=10,
+                line=dict(width=2, color="#D1CFCF" if is_dark else "black"),
+            ),
             hovertemplate=hovertemplate,
             name="",
             customdata=customdata,
@@ -734,10 +750,11 @@ def update_trend_graph(
         xaxis=dict(tickmode="linear", dtick=1),
         margin=dict(l=20, r=60, t=80, b=60),
         height=400,
-        template="plotly_white",
         showlegend=False,
         hovermode="x unified",
         dragmode=False,
     )
+
+    apply_plotly_theme(fig, is_dark)
 
     return fig

@@ -15,7 +15,7 @@ layout = dbc.Container(
                 html.H2(
                     html.B("College Football 4th-Down Decision Analytics"),
                     className="mt-4",
-                    style={"color": "#000"},
+                    style={"color": "var(--text-color)"},
                 ),
             ],
             style={"overflow": "hidden"},
@@ -111,7 +111,9 @@ layout = dbc.Container(
         # SITE OVERVIEW
         # ======================
         html.H3(
-            html.B("What You Can Explore"), className="mt-4", style={"color": "#000"}
+            html.B("What You Can Explore"),
+            className="mt-4",
+            style={"color": "var(--text-color)"},
         ),
         html.P(
             "The site is organized into several sections, accessible via the navigation bar:"
@@ -219,7 +221,11 @@ layout = dbc.Container(
         # ======================
         # KEY METRICS
         # ======================
-        html.H3(html.B("Key Metrics"), className="mt-4", style={"color": "#000"}),
+        html.H3(
+            html.B("Key Metrics"),
+            className="mt-4",
+            style={"color": "var(--text-color)"},
+        ),
         html.P(
             [
                 "Across the ",
@@ -261,7 +267,11 @@ layout = dbc.Container(
         # ======================
         # DATA + CTA
         # ======================
-        html.H3(html.B("Data"), className="mt-4", style={"color": "#000"}),
+        html.H3(
+            html.B("Data"),
+            className="mt-4",
+            style={"color": "var(--text-color)"},
+        ),
         html.P(
             [
                 "All data used in this project is sourced from the ",

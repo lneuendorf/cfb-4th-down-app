@@ -1,41 +1,67 @@
 import dash_bootstrap_components as dbc
 from dash import html
 
-navbar = dbc.NavbarSimple(
-    brand=html.B("CFB 4th Down", style={"fontSize": "28px"}),
-    color="white",
-    dark=False,
-    children=[
-        dbc.NavItem(dbc.NavLink("About", href="/")),
-        dbc.NavItem(dbc.NavLink("Teams", href="/team-tendencies")),
-        dbc.NavItem(dbc.NavLink("Coaches", href="/coach-tendencies")),
-        dbc.NavItem(dbc.NavLink("Plays", href="/game-decisions")),
-        dbc.NavItem(dbc.NavLink("Analysis", href="/analysis")),
-    ],
-    sticky="top",
-    style={
-        "boxShadow": "0 1px 5px rgba(0,0,0,0.1)",
-    },
+theme_toggle_desktop = dbc.Button(
+    html.I(id="theme-toggle-icon-desktop", className="bi bi-moon-stars-fill"),
+    id="theme-toggle-desktop",
+    n_clicks=0,
+    className="theme-toggle-btn theme-toggle-btn-light d-none d-lg-inline-flex ms-lg-3",
+    color="link",
 )
 
-# disclaimer_bar = dbc.Alert(
-#     "⚠️ Beta Release: This early version may contain data inconsistencies (e.g. yards to goal inaccuracy). "
-#     "Use with caution. Final release expected by end of June.",
-#     color="secondary",
-#     style={
-#         "padding": "8px",
-#         "marginBottom": "0",
-#         "borderRadius": "0",
-#         "textAlign": "center",
-#         "fontSize": "14px"
-#     }
-# )
+theme_toggle_mobile = dbc.Button(
+    html.I(id="theme-toggle-icon-mobile", className="bi bi-moon-stars-fill"),
+    id="theme-toggle-mobile",
+    n_clicks=0,
+    className="theme-toggle-btn theme-toggle-btn-light d-inline-flex d-lg-none",
+    color="link",
+)
 
-# Combine both components in a container
+navbar = dbc.Navbar(
+    dbc.Container(
+        [
+            html.Div(
+                [
+                    dbc.NavbarBrand(
+                        html.B("CFB 4th Down", style={"fontSize": "28px"}),
+                        href="/",
+                    ),
+                    html.Div(
+                        [
+                            theme_toggle_mobile,
+                            dbc.NavbarToggler(id="navbar-toggler"),
+                        ],
+                        className="d-flex d-lg-none align-items-center gap-2",
+                    ),
+                ],
+                className="d-flex w-100 justify-content-between align-items-center",
+            ),
+            dbc.Collapse(
+                dbc.Nav(
+                    [
+                        dbc.NavItem(dbc.NavLink("About", href="/")),
+                        dbc.NavItem(dbc.NavLink("Teams", href="/team-tendencies")),
+                        dbc.NavItem(dbc.NavLink("Coaches", href="/coach-tendencies")),
+                        dbc.NavItem(dbc.NavLink("Plays", href="/game-decisions")),
+                        dbc.NavItem(dbc.NavLink("Analysis", href="/analysis")),
+                        dbc.NavItem(theme_toggle_desktop),
+                    ],
+                    className="ms-auto align-items-lg-center",
+                    navbar=True,
+                ),
+                id="navbar-collapse",
+                navbar=True,
+            ),
+        ]
+    ),
+    color="white",
+    dark=False,
+    sticky="top",
+    className="app-navbar",
+    style={"boxShadow": "0 1px 5px rgba(0,0,0,0.1)"},
+)
+
 header = html.Div(
-    [
-        navbar,
-        # disclaimer_bar
-    ],
+    [navbar],
     style={"position": "sticky", "top": 0, "zIndex": 1000},
 )
