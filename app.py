@@ -47,7 +47,7 @@ app.title = "CFB 4th Down Decisions"
 
 app.layout = html.Div(
     [
-        dcc.Store(id="theme-store", storage_type="local", data="light"),
+        dcc.Store(id="theme-store", storage_type="local", data="dark"),
         dcc.Store(id="screen-width-store"),
         dcc.Interval(id="resize-listener", interval=100000, n_intervals=1),
         header,
@@ -59,7 +59,7 @@ app.layout = html.Div(
         footer,
     ],
     id="app-shell",
-    className="app-shell theme-light",
+    className="app-shell theme-dark",
     style={"display": "flex", "flexDirection": "column", "minHeight": "100vh"},
 )
 

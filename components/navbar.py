@@ -2,18 +2,18 @@ import dash_bootstrap_components as dbc
 from dash import html
 
 theme_toggle_desktop = dbc.Button(
-    html.I(id="theme-toggle-icon-desktop", className="bi bi-moon-stars-fill"),
+    html.I(id="theme-toggle-icon-desktop", className="bi bi-sun-fill"),
     id="theme-toggle-desktop",
     n_clicks=0,
-    className="theme-toggle-btn theme-toggle-btn-light d-none d-lg-inline-flex ms-lg-3",
+    className="theme-toggle-btn theme-toggle-btn-dark d-none d-lg-inline-flex ms-lg-3",
     color="link",
 )
 
 theme_toggle_mobile = dbc.Button(
-    html.I(id="theme-toggle-icon-mobile", className="bi bi-moon-stars-fill"),
+    html.I(id="theme-toggle-icon-mobile", className="bi bi-sun-fill"),
     id="theme-toggle-mobile",
     n_clicks=0,
-    className="theme-toggle-btn theme-toggle-btn-light d-inline-flex d-lg-none",
+    className="theme-toggle-btn theme-toggle-btn-dark d-inline-flex d-lg-none",
     color="link",
 )
 
