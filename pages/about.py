@@ -142,7 +142,7 @@ layout = dbc.Container(
                                 ),
                             ],
                             lg=5,
-                            className="mb-4 mb-lg-0",
+                            className="mb-4 mb-lg-0 d-flex flex-column gap-4",
                         ),
                         dbc.Col(
                             [
@@ -177,6 +177,7 @@ layout = dbc.Container(
                                 )
                             ],
                             lg=7,
+                            className="d-flex flex-column gap-4 mt-md-4 mt-0",
                         ),
                     ],
                     className="g-4",
@@ -219,7 +220,7 @@ layout = dbc.Container(
                                 className="about-feature-card about-feature-card-team",
                             ),
                             md=6,
-                            className="mb-3",
+                            className="mb-3 mb-md-0",
                         ),
                         dbc.Col(
                             html.Div(
@@ -238,7 +239,7 @@ layout = dbc.Container(
                                 className="about-feature-card about-feature-card-coach",
                             ),
                             md=6,
-                            className="mb-3",
+                            className="mb-3 mb-md-0",
                         ),
                         dbc.Col(
                             html.Div(
@@ -278,7 +279,7 @@ layout = dbc.Container(
                                 className="about-feature-card about-feature-card-plays",
                             ),
                             lg=7,
-                            className="mb-3",
+                            className="mb-3 mb-md-0",
                         ),
                         dbc.Col(
                             html.Div(
@@ -311,7 +312,7 @@ layout = dbc.Container(
                                 className="about-feature-card about-feature-card-analysis",
                             ),
                             lg=5,
-                            className="mb-3",
+                            className="mb-3 mb-md-0",
                         ),
                     ],
                     className="g-3",
@@ -371,7 +372,7 @@ layout = dbc.Container(
                                 className="about-metric-card about-metric-card-light",
                             ),
                             md=6,
-                            className="mb-3",
+                            className="mb-3 mb-md-0",
                         ),
                         dbc.Col(
                             html.Div(
@@ -390,7 +391,7 @@ layout = dbc.Container(
                                 className="about-metric-card about-metric-card-light",
                             ),
                             md=6,
-                            className="mb-3",
+                            className="mb-3 mb-md-0",
                         ),
                     ],
                     className="g-3",

@@ -39,11 +39,21 @@ navbar = dbc.Navbar(
             dbc.Collapse(
                 dbc.Nav(
                     [
-                        dbc.NavItem(dbc.NavLink("About", href="/")),
-                        dbc.NavItem(dbc.NavLink("Teams", href="/team-tendencies")),
-                        dbc.NavItem(dbc.NavLink("Coaches", href="/coach-tendencies")),
-                        dbc.NavItem(dbc.NavLink("Plays", href="/game-decisions")),
-                        dbc.NavItem(dbc.NavLink("Analysis", href="/analysis")),
+                        dbc.NavItem(dbc.NavLink("About", href="/", active="exact")),
+                        dbc.NavItem(
+                            dbc.NavLink("Teams", href="/team-tendencies", active="exact")
+                        ),
+                        dbc.NavItem(
+                            dbc.NavLink(
+                                "Coaches", href="/coach-tendencies", active="exact"
+                            )
+                        ),
+                        dbc.NavItem(
+                            dbc.NavLink("Plays", href="/game-decisions", active="exact")
+                        ),
+                        dbc.NavItem(
+                            dbc.NavLink("Analysis", href="/analysis", active="exact")
+                        ),
                         dbc.NavItem(theme_toggle_desktop),
                     ],
                     className="ms-auto align-items-lg-center",
