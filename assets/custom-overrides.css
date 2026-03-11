@@ -73,7 +73,6 @@ body * {
 .theme-dark .card,
 .theme-dark .app-footer,
 .theme-dark .app-navbar.navbar,
-.theme-dark .dropdown-menu,
 .theme-dark .popover,
 .theme-dark .tooltip-inner {
     background-color: var(--surface-bg) !important;
@@ -187,11 +186,11 @@ body * {
     background-color: var(--surface-bg);
 }
 
-.theme-dark .input-group-text {
+/* .theme-dark .input-group-text {
     background-color: var(--surface-alt-bg);
     color: var(--text-color);
     border-color: var(--border-color);
-}
+} */
 
 .theme-dark .footer-divider {
     border-top: 1px solid var(--border-color);
@@ -222,4 +221,24 @@ body * {
 .theme-dark h5,
 .theme-dark h6 {
     color: inherit;
+}
+
+.theme-dark #decision-table img {
+    filter:
+        drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
+        drop-shadow(1px 0 0 rgba(255, 255, 255, 0.95))
+        drop-shadow(-1px 0 0 rgba(255, 255, 255, 0.95))
+        drop-shadow(0 1px 0 rgba(255, 255, 255, 0.95))
+        drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.95));
+}
+
+.theme-dark #team-tendency-graph .imagelayer image,
+.theme-dark #wp-lost-graph .imagelayer image,
+.theme-dark #team-trend-graph .imagelayer image {
+    filter:
+        drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
+        drop-shadow(1px 0 0 rgba(255, 255, 255, 0.95))
+        drop-shadow(-1px 0 0 rgba(255, 255, 255, 0.95))
+        drop-shadow(0 1px 0 rgba(255, 255, 255, 0.95))
+        drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.95));
 }
