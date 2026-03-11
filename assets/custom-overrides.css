@@ -389,7 +389,6 @@ body * {
 
 .about-story-card-outline {
     background: var(--surface-bg);
-    border-style: dashed;
 }
 
 .about-card-title,
