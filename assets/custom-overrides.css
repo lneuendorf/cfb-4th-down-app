@@ -242,3 +242,382 @@ body * {
         drop-shadow(0 1px 0 rgba(255, 255, 255, 0.95))
         drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.95));
 }
+
+.about-page {
+    padding-top: 1rem;
+}
+
+.about-page a {
+    color: inherit;
+}
+
+.about-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    min-height: 380px;
+    margin: 0 0 1.5rem;
+    box-shadow: 0 20px 50px var(--shadow-color);
+}
+
+.about-hero-image {
+    width: 100%;
+    height: 100%;
+    min-height: 380px;
+    object-fit: cover;
+    display: block;
+}
+
+.about-hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(8, 14, 20, 0.88) 8%, rgba(8, 14, 20, 0.52) 48%, rgba(8, 14, 20, 0.18) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.about-hero-content {
+    position: absolute;
+    inset: auto auto 0 0;
+    max-width: 680px;
+    padding: 2rem;
+    color: #f7fbff;
+}
+
+.about-hero-title {
+    margin: 0;
+    font-size: clamp(2rem, 4.5vw, 3.6rem);
+    line-height: 0.98;
+    color: #ffffff;
+    text-wrap: balance;
+}
+
+.about-hero-subtitle {
+    margin: 1rem 0 0;
+    max-width: 58ch;
+    font-size: clamp(1rem, 1.9vw, 1.2rem);
+    color: rgba(247, 251, 255, 0.92);
+}
+
+.about-intro-panel,
+.about-story-card,
+.about-diagram-panel,
+.about-feature-card,
+.about-metric-card,
+.about-data-banner {
+    border: 1px solid var(--border-color);
+    box-shadow: 0 14px 36px var(--shadow-color);
+}
+
+.about-intro-panel {
+    margin-bottom: 2rem;
+    padding: 1.25rem 1.4rem;
+    border-radius: 22px;
+    background:
+        linear-gradient(135deg, rgba(39, 89, 68, 0.14), rgba(255, 255, 255, 0.9)),
+        var(--surface-bg);
+    font-size: 1.03rem;
+}
+
+.about-section {
+    margin-bottom: 2rem;
+}
+
+.about-section-heading {
+    margin-bottom: 1.1rem;
+}
+
+.about-section-kicker {
+    display: inline-block;
+    margin-bottom: 0.45rem;
+    color: #2d6a4f;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.about-section-title {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+    color: var(--text-color);
+}
+
+.about-section-copy {
+    margin-bottom: 0;
+    max-width: 70ch;
+    color: var(--muted-text-color);
+}
+
+.about-story-card,
+.about-feature-card,
+.about-metric-card,
+.about-data-banner,
+.about-diagram-panel {
+    border-radius: 24px;
+}
+
+.about-story-card {
+    padding: 1.25rem 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.about-story-card-primary {
+    background: linear-gradient(160deg, rgba(226, 241, 234, 0.95), var(--surface-bg));
+}
+
+.about-story-card-accent {
+    background: linear-gradient(160deg, rgba(255, 243, 229, 0.96), var(--surface-bg));
+}
+
+.about-story-card-outline {
+    background: var(--surface-bg);
+    border-style: dashed;
+}
+
+.about-card-title,
+.about-feature-title,
+.about-metric-title {
+    margin-bottom: 0.65rem;
+    font-size: 1.05rem;
+    color: var(--text-color);
+}
+
+.about-diagram-panel {
+    height: 100%;
+    padding: 1.4rem;
+    background:
+        radial-gradient(circle at top right, rgba(45, 106, 79, 0.08), transparent 42%),
+        var(--surface-bg);
+}
+
+.about-diagram-copy,
+.about-diagram-note {
+    color: var(--muted-text-color);
+}
+
+.about-architecture-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto 1.2rem;
+    border-radius: 18px;
+}
+
+.about-feature-card {
+    position: relative;
+    height: 100%;
+    padding: 1.35rem;
+    overflow: hidden;
+}
+
+.about-feature-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 6px;
+    background: currentColor;
+    opacity: 0.18;
+}
+
+.about-feature-card-team {
+    background: linear-gradient(150deg, rgba(219, 236, 255, 0.92), var(--surface-bg));
+    color: #1d4e89;
+}
+
+.about-feature-card-team p,
+.about-feature-card-team li,
+.about-feature-card-team h3,
+.about-feature-card-team a {
+    color: #163c69 !important;
+}
+
+.about-feature-card-coach {
+    background: linear-gradient(150deg, rgba(239, 230, 255, 0.92), var(--surface-bg));
+    color: #6b3fa0;
+}
+
+.about-feature-card-coach p,
+.about-feature-card-coach li,
+.about-feature-card-coach h3,
+.about-feature-card-coach a {
+    color: #532e7d !important;
+}
+
+.about-feature-card-plays {
+    background: linear-gradient(155deg, rgba(255, 245, 219, 0.94), var(--surface-bg));
+    color: #8a5a12;
+}
+
+.about-feature-card-plays p,
+.about-feature-card-plays li,
+.about-feature-card-plays h3,
+.about-feature-card-plays a {
+    color: #6f470d !important;
+}
+
+.about-feature-card-analysis {
+    background: linear-gradient(155deg, rgba(225, 242, 236, 0.94), var(--surface-bg));
+    color: #256348;
+}
+
+.about-feature-card-analysis p,
+.about-feature-card-analysis li,
+.about-feature-card-analysis h3,
+.about-feature-card-analysis a {
+    color: #1d4e39 !important;
+}
+
+.about-feature-number {
+    margin-bottom: 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.72;
+}
+
+.about-metric-card {
+    height: 100%;
+    padding: 1.35rem;
+}
+
+.about-metric-card-light {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.98)),
+        repeating-linear-gradient(-45deg, rgba(37, 99, 235, 0.03), rgba(37, 99, 235, 0.03) 12px, transparent 12px, transparent 24px);
+}
+
+.about-metric-card-dark {
+    background: linear-gradient(145deg, #1f2937, #101827);
+    color: #f4f7fb;
+}
+
+.about-metric-card-dark p,
+.about-metric-card-dark h3 {
+    color: #f4f7fb !important;
+}
+
+.about-data-banner {
+    padding: 1.35rem 1.4rem;
+    background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(45, 106, 79, 0.1)),
+        var(--surface-bg);
+}
+
+.about-data-banner a {
+    font-weight: 700;
+}
+
+.theme-dark .about-hero {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.theme-dark .about-intro-panel {
+    background:
+        linear-gradient(135deg, rgba(45, 106, 79, 0.2), rgba(22, 27, 34, 0.98)),
+        var(--surface-bg);
+}
+
+.theme-dark .about-story-card-primary {
+    background: linear-gradient(160deg, rgba(26, 58, 45, 0.85), rgba(22, 27, 34, 0.98));
+}
+
+.theme-dark .about-story-card-accent {
+    background: linear-gradient(160deg, rgba(74, 54, 18, 0.82), rgba(22, 27, 34, 0.98));
+}
+
+.theme-dark .about-story-card-outline {
+    background: rgba(22, 27, 34, 0.98);
+}
+
+.theme-dark .about-diagram-panel {
+    background:
+        radial-gradient(circle at top right, rgba(86, 189, 138, 0.12), transparent 42%),
+        var(--surface-bg);
+}
+
+.theme-dark .about-section-kicker {
+    color: #7bd4a8;
+}
+
+.theme-dark .about-feature-card-team {
+    background: linear-gradient(150deg, rgba(20, 45, 74, 0.96), rgba(22, 27, 34, 0.98));
+}
+
+.theme-dark .about-feature-card-team p,
+.theme-dark .about-feature-card-team li,
+.theme-dark .about-feature-card-team h3,
+.theme-dark .about-feature-card-team a {
+    color: #d8e9ff !important;
+}
+
+.theme-dark .about-feature-card-coach {
+    background: linear-gradient(150deg, rgba(52, 31, 77, 0.96), rgba(22, 27, 34, 0.98));
+}
+
+.theme-dark .about-feature-card-coach p,
+.theme-dark .about-feature-card-coach li,
+.theme-dark .about-feature-card-coach h3,
+.theme-dark .about-feature-card-coach a {
+    color: #eadcff !important;
+}
+
+.theme-dark .about-feature-card-plays {
+    background: linear-gradient(150deg, rgba(83, 53, 16, 0.96), rgba(22, 27, 34, 0.98));
+}
+
+.theme-dark .about-feature-card-plays p,
+.theme-dark .about-feature-card-plays li,
+.theme-dark .about-feature-card-plays h3,
+.theme-dark .about-feature-card-plays a {
+    color: #ffe8c2 !important;
+}
+
+.theme-dark .about-feature-card-analysis {
+    background: linear-gradient(150deg, rgba(24, 64, 46, 0.96), rgba(22, 27, 34, 0.98));
+}
+
+.theme-dark .about-feature-card-analysis p,
+.theme-dark .about-feature-card-analysis li,
+.theme-dark .about-feature-card-analysis h3,
+.theme-dark .about-feature-card-analysis a {
+    color: #dbf5e7 !important;
+}
+
+.theme-dark .about-metric-card-light {
+    background:
+        linear-gradient(180deg, rgba(26, 33, 42, 0.98), rgba(18, 24, 31, 0.98)),
+        repeating-linear-gradient(-45deg, rgba(123, 212, 168, 0.06), rgba(123, 212, 168, 0.06) 12px, transparent 12px, transparent 24px);
+}
+
+.theme-dark .about-data-banner {
+    background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(45, 106, 79, 0.18)),
+        var(--surface-bg);
+}
+
+@media (max-width: 767.98px) {
+    .about-hero {
+        min-height: 300px;
+        border-radius: 22px;
+    }
+
+    .about-hero-image {
+        min-height: 300px;
+    }
+
+    .about-hero-content {
+        padding: 1.35rem;
+    }
+
+    .about-intro-panel,
+    .about-story-card,
+    .about-diagram-panel,
+    .about-feature-card,
+    .about-metric-card,
+    .about-data-banner {
+        border-radius: 20px;
+    }
+}
