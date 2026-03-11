@@ -4,7 +4,11 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objects as go
 from config.config import CONFIG
-from components.theme import apply_plotly_theme
+from components.theme import (
+    apply_plotly_theme,
+    build_responsive_plot_title,
+    get_plot_title_margin,
+)
 
 dash.register_page(__name__, path="/coach-tendencies", name="Coach Tendencies")
 
@@ -549,12 +553,17 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width, them
     calculated_height = num_coaches * (BAR_HEIGHT + BAR_GAP) + 150
     plot_height = max(calculated_height, min_height)
 
+    fig1_title = build_responsive_plot_title(
+        "Go-For-It Rate When Recommended",
+        subtitle="'Recommended' when going for it has highest expected win probability",
+        screen_width=screen_width,
+        columns=2,
+        subtitle_width_factor=0.4,
+    )
+
     fig1.update_layout(
         title=dict(
-            text=(
-                "<span style='font-size:16px'><b>Go-For-It Rate When Recommended</b></span><br>"
-                "<span style='font-size:16px'><sub>'Recommended' when going for it has highest expected win probability</sub></span>"
-            ),
+            text=fig1_title["text"],
             xanchor="left",
             x=0,
         ),
@@ -571,7 +580,12 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width, them
             tickformat=".0%",
             range=[0, max_x1 * x_range_multiplier if max_x1 > 0 else 1],
         ),
-        margin=dict(l=20, r=60, t=100, b=bottom_margin),
+        margin=dict(
+            l=20,
+            r=60,
+            t=get_plot_title_margin(fig1_title["lines"], has_subtitle=True, base=100),
+            b=bottom_margin,
+        ),
         height=plot_height,
         barmode="overlay",
         bargap=0.2,
@@ -610,12 +624,17 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width, them
         else 1
     )
 
+    fig2_title = build_responsive_plot_title(
+        "Win Probability Lost Per Season",
+        subtitle="Due to not going for it on 4th down when recommended",
+        screen_width=screen_width,
+        columns=2,
+        subtitle_width_factor=0.4,
+    )
+
     fig2.update_layout(
         title=dict(
-            text=(
-                "<span style='font-size:16px'><b>Win Probability Lost Per Season</b></span><br>"
-                "<span style='font-size:16px'><sub>Due to not going for it on 4th down when recommended</sub></span>"
-            ),
+            text=fig2_title["text"],
             xanchor="left",
             x=0,
         ),
@@ -632,7 +651,12 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width, them
             tickformat=".0%",
             range=[0, max_x2 * x_range_multiplier if max_x2 > 0 else 1],
         ),
-        margin=dict(l=20, r=60, t=100, b=bottom_margin),
+        margin=dict(
+            l=20,
+            r=60,
+            t=get_plot_title_margin(fig2_title["lines"], has_subtitle=True, base=100),
+            b=bottom_margin,
+        ),
         height=plot_height,
         barmode="overlay",
         bargap=0.2,
@@ -739,16 +763,29 @@ def update_trend_graph(
         )
     )
 
+    trend_title = build_responsive_plot_title(
+        chart_title,
+        screen_width=screen_width,
+        columns=1,
+        title_font_size=title_fontsize,
+        title_width_factor=0.7,
+    )
+
     fig.update_layout(
         title=dict(
-            text=f"<span style='font-size:{title_fontsize}px'><b>{chart_title}</b></span>",
+            text=trend_title["text"],
             x=0.5,
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Season</span>",
         yaxis_title=f"<span style='font-size:{axis_fontsize}px'>{y_title}</span>",
         yaxis=yaxis_config,
         xaxis=dict(tickmode="linear", dtick=1),
-        margin=dict(l=20, r=60, t=80, b=60),
+        margin=dict(
+            l=20,
+            r=60,
+            t=get_plot_title_margin(trend_title["lines"], base=80),
+            b=60,
+        ),
         height=400,
         showlegend=False,
         hovermode="x unified",
