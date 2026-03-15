@@ -3,7 +3,9 @@ from dash import html
 import dash_bootstrap_components as dbc
 from config.config import CONFIG
 
-dash.register_page(__name__, path="/analysis", name="Analysis")
+dash.register_page(
+    __name__, path="/analysis", name="Analysis", title="Analysis | CFB 4th Down"
+)
 
 CARD_STYLE = {
     "borderRadius": "22px",

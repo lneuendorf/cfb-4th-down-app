@@ -6,7 +6,12 @@ import pandas as pd
 from dash.dash_table import DataTable
 from config.config import CONFIG
 
-dash.register_page(__name__, path="/game-decisions", name="Game Decisions")
+dash.register_page(
+    __name__,
+    path="/game-decisions",
+    name="Game Decisions",
+    title="Game Decisions | CFB 4th Down",
+)
 
 # Load the data
 df = pd.read_parquet("data/game_decisions.parquet")

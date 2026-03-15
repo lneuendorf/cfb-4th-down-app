@@ -10,7 +10,12 @@ from components.theme import (
     get_plot_title_margin,
 )
 
-dash.register_page(__name__, path="/coach-tendencies", name="Coach Tendencies")
+dash.register_page(
+    __name__,
+    path="/coach-tendencies",
+    name="Coach Tendencies",
+    title="Coach Tendencies | CFB 4th Down",
+)
 
 df = pd.read_parquet("data/coach_tendencies.parquet")
 

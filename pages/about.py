@@ -3,7 +3,7 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 from config.config import CONFIG
 
-dash.register_page(__name__, path="/", name="About")
+dash.register_page(__name__, path="/", name="Home", title="CFB 4th Down")
 
 
 layout = dbc.Container(
