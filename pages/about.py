@@ -66,7 +66,11 @@ layout = dbc.Container(
                                 html.Div(
                                     [
                                         html.Div("01", className="about-feature-number"),
-                                        html.H3("Teams", className="about-feature-title"),
+                                        html.H3(
+                                            "Teams",
+                                            className="about-feature-title",
+                                            style={"fontWeight": "700"},
+                                        ),
                                         html.P(
                                             "Compare how often teams follow the model’s recommendation and how much win probability they gain or lose from fourth-down decisions.",
                                             className="mb-0",
@@ -86,7 +90,9 @@ layout = dbc.Container(
                                     [
                                         html.Div("02", className="about-feature-number"),
                                         html.H3(
-                                            "Coaches", className="about-feature-title"
+                                            "Coaches",
+                                            className="about-feature-title",
+                                            style={"fontWeight": "700"},
                                         ),
                                         html.P(
                                             "See which coaches are more aggressive or conservative, and how their decision-making changes over time.",
@@ -106,7 +112,11 @@ layout = dbc.Container(
                                 html.Div(
                                     [
                                         html.Div("03", className="about-feature-number"),
-                                        html.H3("Plays", className="about-feature-title"),
+                                        html.H3(
+                                            "Plays",
+                                            className="about-feature-title",
+                                            style={"fontWeight": "700"},
+                                        ),
                                         html.P(
                                             "Inspect individual fourth-down decisions with full game context, model recommendations, and expected win probability by option.",
                                             className="mb-0",
@@ -149,6 +159,7 @@ layout = dbc.Container(
                                     html.H3(
                                         "Go-For-It Rate When Recommended",
                                         className="about-metric-title",
+                                        style={"fontWeight": "700"},
                                     ),
                                     html.P(
                                         "The percentage of model-recommended go situations where the team or coach actually went for it.",
@@ -166,6 +177,7 @@ layout = dbc.Container(
                                     html.H3(
                                         "Win Probability Lost Per Season",
                                         className="about-metric-title",
+                                        style={"fontWeight": "700"},
                                     ),
                                     html.P(
                                         "The total expected win probability given up by choosing a lower-value option on fourth down.",
@@ -191,13 +203,7 @@ layout = dbc.Container(
                         html.Span("Data", className="about-section-kicker"),
                         html.H2(
                             "Source and attribution",
-                            className="about-section-title",
                         ),
-                    ],
-                    className="about-section-heading",
-                ),
-                html.Div(
-                    [
                         html.P(
                             [
                                 "All data used in this project is sourced from the ",
@@ -217,9 +223,9 @@ layout = dbc.Container(
                                 " Python package.",
                             ],
                             className="mb-0",
-                        )
+                        ),
                     ],
-                    className="about-data-banner",
+                    className="about-section-heading",
                 ),
             ],
             className="about-section about-section-data",
