@@ -25,14 +25,17 @@ layout = dbc.Container(
     [
         html.Div(
             [
-                html.H5(
-                    html.B("Team Tendencies"),
-                    className="mt-4",
-                    style={"color": "var(--text-color)"},
+                html.Div("Comparison", className="tendencies-section-kicker"),
+                html.H2(
+                    "Team Fourth-Down Tendencies",
+                    className="tendencies-section-title",
                 ),
-                html.P("Explore how different teams behave on 4th down."),
+                html.P(
+                    "Compare how teams behave on fourth down and how their decisions impact win probability.",
+                    className="tendencies-section-subtitle",
+                ),
             ],
-            style={"overflow": "hidden"},
+            className="tendencies-section-header mt-2",
         ),
         dbc.Row(
             [
@@ -141,7 +144,7 @@ layout = dbc.Container(
                             ],
                             value="wp_lost",
                             inline=True,
-                            className="d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
+                            className="tendencies-metric-radio d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
                             inputCheckedClassName="border border-dark bg-dark",
                         )
                     ],
@@ -165,27 +168,32 @@ layout = dbc.Container(
                                 html.Div(
                                     [
                                         html.Div(
-                                            html.Img(
-                                                src="/assets/logos/more_info.png",
-                                                style={
-                                                    "width": "15px",
-                                                    "height": "15px",
-                                                    "cursor": "pointer",
-                                                },
-                                                id="team-summary-info-icon",
-                                                className="info-icon",
-                                            ),
-                                            style={
-                                                "position": "absolute",
-                                                "top": "10px",
-                                                "right": "0px",
-                                                "width": "24px",
-                                                "height": "24px",
-                                                "display": "flex",
-                                                "alignItems": "center",
-                                                "justifyContent": "center",
-                                                "zIndex": "100",
-                                            },
+                                            [
+                                                html.Button(
+                                                    html.I(className="bi bi-download"),
+                                                    id="team-summary-download-button",
+                                                    className="plot-action-button plot-download-button",
+                                                    title="Download chart",
+                                                    type="button",
+                                                    **{
+                                                        "data-graph-id": "team-summary-graph",
+                                                        "data-filename": "team-summary-chart",
+                                                        "data-export-width": "450",
+                                                        "data-export-height": "550",
+                                                    },
+                                                ),
+                                                html.Button(
+                                                    html.Img(
+                                                        src="/assets/logos/more_info.png",
+                                                        className="info-icon",
+                                                    ),
+                                                    id="team-summary-info-icon",
+                                                    className="plot-action-button plot-info-button",
+                                                    title="About this chart",
+                                                    type="button",
+                                                ),
+                                            ],
+                                            className="plot-action-bar",
                                         ),
                                         dcc.Graph(
                                             id="team-summary-graph",
@@ -213,11 +221,10 @@ layout = dbc.Container(
                                     },
                                 ),
                             ],
-                            className="bg-white",
+                            className="bg-white tendencies-chart-card",
                             style={
                                 "padding-left": "20px",
                                 "border-radius": "16px",
-                                "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
                                 "height": "100%",
                                 "min-height": "400px",
                             },
@@ -229,18 +236,20 @@ layout = dbc.Container(
                 ),
             ]
         ),
+        html.Div(className="tendencies-section-divider"),
         html.Div(
             [
-                html.H5(
-                    html.B("Team Tendencies Over Time"),
-                    className="mt-4",
-                    style={"color": "var(--text-color)"},
+                html.Div("Trends", className="tendencies-section-kicker"),
+                html.H2(
+                    "Fourth-Down Trends Over Time",
+                    className="tendencies-section-title",
                 ),
                 html.P(
-                    "Explore how teams have performed over time on fourth down based on the selected metric."
+                    "Track how a team's fourth-down decision making has evolved across seasons.",
+                    className="tendencies-section-subtitle",
                 ),
             ],
-            style={"overflow": "hidden"},
+            className="tendencies-section-header",
         ),
         dbc.Row(
             [
@@ -299,7 +308,7 @@ layout = dbc.Container(
                             ],
                             value="wp_lost",
                             inline=True,
-                            className="d-flex justify-content-center justify-content-md-start gap-3 pt-2",
+                            className="tendencies-metric-radio d-flex justify-content-center justify-content-md-start gap-3 pt-2",
                             inputCheckedClassName="border border-dark bg-dark",
                         )
                     ],
@@ -318,27 +327,32 @@ layout = dbc.Container(
                                 html.Div(
                                     [
                                         html.Div(
-                                            html.Img(
-                                                src="/assets/logos/more_info.png",
-                                                style={
-                                                    "width": "15px",
-                                                    "height": "15px",
-                                                    "cursor": "pointer",
-                                                },
-                                                id="info-icon3",
-                                                className="info-icon",
-                                            ),
-                                            style={
-                                                "position": "absolute",
-                                                "top": "10px",
-                                                "right": "0px",
-                                                "width": "24px",
-                                                "height": "24px",
-                                                "display": "flex",
-                                                "alignItems": "center",
-                                                "justifyContent": "center",
-                                                "zIndex": "100",
-                                            },
+                                            [
+                                                html.Button(
+                                                    html.I(className="bi bi-download"),
+                                                    id="team-trend-download-button",
+                                                    className="plot-action-button plot-download-button",
+                                                    title="Download chart",
+                                                    type="button",
+                                                    **{
+                                                        "data-graph-id": "team-trend-graph",
+                                                        "data-filename": "team-trend-chart",
+                                                        "data-export-width": "700",
+                                                        "data-export-height": "500",
+                                                    },
+                                                ),
+                                                html.Button(
+                                                    html.Img(
+                                                        src="/assets/logos/more_info.png",
+                                                        className="info-icon",
+                                                    ),
+                                                    id="info-icon3",
+                                                    className="plot-action-button plot-info-button",
+                                                    title="About this chart",
+                                                    type="button",
+                                                ),
+                                            ],
+                                            className="plot-action-bar",
                                         ),
                                         dcc.Graph(
                                             id="team-trend-graph",
@@ -355,9 +369,8 @@ layout = dbc.Container(
                                     style={"position": "relative"},
                                 ),
                                 dbc.Tooltip(
-                                    "This chart tracks either how often a team follows go-for-it recommendations on fourth down or how much "
-                                    "win probability it gives up by not doing so across seasons. Changes over time can reflect shifts in "
-                                    "coaching philosophy, analytical adoption, league-wide trends, or season-to-season randomness.",
+                                    id="team-trend-tooltip",
+                                    children="",
                                     target="info-icon3",
                                     placement="left",
                                     style={
@@ -368,11 +381,10 @@ layout = dbc.Container(
                                     },
                                 ),
                             ],
-                            className="bg-white",
+                            className="bg-white tendencies-chart-card",
                             style={
                                 "padding-left": "20px",
                                 "border-radius": "16px",
-                                "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
                                 "height": "100%",
                                 "min-height": "400px",
                             },
@@ -389,7 +401,7 @@ layout = dbc.Container(
         "padding-left": CONFIG["padding-left"],
         "padding-right": CONFIG["padding-right"],
     },
-    className="responsive-container",
+    className="responsive-container tendencies-page team-tendencies-page",
 )
 
 
@@ -474,8 +486,8 @@ def update_graphs(
         )
 
     fig1_title = build_responsive_plot_title(
-        "Go-For-It Rate When Recommended",
-        subtitle="'Recommended' when going for it has highest expected win probability",
+        "Go-For-It Rate",
+        subtitle="Percentage of analytically-recommended go situations where the team actually goes for it.",
         screen_width=screen_width,
         columns=2,
         subtitle_width_factor=0.4,
@@ -484,8 +496,8 @@ def update_graphs(
     fig1.update_layout(
         title=dict(
             text=fig1_title["text"],
-            xanchor="left",
-            x=0,
+            xanchor="center",
+            x=0.5,
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Percent of time team went for it when recommended</span>",
         yaxis=dict(
@@ -494,6 +506,7 @@ def update_graphs(
             categoryorder="array",
             categoryarray=grouped_sorted1["offense_team"].tolist(),
             showticklabels=False,
+            showgrid=False,
         ),
         xaxis=dict(
             fixedrange=True,
@@ -506,6 +519,10 @@ def update_graphs(
             t=get_plot_title_margin(fig1_title["lines"], has_subtitle=True, base=100),
             b=bottom_margin,
         ),
+        meta={
+            "export_title": "Go-For-It Rate",
+            "export_subtitle": "Percentage of analytically-recommended go situations where the team actually goes for it.",
+        },
         height=PLOT_HEIGHT,
         barmode="overlay",
         bargap=0.2,
@@ -561,17 +578,17 @@ def update_graphs(
 
     fig2_title = build_responsive_plot_title(
         "Win Probability Lost",
-        subtitle="Due to not going for it on 4th down when recommended",
+        subtitle="Due to not going for it on 4th down when analytically recommended",
         screen_width=screen_width,
         columns=2,
-        subtitle_width_factor=0.4,
+        subtitle_width_factor=0.5,
     )
 
     fig2.update_layout(
         title=dict(
             text=fig2_title["text"],
-            xanchor="left",
-            x=0,
+            xanchor="center",
+            x=0.5,
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>WP Lost (percentage points)</span>",
         yaxis=dict(
@@ -580,6 +597,7 @@ def update_graphs(
             categoryorder="array",
             categoryarray=grouped_sorted2["offense_team"].tolist(),
             showticklabels=False,
+            showgrid=False,
         ),
         xaxis=dict(
             fixedrange=True,
@@ -592,6 +610,10 @@ def update_graphs(
             t=get_plot_title_margin(fig2_title["lines"], has_subtitle=True, base=100),
             b=bottom_margin,
         ),
+        meta={
+            "export_title": "Win Probability Lost",
+            "export_subtitle": "Due to not going for it on 4th down when analytically recommended",
+        },
         height=PLOT_HEIGHT,
         barmode="overlay",
         bargap=0.2,
@@ -602,17 +624,8 @@ def update_graphs(
     apply_plotly_theme(fig1, is_dark)
     apply_plotly_theme(fig2, is_dark)
 
-    tooltip_go_rate = (
-        "A higher value indicates that a team frequently follows recommendations on fourth down. Lower "
-        "values suggest a more conservative approach, even when going for it would increase expected win "
-        "probability. This metric does not account for situations where punting or kicking was recommended."
-    )
-    tooltip_wp_lost = (
-        "This metric estimates how much win probability a team gives up over a season by choosing not to "
-        "go for it on fourth down when the model recommends doing so. Higher values indicate a greater "
-        "cumulative cost of conservative decisions, while lower values suggest teams are better at capitalizing "
-        "on high-leverage go-for-it opportunities."
-    )
+    tooltip_go_rate = "Higher values indicate that a team often follows the model’s recommendation to go for it on fourth down. Lower values suggest a more conservative approach, even when going for it would increase expected win probability. This metric only includes situations where the model recommends going for it."
+    tooltip_wp_lost = "This chart shows the average win probability lost for the teams in a given conference. Win probability is lost when a team punts or attempts a field goal instead of going for it when recommended by the model. Higher values indicate a greater expected cost from conservative fourth-down decisions."
 
     if selected_metric == "go_rate":
         return fig1, tooltip_go_rate
@@ -622,6 +635,7 @@ def update_graphs(
 
 @dash.callback(
     Output("team-trend-graph", "figure"),
+    Output("team-trend-tooltip", "children"),
     Input("team-dropdown", "value"),
     Input("trend-metric-radio", "value"),
     Input("screen-width-store", "data"),
@@ -630,7 +644,7 @@ def update_graphs(
 def update_trend_graph(selected_team, selected_metric, screen_width, theme):
     is_dark = theme == "dark"
     if selected_team is None:
-        return go.Figure()
+        return go.Figure(), ""
 
     team_df = df[df["offense_team"] == selected_team]
     team_data = (
@@ -652,7 +666,7 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
     team_data["wp_lost"] = team_data["net_wp_lost"]
 
     if team_data.empty:
-        return go.Figure()
+        return go.Figure(), ""
 
     if screen_width < 768:
         axis_fontsize = 11
@@ -671,7 +685,13 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
         y_col = "go_rate"
         y_title = "Go-For-It Rate When Recommended"
         chart_title = f"{selected_team} Go-For-It Rate When Recommended Over Time"
+        chart_subtitle = "Percentage of analytically-recommended go situations where the team actually goes for it."
         hovertemplate = "<b>Season %{x}</b><br>Go Rate: %{y:.1%}<extra></extra>"
+        tooltip_text = (
+            "This chart shows how often "
+            f"{selected_team} went for it when the model recommended doing so in each season. "
+            "Higher values indicate the team followed high-leverage fourth-down recommendations more consistently over time."
+        )
         yaxis_config = dict(
             tickformat=".0%",
             range=[0, min(1.1, max(team_data[y_col].max() * 1.1, 0.1))],
@@ -680,7 +700,15 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
         y_col = "wp_lost"
         y_title = "Win Probability Lost"
         chart_title = f"{selected_team} Win Probability Lost Over Time"
+        chart_subtitle = (
+            "Due to not going for it on 4th down when analytically recommended"
+        )
         hovertemplate = "<b>Season %{x}</b><br>WP Lost: %{y:.1%}<extra></extra>"
+        tooltip_text = (
+            "This chart shows the estimated win probability "
+            f"{selected_team} gave up in each season by not going for it when the model recommended it. "
+            "Higher values indicate a larger cumulative cost from conservative fourth-down choices."
+        )
         y_max = team_data[y_col].max()
         yaxis_config = dict(
             tickformat=".0%",
@@ -688,6 +716,19 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
         )
 
     fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=team_data["season"],
+            y=team_data[y_col],
+            mode="lines+markers",
+            line=dict(color="rgba(210, 210, 210, 0.92)", width=5),
+            marker=dict(color="rgba(210, 210, 210, 0.92)", size=12),
+            hoverinfo="skip",
+            showlegend=False,
+            name="",
+        )
+    )
 
     fig.add_trace(
         go.Scatter(
@@ -723,16 +764,19 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
 
     trend_title = build_responsive_plot_title(
         chart_title,
+        subtitle=chart_subtitle,
         screen_width=screen_width,
         columns=1,
         title_font_size=title_fontsize,
         title_width_factor=0.7,
+        subtitle_width_factor=0.55,
     )
 
     fig.update_layout(
         title=dict(
             text=trend_title["text"],
             x=0.5,
+            xanchor="center",
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Season</span>",
         yaxis_title=f"<span style='font-size:{axis_fontsize}px'>{y_title}</span>",
@@ -741,9 +785,13 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
         margin=dict(
             l=20,
             r=60,
-            t=get_plot_title_margin(trend_title["lines"], base=80),
+            t=get_plot_title_margin(trend_title["lines"], has_subtitle=True, base=100),
             b=60,
         ),
+        meta={
+            "export_title": chart_title,
+            "export_subtitle": chart_subtitle,
+        },
         height=400,
         showlegend=False,
         hovermode="x unified",
@@ -752,4 +800,4 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
 
     apply_plotly_theme(fig, is_dark)
 
-    return fig
+    return fig, tooltip_text

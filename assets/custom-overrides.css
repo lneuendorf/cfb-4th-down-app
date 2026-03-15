@@ -290,6 +290,183 @@ body * {
     box-shadow: 0 10px 30px var(--shadow-color) !important;
 }
 
+.tendencies-page {
+    padding-top: 1.25rem;
+    padding-bottom: 2.5rem;
+}
+
+.tendencies-section-header {
+    overflow: hidden;
+    margin: 0 0 1.25rem;
+}
+
+.tendencies-section-kicker {
+    margin-bottom: 0.4rem;
+    color: var(--accent-color);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.tendencies-section-title {
+    margin: 0;
+    color: var(--text-color);
+    font-size: clamp(1.65rem, 2.2vw, 2.15rem);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.theme-dark .tendencies-section-title {
+    color: #f4f7fb;
+}
+
+.tendencies-section-subtitle {
+    margin: 0.75rem 0 0;
+    max-width: 200ch;
+    color: var(--muted-text-color);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.tendencies-section-divider {
+    height: 4px;
+    margin: 2.75rem 0 2.25rem;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent-color),
+        transparent
+    );
+}
+
+.tendencies-chart-card {
+    position: relative;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(var(--surface-bg), var(--surface-bg)) padding-box,
+        linear-gradient(
+            135deg,
+            rgba(255, 122, 26, 0.92) 0%,
+            rgba(255, 166, 77, 0.6) 42%,
+            rgba(255, 122, 26, 0.24) 68%,
+            rgba(255, 208, 153, 0.78) 100%
+        ) border-box;
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.14),
+        0 0 0 1px rgba(255, 122, 26, 0.16) !important;
+}
+
+.theme-dark .tendencies-chart-card.bg-white {
+    background:
+        linear-gradient(var(--surface-bg), var(--surface-bg)) padding-box,
+        linear-gradient(
+            135deg,
+            rgba(255, 159, 67, 0.96) 0%,
+            rgba(255, 190, 120, 0.68) 38%,
+            rgba(255, 159, 67, 0.26) 66%,
+            rgba(255, 220, 173, 0.82) 100%
+        ) border-box;
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(255, 159, 67, 0.2) !important;
+}
+
+@media (min-width: 768px) {
+    .tendencies-chart-card {
+        border-width: 4px;
+    }
+}
+
+.tendencies-metric-radio .form-check {
+    margin-bottom: 0;
+}
+
+.tendencies-metric-radio .form-check-input {
+    border-color: rgba(255, 122, 26, 0.45);
+}
+
+.tendencies-metric-radio .form-check-input:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.tendencies-metric-radio .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 122, 26, 0.18);
+}
+
+.tendencies-metric-radio .form-check-input:checked ~ .form-check-label {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.plot-action-bar {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.plot-action-button {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition:
+        border-color 0.18s ease,
+        color 0.18s ease,
+        background-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.plot-action-button:hover,
+.plot-action-button:focus {
+    color: var(--accent-color);
+    border-color: rgba(255, 122, 26, 0.36);
+    background-color: rgba(255, 244, 236, 0.96);
+    transform: translateY(-1px);
+}
+
+.plot-action-button .info-icon {
+    width: 15px;
+    height: 15px;
+    transition: filter 0.18s ease;
+}
+
+.plot-info-button:hover .info-icon,
+.plot-info-button:focus .info-icon {
+    filter: brightness(0) saturate(100%) invert(53%) sepia(85%) saturate(1264%) hue-rotate(356deg) brightness(96%) contrast(93%);
+}
+
+.plot-download-button .bi {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.theme-dark .plot-action-button {
+    background-color: rgba(22, 27, 34, 0.92);
+    color: #f4f7fb;
+    border-color: rgba(244, 247, 251, 0.14);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.theme-dark .plot-action-button:hover,
+.theme-dark .plot-action-button:focus {
+    color: var(--accent-color);
+    border-color: rgba(255, 159, 67, 0.4);
+    background-color: rgba(38, 30, 22, 0.96);
+}
+
 .theme-dark .card-text,
 .theme-dark .lead,
 .theme-dark p,
@@ -330,6 +507,25 @@ body * {
         drop-shadow(-1px 0 0 rgba(255, 255, 255, 0.95))
         drop-shadow(0 1px 0 rgba(255, 255, 255, 0.95))
         drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.95));
+}
+
+@media (max-width: 767.98px) {
+    .tendencies-page {
+        padding-top: 0.75rem;
+        padding-bottom: 2rem;
+    }
+
+    .tendencies-section-header {
+        margin-bottom: 1rem;
+    }
+
+    .tendencies-section-subtitle {
+        font-size: 0.96rem;
+    }
+
+    .tendencies-section-divider {
+        margin: 2.25rem 0 1.75rem;
+    }
 }
 
 .about-page {

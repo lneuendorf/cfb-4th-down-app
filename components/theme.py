@@ -65,6 +65,21 @@ def _count_wrapped_lines(wrapped_text):
     return wrapped_text.count("<br>") + 1
 
 
+def _fit_single_line_font_size(
+    text, plot_width, base_font_size, width_factor, min_font_size=None
+):
+    if not text:
+        return base_font_size
+
+    # Spaces render narrower than letters, so discount them slightly in the fit estimate.
+    normalized_chars = sum(0.55 if char.isspace() else 1 for char in text)
+    estimated_font_size = plot_width / max(normalized_chars * width_factor, 1)
+    minimum_size = (
+        min_font_size if min_font_size is not None else max(10, base_font_size * 0.68)
+    )
+    return round(min(base_font_size, max(minimum_size, estimated_font_size)), 1)
+
+
 def build_responsive_plot_title(
     title,
     subtitle=None,
@@ -76,25 +91,36 @@ def build_responsive_plot_title(
     subtitle_width_factor=0.52,
 ):
     plot_width = _estimate_plot_width(screen_width, columns=columns)
-    title_chars = plot_width / max(title_font_size * title_width_factor, 1)
-    subtitle_chars = plot_width / max(subtitle_font_size * subtitle_width_factor, 1)
-    wrapped_title = _wrap_plot_text(title, title_chars)
-    title_lines = _count_wrapped_lines(wrapped_title)
+    fitted_title_font_size = _fit_single_line_font_size(
+        title,
+        plot_width,
+        title_font_size,
+        title_width_factor,
+        min_font_size=max(12, title_font_size * 0.72),
+    )
+    escaped_title = html.escape(title)
+    title_text = f"<span style='font-size:{fitted_title_font_size}px; white-space:nowrap; display:inline-block;'><b>{escaped_title}</b></span>"
+    title_lines = 1
 
     if not subtitle:
         return {
-            "text": f"<span style='font-size:{title_font_size}px'><b>{wrapped_title}</b></span>",
+            "text": title_text,
             "lines": title_lines,
         }
 
-    wrapped_subtitle = _wrap_plot_text(subtitle, subtitle_chars)
-    subtitle_lines = _count_wrapped_lines(wrapped_subtitle)
+    fitted_subtitle_font_size = _fit_single_line_font_size(
+        subtitle,
+        plot_width,
+        subtitle_font_size,
+        subtitle_width_factor,
+    )
+    escaped_subtitle = html.escape(subtitle)
     return {
         "text": (
-            f"<span style='font-size:{title_font_size}px'><b>{wrapped_title}</b></span><br>"
-            f"<span style='font-size:{subtitle_font_size}px'><sub>{wrapped_subtitle}</sub></span>"
+            f"{title_text}<br>"
+            f"<span style='font-size:{fitted_subtitle_font_size}px; white-space:nowrap; display:inline-block;'><sub>{escaped_subtitle}</sub></span>"
         ),
-        "lines": title_lines + subtitle_lines,
+        "lines": title_lines + 1,
     }
 
 

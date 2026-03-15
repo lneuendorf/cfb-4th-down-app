@@ -39,14 +39,17 @@ layout = dbc.Container(
     [
         html.Div(
             [
-                html.H5(
-                    html.B("Coach Tendencies"),
-                    className="mt-4",
-                    style={"color": "var(--text-color)"},
+                html.Div("Comparison", className="tendencies-section-kicker"),
+                html.H2(
+                    "Coach Fourth-Down Tendencies",
+                    className="tendencies-section-title",
                 ),
-                html.P("Explore how different coaches behave on 4th down."),
+                html.P(
+                    "Compare how coaches behave on fourth down and how their decisions impact win probability.",
+                    className="tendencies-section-subtitle",
+                ),
             ],
-            style={"overflow": "hidden"},
+            className="tendencies-section-header mt-2",
         ),
         dbc.Row(
             [
@@ -183,7 +186,7 @@ layout = dbc.Container(
                             ],
                             value="wp_lost",
                             inline=True,
-                            className="d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
+                            className="tendencies-metric-radio d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
                             inputCheckedClassName="border border-dark bg-dark",
                         )
                     ],
@@ -207,27 +210,32 @@ layout = dbc.Container(
                                 html.Div(
                                     [
                                         html.Div(
-                                            html.Img(
-                                                src="/assets/logos/more_info.png",
-                                                style={
-                                                    "width": "15px",
-                                                    "height": "15px",
-                                                    "cursor": "pointer",
-                                                },
-                                                id="coach-summary-info-icon",
-                                                className="info-icon",
-                                            ),
-                                            style={
-                                                "position": "absolute",
-                                                "top": "10px",
-                                                "right": "0px",
-                                                "width": "24px",
-                                                "height": "24px",
-                                                "display": "flex",
-                                                "alignItems": "center",
-                                                "justifyContent": "center",
-                                                "zIndex": "100",
-                                            },
+                                            [
+                                                html.Button(
+                                                    html.I(className="bi bi-download"),
+                                                    id="coach-summary-download-button",
+                                                    className="plot-action-button plot-download-button",
+                                                    title="Download chart",
+                                                    type="button",
+                                                    **{
+                                                        "data-graph-id": "coach-summary-graph",
+                                                        "data-filename": "coach-summary-chart",
+                                                        "data-export-width": "550",
+                                                        "data-export-height": "550",
+                                                    },
+                                                ),
+                                                html.Button(
+                                                    html.Img(
+                                                        src="/assets/logos/more_info.png",
+                                                        className="info-icon",
+                                                    ),
+                                                    id="coach-summary-info-icon",
+                                                    className="plot-action-button plot-info-button",
+                                                    title="About this chart",
+                                                    type="button",
+                                                ),
+                                            ],
+                                            className="plot-action-bar",
                                         ),
                                         dcc.Graph(
                                             id="coach-summary-graph",
@@ -255,11 +263,10 @@ layout = dbc.Container(
                                     },
                                 ),
                             ],
-                            className="bg-white",
+                            className="bg-white tendencies-chart-card",
                             style={
                                 "padding-left": "20px",
                                 "border-radius": "16px",
-                                "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
                                 "height": "100%",
                                 "min-height": "400px",
                             },
@@ -271,18 +278,20 @@ layout = dbc.Container(
                 ),
             ]
         ),
+        html.Div(className="tendencies-section-divider"),
         html.Div(
             [
-                html.H5(
-                    html.B("Coach Tendencies Over Time"),
-                    className="mt-4",
-                    style={"color": "var(--text-color)"},
+                html.Div("Trends", className="tendencies-section-kicker"),
+                html.H2(
+                    "Fourth-Down Trends Over Time",
+                    className="tendencies-section-title",
                 ),
                 html.P(
-                    "Explore how coaches have performed over time on fourth down based on the selected metric."
+                    "Track how a coach's fourth-down decision making has evolved across seasons.",
+                    className="tendencies-section-subtitle",
                 ),
             ],
-            style={"overflow": "hidden"},
+            className="tendencies-section-header",
         ),
         dbc.Row(
             [
@@ -341,7 +350,7 @@ layout = dbc.Container(
                             ],
                             value="wp_lost",
                             inline=True,
-                            className="d-flex justify-content-center justify-content-md-start gap-3 pt-2",
+                            className="tendencies-metric-radio d-flex justify-content-center justify-content-md-start gap-3 pt-2",
                             inputCheckedClassName="border border-dark bg-dark",
                         )
                     ],
@@ -360,27 +369,32 @@ layout = dbc.Container(
                                 html.Div(
                                     [
                                         html.Div(
-                                            html.Img(
-                                                src="/assets/logos/more_info.png",
-                                                style={
-                                                    "width": "15px",
-                                                    "height": "15px",
-                                                    "cursor": "pointer",
-                                                },
-                                                id="info-icon6",
-                                                className="info-icon",
-                                            ),
-                                            style={
-                                                "position": "absolute",
-                                                "top": "10px",
-                                                "right": "0px",
-                                                "width": "24px",
-                                                "height": "24px",
-                                                "display": "flex",
-                                                "alignItems": "center",
-                                                "justifyContent": "center",
-                                                "zIndex": "100",
-                                            },
+                                            [
+                                                html.Button(
+                                                    html.I(className="bi bi-download"),
+                                                    id="coach-trend-download-button",
+                                                    className="plot-action-button plot-download-button",
+                                                    title="Download chart",
+                                                    type="button",
+                                                    **{
+                                                        "data-graph-id": "coach-trend-graph",
+                                                        "data-filename": "coach-trend-chart",
+                                                        "data-export-width": "700",
+                                                        "data-export-height": "500",
+                                                    },
+                                                ),
+                                                html.Button(
+                                                    html.Img(
+                                                        src="/assets/logos/more_info.png",
+                                                        className="info-icon",
+                                                    ),
+                                                    id="info-icon6",
+                                                    className="plot-action-button plot-info-button",
+                                                    title="About this chart",
+                                                    type="button",
+                                                ),
+                                            ],
+                                            className="plot-action-bar",
                                         ),
                                         dcc.Graph(
                                             id="coach-trend-graph",
@@ -397,9 +411,8 @@ layout = dbc.Container(
                                     style={"position": "relative"},
                                 ),
                                 dbc.Tooltip(
-                                    "This chart shows either how often a coach follows go-for-it recommendations on fourth down or how much "
-                                    "win probability they give up by not doing so across seasons. Trends can reveal shifts in a coach’s "
-                                    "decision-making philosophy, adaptation to analytics, or changes in situational context as teams and roles evolve over time.",
+                                    id="coach-trend-tooltip",
+                                    children="",
                                     target="info-icon6",
                                     placement="left",
                                     style={
@@ -410,11 +423,10 @@ layout = dbc.Container(
                                     },
                                 ),
                             ],
-                            className="bg-white",
+                            className="bg-white tendencies-chart-card",
                             style={
                                 "padding-left": "20px",
                                 "border-radius": "16px",
-                                "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
                                 "height": "100%",
                                 "min-height": "400px",
                             },
@@ -431,7 +443,7 @@ layout = dbc.Container(
         "padding-left": CONFIG["padding-left"],
         "padding-right": CONFIG["padding-right"],
     },
-    className="responsive-container",
+    className="responsive-container tendencies-page coach-tendencies-page",
 )
 
 
@@ -522,8 +534,8 @@ def update_graphs(
     plot_height = max(calculated_height, min_height)
 
     fig1_title = build_responsive_plot_title(
-        "Go-For-It Rate When Recommended",
-        subtitle="'Recommended' when going for it has highest expected win probability",
+        "Go-For-It Rate",
+        subtitle="Percentage of analytically-recommended go situations where the team actually goes for it.",
         screen_width=screen_width,
         columns=2,
         subtitle_width_factor=0.4,
@@ -532,8 +544,8 @@ def update_graphs(
     fig1.update_layout(
         title=dict(
             text=fig1_title["text"],
-            xanchor="left",
-            x=0,
+            xanchor="center",
+            x=0.5,
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Percent of time coach went for it when recommended</span>",
         yaxis=dict(
@@ -542,6 +554,7 @@ def update_graphs(
             categoryorder="array",
             categoryarray=grouped_sorted1["coach_name"].tolist(),
             showticklabels=True,
+            showgrid=False,
         ),
         xaxis=dict(
             fixedrange=True,
@@ -554,6 +567,10 @@ def update_graphs(
             t=get_plot_title_margin(fig1_title["lines"], has_subtitle=True, base=100),
             b=bottom_margin,
         ),
+        meta={
+            "export_title": "Go-For-It Rate",
+            "export_subtitle": "Percentage of analytically-recommended go situations where the team actually goes for it.",
+        },
         height=plot_height,
         barmode="overlay",
         bargap=0.2,
@@ -594,17 +611,17 @@ def update_graphs(
 
     fig2_title = build_responsive_plot_title(
         "Win Probability Lost Per Season",
-        subtitle="Due to not going for it on 4th down when recommended",
+        subtitle="Due to not going for it on 4th down when analytically recommended",
         screen_width=screen_width,
         columns=2,
-        subtitle_width_factor=0.4,
+        subtitle_width_factor=0.5,
     )
 
     fig2.update_layout(
         title=dict(
             text=fig2_title["text"],
-            xanchor="left",
-            x=0,
+            xanchor="center",
+            x=0.5,
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Avg WP Lost per Season (percentage points)</span>",
         yaxis=dict(
@@ -613,6 +630,7 @@ def update_graphs(
             categoryorder="array",
             categoryarray=grouped_sorted2["coach_name"].tolist(),
             showticklabels=True,
+            showgrid=False,
         ),
         xaxis=dict(
             fixedrange=True,
@@ -625,6 +643,10 @@ def update_graphs(
             t=get_plot_title_margin(fig2_title["lines"], has_subtitle=True, base=100),
             b=bottom_margin,
         ),
+        meta={
+            "export_title": "Win Probability Lost Per Season",
+            "export_subtitle": "Due to not going for it on 4th down when analytically recommended",
+        },
         height=plot_height,
         barmode="overlay",
         bargap=0.2,
@@ -635,16 +657,8 @@ def update_graphs(
     apply_plotly_theme(fig1, is_dark)
     apply_plotly_theme(fig2, is_dark)
 
-    tooltip_go_rate = (
-        "This chart shows the average go-for-it rate when recommended for the selected coach across the chosen date range, "
-        "summarizing how often the coach followed model recommendations. Higher rates indicate a greater tendency to go for "
-        "it when analytics suggest it is optimal."
-    )
-    tooltip_wp_lost = (
-        "This chart summarizes the average win probability lost per season for the selected coach over the chosen date range. "
-        "Win probability is lost when a coach opts to punt or attempt a field goal despite going for it being recommended. "
-        "Higher values indicate a greater expected cost from conservative fourth down decisions across the selected seasons."
-    )
+    tooltip_go_rate = "Higher values indicate that a coach often follows the model’s recommendation to go for it on fourth down. Lower values suggest a more conservative approach, even when going for it would increase expected win probability. This metric only includes situations where the model recommends going for it."
+    tooltip_wp_lost = "This chart shows the average win probability lost per season for the selected coach over the chosen date range. Win probability is lost when a coach punts or attempts a field goal instead of going for it when recommended by the model. Higher values indicate a greater expected cost from conservative fourth-down decisions."
 
     if selected_metric == "go_rate":
         return fig1, tooltip_go_rate
@@ -654,6 +668,7 @@ def update_graphs(
 
 @dash.callback(
     Output("coach-trend-graph", "figure"),
+    Output("coach-trend-tooltip", "children"),
     Input("trend-coach-dropdown", "value"),
     Input("trend-metric-radio", "value"),
     Input("start-season", "value"),
@@ -666,7 +681,7 @@ def update_trend_graph(
 ):
     is_dark = theme == "dark"
     if selected_coach is None:
-        return go.Figure()
+        return go.Figure(), ""
 
     coach_df = df[
         (df["coach_name"] == selected_coach)
@@ -692,7 +707,7 @@ def update_trend_graph(
     coach_data["wp_lost"] = coach_data["net_wp_lost"]
 
     if coach_data.empty:
-        return go.Figure()
+        return go.Figure(), ""
 
     if screen_width < 768:
         axis_fontsize = 11
@@ -708,7 +723,13 @@ def update_trend_graph(
         y_col = "go_rate"
         y_title = "Go-For-It Rate When Recommended"
         chart_title = f"{selected_coach} Go-For-It Rate When Recommended Over Time"
+        chart_subtitle = "Percentage of analytically-recommended go situations where the team actually goes for it."
         hovertemplate = "<b>Season %{x}</b><br>Go Rate: %{y:.1%}<br>Plays: %{customdata}<extra></extra>"
+        tooltip_text = (
+            "This chart shows how often "
+            f"{selected_coach} followed go-for-it recommendations in each season. "
+            "It highlights whether the coach became more or less aggressive on analytically favorable fourth downs over time."
+        )
         yaxis_config = dict(
             tickformat=".0%",
             range=[0, min(1.1, max(coach_data[y_col].max() * 1.1, 0.1))],
@@ -718,7 +739,15 @@ def update_trend_graph(
         y_col = "wp_lost"
         y_title = "Win Probability Lost"
         chart_title = f"{selected_coach} Win Probability Lost Over Time"
+        chart_subtitle = (
+            "Due to not going for it on 4th down when analytically recommended"
+        )
         hovertemplate = "<b>Season %{x}</b><br>WP Lost: %{y:.1%}<extra></extra>"
+        tooltip_text = (
+            "This chart shows the estimated win probability "
+            f"{selected_coach} gave up in each season by passing on model-recommended go-for-it decisions. "
+            "Higher values indicate a greater season-long cost from conservative fourth-down decision making."
+        )
         y_max = coach_data[y_col].max()
         yaxis_config = dict(
             tickformat=".0%",
@@ -727,6 +756,19 @@ def update_trend_graph(
         customdata = None
 
     fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=coach_data["season"],
+            y=coach_data[y_col],
+            mode="lines+markers",
+            line=dict(color="rgba(255, 255, 255, 0.92)", width=7),
+            marker=dict(color="rgba(255, 255, 255, 0.92)", size=14),
+            hoverinfo="skip",
+            showlegend=False,
+            name="",
+        )
+    )
 
     fig.add_trace(
         go.Scatter(
@@ -747,16 +789,19 @@ def update_trend_graph(
 
     trend_title = build_responsive_plot_title(
         chart_title,
+        subtitle=chart_subtitle,
         screen_width=screen_width,
         columns=1,
         title_font_size=title_fontsize,
         title_width_factor=0.7,
+        subtitle_width_factor=0.55,
     )
 
     fig.update_layout(
         title=dict(
             text=trend_title["text"],
             x=0.5,
+            xanchor="center",
         ),
         xaxis_title=f"<span style='font-size:{axis_fontsize}px'>Season</span>",
         yaxis_title=f"<span style='font-size:{axis_fontsize}px'>{y_title}</span>",
@@ -765,9 +810,13 @@ def update_trend_graph(
         margin=dict(
             l=20,
             r=60,
-            t=get_plot_title_margin(trend_title["lines"], base=80),
+            t=get_plot_title_margin(trend_title["lines"], has_subtitle=True, base=100),
             b=60,
         ),
+        meta={
+            "export_title": chart_title,
+            "export_subtitle": chart_subtitle,
+        },
         height=400,
         showlegend=False,
         hovermode="x unified",
@@ -776,4 +825,4 @@ def update_trend_graph(
 
     apply_plotly_theme(fig, is_dark)
 
-    return fig
+    return fig, tooltip_text
