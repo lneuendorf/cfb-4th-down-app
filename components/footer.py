@@ -1,3 +1,4 @@
+import datetime
 from dash import html
 
 footer = html.Footer(
@@ -78,6 +79,11 @@ footer = html.Footer(
         #     ],
         #     style={"marginTop": "10px"},
         # ),
+        # © 2026 Elite Drafters. All rights reserved.
+        html.P(
+            f"© {datetime.datetime.now().year} CFB4thDown. All rights reserved.",
+            style={"marginTop": "10px"},
+        ),
     ],
     style={
         "width": "100%",
