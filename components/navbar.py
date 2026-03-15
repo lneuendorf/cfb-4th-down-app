@@ -67,6 +67,7 @@ navbar = dbc.Navbar(
     color="white",
     dark=False,
     sticky="top",
+    expand="lg",
     className="app-navbar",
     style={"boxShadow": "0 1px 5px rgba(0,0,0,0.1)"},
 )
