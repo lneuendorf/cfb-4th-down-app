@@ -518,6 +518,49 @@ body * {
     margin-bottom: 0.45rem !important;
 }
 
+.decision-chip {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 400;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.decision-chip-match {
+    background-color: rgba(34, 197, 94, 0.16);
+    color: #166534;
+}
+
+.decision-chip-mismatch {
+    background-color: rgba(239, 68, 68, 0.16);
+    color: #991b1b;
+}
+
+.theme-dark .decision-chip-match {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #dcfce7;
+}
+
+.theme-dark .decision-chip-mismatch {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #fee2e2;
+}
+
+#decision-table td[data-dash-column="Decision"] {
+    text-align: center;
+}
+
+#decision-table td[data-dash-column="Decision"] .dash-cell-value {
+    text-align: center;
+}
+
+#decision-table td[data-dash-column="Decision"] p {
+    margin: 0;
+    display: inline-block;
+    text-align: center;
+}
+
 .dash-table-tooltip,
 .dash-tooltip {
     background-color: var(--surface-bg) !important;
@@ -541,6 +584,29 @@ body * {
 .theme-dark .dash-table-tooltip *,
 .theme-dark .dash-tooltip * {
     color: #f4f7fb !important;
+}
+
+.game-decisions-page .dash-table-container .previous-next-container button:hover,
+.game-decisions-page .dash-table-container .previous-next-container button:focus,
+.game-decisions-page .dash-table-container .previous-next-container button:active,
+.game-decisions-page .dash-table-container .dash-spreadsheet-container th:hover .column-header--sort,
+.game-decisions-page .dash-table-container .dash-spreadsheet-container th .column-header--sort:hover,
+.game-decisions-page .dash-table-container .dash-spreadsheet-container th .column-header--sort:focus,
+.game-decisions-page .dash-table-container .dash-spreadsheet-container th:hover .column-header--sort svg,
+.game-decisions-page .dash-table-container .dash-spreadsheet-container th .column-header--sort:hover svg,
+.game-decisions-page .dash-table-container .dash-spreadsheet-container th .column-header--sort:focus svg {
+    color: var(--accent-color) !important;
+    fill: var(--accent-color) !important;
+}
+
+.theme-dark .game-decisions-page .dash-table-container .previous-next-container,
+.theme-dark .game-decisions-page .dash-table-container .previous-next-container *,
+.theme-dark .game-decisions-page .dash-table-container .previous-next-container input,
+.theme-dark .game-decisions-page .dash-table-container .previous-next-container input.current-page,
+.theme-dark .game-decisions-page .dash-table-container .previous-next-container .current-page,
+.theme-dark .game-decisions-page .dash-table-container .previous-next-container .page-number {
+    color: #f4f7fb !important;
+    -webkit-text-fill-color: #f4f7fb !important;
 }
 
 .theme-dark .card-text,

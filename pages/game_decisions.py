@@ -388,6 +388,7 @@ layout = html.Div(
                                         {
                                             "name": ["Play Outcome", "Decision"],
                                             "id": "Decision",
+                                            "presentation": "markdown",
                                         },
                                         {
                                             "name": ["Play Outcome", "Play Desc"],
@@ -506,24 +507,6 @@ layout = html.Div(
                                         {
                                             "if": {"row_index": "odd"},
                                             "backgroundColor": "var(--table-stripe-bg)",
-                                        },
-                                        {
-                                            "if": {
-                                                "column_id": "Decision",
-                                                "filter_query": '{_decision_match} = "match"',
-                                            },
-                                            "backgroundColor": "rgba(34, 197, 94, 0.16)",
-                                            "color": "var(--text-color)",
-                                            "fontWeight": "700",
-                                        },
-                                        {
-                                            "if": {
-                                                "column_id": "Decision",
-                                                "filter_query": '{_decision_match} = "mismatch"',
-                                            },
-                                            "backgroundColor": "rgba(239, 68, 68, 0.16)",
-                                            "color": "var(--text-color)",
-                                            "fontWeight": "700",
                                         },
                                     ],
                                     tooltip_delay=0,
@@ -681,6 +664,12 @@ def update_table(
     )
     dff["Defense Team"] = dff.apply(
         lambda x: f"<img src='{x['Defense Logo']}' style='height:30px; margin-right:5px;'> {x['Defense Team']}",
+        axis=1,
+    )
+    dff["Decision"] = dff.apply(
+        lambda row: (
+            f"<span class='decision-chip decision-chip-{row['_decision_match']}'>{row['Decision']}</span>"
+        ),
         axis=1,
     )
 
