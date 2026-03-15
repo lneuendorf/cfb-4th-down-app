@@ -57,7 +57,7 @@ layout = dbc.Container(
                                     },
                                 ),
                                 html.H1(
-                                    "Analyze fourth-down decisions across college football.",
+                                    "How often should teams go for it on 4th down?",
                                     className="about-hero-title",
                                     style={
                                         "fontSize": "clamp(1.8rem, 8vw, 3.5rem)",  # Responsive font (smaller on mobile)
@@ -70,7 +70,7 @@ layout = dbc.Container(
                                     },
                                 ),
                                 html.P(
-                                    "See how teams and coaches’ choices affect win probability and compare to analytical recommendations.",
+                                    "Explore how college football decisions compare to analytical recommendations.",
                                     className="about-hero-copy",
                                     style={
                                         "fontSize": "clamp(1rem, 3vw, 1.25rem)",  # Responsive font
@@ -151,7 +151,7 @@ layout = dbc.Container(
                                             className="about-feature-title-row",
                                         ),
                                         html.P(
-                                            "Compare how often teams follow analytical recommendations and how much win probability their decisions add or cost.",
+                                            "Compare how often teams follow analytical recommendations and the win probability their decisions add or cost.",
                                             className="mb-0",
                                             style={"color": "var(--text-color)"},
                                         ),
@@ -237,7 +237,7 @@ layout = dbc.Container(
                             className="mb-3 mb-md-0",
                         ),
                     ],
-                    className="g-3",
+                    className="g-3 mt-2",
                 ),
             ],
             className="about-section about-section-features",
@@ -300,7 +300,7 @@ layout = dbc.Container(
                                     className="mb-3 mb-md-0",
                                 ),
                             ],
-                            className="g-3",
+                            className="g-3 mt-2",
                         ),
                     ],
                     className="about-section-band-inner",
@@ -313,48 +313,113 @@ layout = dbc.Container(
             [
                 html.Div(
                     [
-                        html.Span("Data", className="about-section-kicker"),
+                        html.Span("Data & Methodology", className="about-section-kicker"),
                         html.H2(
-                            "Source and attribution",
+                            "How the analysis is built",
                         ),
                         html.P(
                             [
-                                "Play-by-play data was sourced from the ",
+                                "Explore the modeling approach on the ",
                                 html.A(
-                                    "CollegeFootballData",
-                                    href="https://collegefootballdata.com/",
-                                    target="_blank",
-                                    style={
-                                        "textDecoration": "underline",
-                                        "fontStyle": "italic",
-                                        "color": "var(--accent-color)",
-                                    },
-                                ),
-                                " API via the ",
-                                html.A(
-                                    "cfbd-python",
-                                    href="https://github.com/CFBD/cfbd-python",
-                                    target="_blank",
-                                    style={
-                                        "textDecoration": "underline",
-                                        "fontStyle": "italic",
-                                        "color": "var(--accent-color)",
-                                    },
-                                ),
-                                " Python package. All models and analysis were developed independently. See the ",
-                                html.A(
-                                    "Analysis",
+                                    [
+                                        "Analysis page",
+                                        html.I(
+                                            className="bi bi-box-arrow-up-right ms-2",
+                                        ),
+                                    ],
                                     href="/analysis",
-                                    target="_blank",
-                                    style={
-                                        "textDecoration": "underline",
-                                        "fontStyle": "italic",
-                                        "color": "var(--accent-color)",
-                                    },
+                                    className="about-data-cta",
                                 ),
-                                " tab for more details.",
+                                ".",
                             ],
-                            className="mb-0",
+                            className="mt-0 about-data-cta-row",
+                        ),
+                        dbc.Row(
+                            [
+                                dbc.Col(
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                [
+                                                    html.Div(
+                                                        html.Img(
+                                                            src="/assets/logos/database.png",
+                                                            alt="Data Sources",
+                                                            className="about-feature-icon",
+                                                        ),
+                                                        className="about-data-icon-badge",
+                                                    ),
+                                                    html.H3(
+                                                        "Data Sources",
+                                                        className="about-data-card-title",
+                                                    ),
+                                                ],
+                                                className="about-data-card-header",
+                                            ),
+                                            html.P(
+                                                [
+                                                    "Play-by-play data from ",
+                                                    html.A(
+                                                        "CollegeFootballData",
+                                                        href="https://collegefootballdata.com/",
+                                                        target="_blank",
+                                                        style={
+                                                            "textDecoration": "underline",
+                                                            "color": "inherit",
+                                                        },
+                                                    ),
+                                                    " via the ",
+                                                    html.A(
+                                                        "cfbd-python",
+                                                        href="https://github.com/CFBD/cfbd-python",
+                                                        target="_blank",
+                                                        style={
+                                                            "textDecoration": "underline",
+                                                            "color": "inherit",
+                                                        },
+                                                    ),
+                                                    " package.",
+                                                ],
+                                                className="mb-0 about-data-card-copy",
+                                            ),
+                                        ],
+                                        className="about-data-card",
+                                    ),
+                                    md=6,
+                                    className="d-flex",
+                                ),
+                                dbc.Col(
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                [
+                                                    html.Div(
+                                                        html.Img(
+                                                            src="/assets/logos/model.png",
+                                                            alt="Model Development",
+                                                            className="about-feature-icon",
+                                                        ),
+                                                        className="about-data-icon-badge",
+                                                    ),
+                                                    html.H3(
+                                                        "Model Development",
+                                                        className="about-data-card-title",
+                                                    ),
+                                                ],
+                                                className="about-data-card-header",
+                                            ),
+                                            html.P(
+                                                "Win probability and fourth-down decision models were developed independently.",
+                                                className="mb-0 about-data-card-copy",
+                                            ),
+                                        ],
+                                        className="about-data-card",
+                                    ),
+                                    md=6,
+                                    className="d-flex",
+                                ),
+                            ],
+                            className="g-3 mt-2",
                         ),
                     ],
                     className="about-section-heading",

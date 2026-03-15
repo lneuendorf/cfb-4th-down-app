@@ -23,7 +23,7 @@ navbar = dbc.Navbar(
             html.Div(
                 [
                     dbc.NavbarBrand(
-                        html.B("CFB 4th Down", style={"fontSize": "28px"}),
+                        html.B("CFB4thDown", style={"fontSize": "28px"}),
                         href="/",
                     ),
                     html.Div(
