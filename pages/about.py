@@ -134,10 +134,13 @@ layout = dbc.Container(
                                     [
                                         html.Div(
                                             [
-                                                html.Img(
-                                                    src="/assets/logos/team.png",
-                                                    alt="Teams",
-                                                    className="about-feature-icon",
+                                                html.Span(
+                                                    html.Img(
+                                                        src="/assets/logos/team.png",
+                                                        alt="Teams",
+                                                        className="about-feature-icon",
+                                                    ),
+                                                    className="about-feature-icon-badge",
                                                 ),
                                                 html.H3(
                                                     "Teams",
@@ -150,6 +153,7 @@ layout = dbc.Container(
                                         html.P(
                                             "Compare how often teams follow analytical recommendations and how much win probability their decisions add or cost.",
                                             className="mb-0",
+                                            style={"color": "var(--text-color)"},
                                         ),
                                     ],
                                     className="about-feature-card clickable-card",
@@ -166,10 +170,13 @@ layout = dbc.Container(
                                     [
                                         html.Div(
                                             [
-                                                html.Img(
-                                                    src="/assets/logos/coach.png",
-                                                    alt="Coaches",
-                                                    className="about-feature-icon",
+                                                html.Span(
+                                                    html.Img(
+                                                        src="/assets/logos/coach.png",
+                                                        alt="Coaches",
+                                                        className="about-feature-icon",
+                                                    ),
+                                                    className="about-feature-icon-badge",
                                                 ),
                                                 html.H3(
                                                     "Coaches",
@@ -182,6 +189,7 @@ layout = dbc.Container(
                                         html.P(
                                             "See which coaches are more aggressive or conservative and how their decision-making evolves over time.",
                                             className="mb-0",
+                                            style={"color": "var(--text-color)"},
                                         ),
                                     ],
                                     className="about-feature-card clickable-card",
@@ -198,10 +206,13 @@ layout = dbc.Container(
                                     [
                                         html.Div(
                                             [
-                                                html.Img(
-                                                    src="/assets/logos/play.png",
-                                                    alt="Plays",
-                                                    className="about-feature-icon",
+                                                html.Span(
+                                                    html.Img(
+                                                        src="/assets/logos/play.png",
+                                                        alt="Plays",
+                                                        className="about-feature-icon",
+                                                    ),
+                                                    className="about-feature-icon-badge",
                                                 ),
                                                 html.H3(
                                                     "Plays",
@@ -214,6 +225,7 @@ layout = dbc.Container(
                                         html.P(
                                             "Explore individual fourth-down plays with full game context, model recommendations, and expected win probability for each decision.",
                                             className="mb-0",
+                                            style={"color": "var(--text-color)"},
                                         ),
                                     ],
                                     className="about-feature-card clickable-card",
@@ -315,6 +327,7 @@ layout = dbc.Container(
                                     style={
                                         "textDecoration": "underline",
                                         "fontStyle": "italic",
+                                        "color": "var(--accent-color)",
                                     },
                                 ),
                                 " API via the ",
@@ -325,6 +338,7 @@ layout = dbc.Container(
                                     style={
                                         "textDecoration": "underline",
                                         "fontStyle": "italic",
+                                        "color": "var(--accent-color)",
                                     },
                                 ),
                                 " Python package. All models and analysis were developed independently. See the ",
@@ -335,6 +349,7 @@ layout = dbc.Container(
                                     style={
                                         "textDecoration": "underline",
                                         "fontStyle": "italic",
+                                        "color": "var(--accent-color)",
                                     },
                                 ),
                                 " tab for more details.",
