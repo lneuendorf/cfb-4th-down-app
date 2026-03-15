@@ -39,7 +39,6 @@ navbar = dbc.Navbar(
             dbc.Collapse(
                 dbc.Nav(
                     [
-                        dbc.NavItem(dbc.NavLink("About", href="/", active="exact")),
                         dbc.NavItem(
                             dbc.NavLink("Teams", href="/team-tendencies", active="exact")
                         ),
