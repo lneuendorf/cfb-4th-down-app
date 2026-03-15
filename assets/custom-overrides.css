@@ -533,15 +533,6 @@ body * {
     color: #f4f7fb !important;
 }
 
-.about-data-banner {
-    padding: 1rem 0 0;
-    border-top: 1px solid var(--border-color);
-}
-
-.about-data-banner a {
-    font-weight: 700;
-}
-
 .about-data-copy {
     max-width: 72ch;
     color: var(--muted-text-color);
@@ -881,3 +872,16 @@ body * {
         padding: 1.1rem;
     }
     }
+
+.clickable-card {
+    transition: all 0.22s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+.clickable-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+    border-color: rgba(0,0,0,0.25);
+    background-color: rgba(0,0,0,0.04);
+}
