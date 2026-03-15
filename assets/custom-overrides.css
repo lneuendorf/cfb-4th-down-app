@@ -112,7 +112,7 @@ body * {
     left: 0;
     right: 0;
     top: 0;
-    height: 2px;
+    height: 4px;
     background: var(--accent-color);
 }
 
@@ -205,7 +205,7 @@ body * {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 2px;
+    height: 4px;
     background: var(--accent-color);
 }
 
@@ -343,10 +343,21 @@ body * {
 .about-hero-viewport {
     height: calc(100svh - var(--app-navbar-height));
     min-height: calc(100svh - var(--app-navbar-height));
+    height: calc(100dvh - var(--app-navbar-height));
+    min-height: calc(100dvh - var(--app-navbar-height));
 }
 
 .hero-background {
     opacity: 0.6;
+    min-height: 0;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+    .hero-background {
+        background-attachment: fixed;
+    }
 }
 
 .about-hero {
@@ -935,6 +946,8 @@ body * {
     .about-hero-viewport {
         height: calc(100svh - var(--app-navbar-height));
         min-height: calc(100svh - var(--app-navbar-height));
+        height: calc(100dvh - var(--app-navbar-height));
+        min-height: calc(100dvh - var(--app-navbar-height));
     }
 
     .about-hero-image {
