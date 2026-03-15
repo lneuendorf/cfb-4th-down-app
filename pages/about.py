@@ -240,9 +240,6 @@ layout = dbc.Container(
                                 dbc.Col(
                                     html.Div(
                                         [
-                                            html.Div(
-                                                "01", className="about-feature-number"
-                                            ),
                                             html.H3(
                                                 "Go-For-It Rate When Recommended",
                                                 className="about-metric-title",
@@ -261,9 +258,6 @@ layout = dbc.Container(
                                 dbc.Col(
                                     html.Div(
                                         [
-                                            html.Div(
-                                                "02", className="about-feature-number"
-                                            ),
                                             html.H3(
                                                 "Win Probability Lost Per Season",
                                                 className="about-metric-title",
