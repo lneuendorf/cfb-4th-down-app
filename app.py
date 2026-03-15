@@ -52,7 +52,7 @@ app.layout = html.Div(
         dcc.Location(id="url"),
         html.Div(
             dash.page_container,
-            style={"flex": "1", "paddingTop": "76px"},
+            style={"flex": "1", "paddingTop": "var(--app-navbar-height, 76px)"},
         ),
         footer,
     ],

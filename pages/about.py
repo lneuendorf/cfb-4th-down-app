@@ -19,7 +19,6 @@ layout = dbc.Container(
                                 "backgroundImage": 'url("/assets/images/4th_down.jpg")',
                                 "backgroundSize": "cover",
                                 "backgroundPosition": "center 30%",
-                                "opacity": 0.7,
                                 "position": "absolute",
                                 "top": 0,
                                 "left": 0,
@@ -73,26 +72,30 @@ layout = dbc.Container(
                             style={
                                 "position": "relative",
                                 "zIndex": 3,
-                                "padding": "clamp(5.5rem, 12vw, 7rem) clamp(1rem, 4vw, 2rem) clamp(3rem, 6vw, 4.5rem)",  # Extra top inset keeps hero copy below the fixed navbar on small screens
+                                "padding": "clamp(1.5rem, 4vw, 2.5rem)",
                                 "maxWidth": "1100px",
                                 "margin": "0 auto",
                                 "width": "100%",
                                 "boxSizing": "border-box",
+                                "minHeight": "100%",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "alignItems": "center",
+                                "justifyContent": "center",
+                                "textAlign": "center",
                             },
                         ),
                     ],
+                    className="about-hero-viewport",
                     style={
                         "position": "relative",
                         "width": "100vw",
                         "marginLeft": "calc(-50vw + 50%)",
                         "marginRight": "calc(-50vw + 50%)",
-                        "height": "clamp(300px, 50svh, 1000px)",  # Use stable viewport height to avoid mobile scroll resizing
-                        "minHeight": "300px",  # Ensure minimum height on very small screens
                         "overflow": "hidden",
                     },
                 )
-            ],
-            style={"marginTop": "-76px"},
+            ]
         ),
         # What you can explore
         html.Section(
@@ -109,7 +112,7 @@ layout = dbc.Container(
                             className="about-section-copy",
                         ),
                     ],
-                    className="about-section-heading mt-5",
+                    className="about-section-heading",
                 ),
                 dbc.Row(
                     [
@@ -213,7 +216,7 @@ layout = dbc.Container(
                     className="g-3",
                 ),
             ],
-            className="about-section about-section-features mt-5",
+            className="about-section about-section-features",
         ),
         # Key metrics
         html.Section(
@@ -279,7 +282,7 @@ layout = dbc.Container(
                     className="about-section-band-inner",
                 ),
             ],
-            className="about-section about-section-metrics mt-5",
+            className="about-section about-section-metrics",
         ),
         # Data attribution
         html.Section(
@@ -330,14 +333,15 @@ layout = dbc.Container(
                     className="about-section-heading",
                 ),
             ],
-            className="about-section about-section-data mt-5 mb-5",
+            className="about-section about-section-data",
         ),
     ],
     fluid=True,
     style={
         "paddingLeft": CONFIG["padding-left"],
         "paddingRight": CONFIG["padding-right"],
-        "paddingTop": "2rem",
+        "paddingTop": "0",
+        "paddingBottom": "0rem",
     },
     className="responsive-container about-page",
 )

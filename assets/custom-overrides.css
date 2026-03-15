@@ -2,6 +2,7 @@
 
 :root {
     --bs-primary: var(--bs-success);
+    --app-navbar-height: 76px;
     --app-bg: #f5f2f2;
     --surface-bg: #ffffff;
     --surface-alt-bg: #f8f9fa;
@@ -271,11 +272,20 @@ body * {
 }
 
 .about-page {
-    padding-top: 1rem;
+    padding-top: 0;
 }
 
 .about-page a {
     color: inherit;
+}
+
+.about-hero-viewport {
+    height: calc(100svh - var(--app-navbar-height));
+    min-height: calc(100svh - var(--app-navbar-height));
+}
+
+.hero-background {
+    opacity: 0.6;
 }
 
 .about-hero {
@@ -305,8 +315,8 @@ body * {
 
 .about-hero-content {
     position: absolute;
-    inset: auto auto 0 0;
-    max-width: 680px;
+    inset: 0;
+    max-width: none;
     padding: 2rem;
     color: #f7fbff;
 }
@@ -359,7 +369,9 @@ body * {
 }
 
 .about-section {
-    margin-bottom: 2rem;
+    padding-top: clamp(5rem, 10vw, 15rem);
+    padding-bottom: clamp(5rem, 10vw, 15rem);
+    margin-bottom: 0;
 }
 
 .about-section-heading {
@@ -579,13 +591,15 @@ body * {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
-    padding-top: 3rem;
-    padding-bottom: 3rem;
     background-color: #e9e4e4;
 }
 
 .theme-dark .about-hero {
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.theme-dark .hero-background {
+    opacity: 0.2;
 }
 
 .theme-dark .about-intro-panel {
@@ -673,6 +687,11 @@ body * {
         border-radius: 22px;
     }
 
+    .about-hero-viewport {
+        height: calc(100svh - var(--app-navbar-height));
+        min-height: calc(100svh - var(--app-navbar-height));
+    }
+
     .about-hero-image {
         min-height: 300px;
     }
@@ -712,8 +731,8 @@ body * {
     }
 
     .about-section-metrics {
-        padding-top: 2.5rem;
-        padding-bottom: 2.5rem;
+        padding-top: clamp(5rem, 10vw, 15rem);
+        padding-bottom: clamp(5rem, 10vw, 15rem);
     }
 }
 
