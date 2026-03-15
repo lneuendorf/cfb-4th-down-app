@@ -259,10 +259,15 @@ body * {
 }
 
 .theme-dark #team-tendency-graph .imagelayer image,
+.theme-dark #team-tendency-graph .main-svg image,
 .theme-dark #wp-lost-graph .imagelayer image,
+.theme-dark #wp-lost-graph .main-svg image,
 .theme-dark #team-summary-graph .imagelayer image,
+.theme-dark #team-summary-graph .main-svg image,
 .theme-dark #coach-summary-graph .imagelayer image,
-.theme-dark #team-trend-graph .imagelayer image {
+.theme-dark #coach-summary-graph .main-svg image,
+.theme-dark #team-trend-graph .imagelayer image,
+.theme-dark #team-trend-graph .main-svg image {
     filter:
         drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
         drop-shadow(1px 0 0 rgba(255, 255, 255, 0.95))
