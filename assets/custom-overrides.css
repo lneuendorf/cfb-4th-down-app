@@ -317,24 +317,35 @@ body * {
     color: rgba(247, 251, 255, 0.92);
 }
 
-.about-intro-panel,
-.about-story-card,
-.about-diagram-panel,
 .about-feature-card,
-.about-metric-card,
-.about-data-banner {
+.about-metric-card {
     border: 1px solid var(--border-color);
     box-shadow: 0 14px 36px var(--shadow-color);
 }
 
 .about-intro-panel {
     margin-bottom: 2rem;
-    padding: 1.25rem 1.4rem;
-    border-radius: 22px;
-    background:
-        linear-gradient(135deg, rgba(39, 89, 68, 0.14), rgba(255, 255, 255, 0.9)),
-        var(--surface-bg);
-    font-size: 1.03rem;
+    padding: 0 0 1.4rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.about-intro-lead {
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    line-height: 1.35;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.about-intro-support {
+    max-width: 54ch;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--border-color);
+    color: var(--muted-text-color);
+    line-height: 1.7;
 }
 
 .about-section {
@@ -367,28 +378,33 @@ body * {
     color: var(--muted-text-color);
 }
 
-.about-story-card,
 .about-feature-card,
-.about-metric-card,
-.about-data-banner,
-.about-diagram-panel {
+.about-metric-card {
     border-radius: 24px;
 }
 
-.about-story-card {
-    padding: 1.25rem 1.3rem;
+.about-text-eyebrow {
+    margin-bottom: 0.75rem;
+    color: var(--muted-text-color);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.about-story-card-primary {
-    background: linear-gradient(160deg, rgba(226, 241, 234, 0.95), var(--surface-bg));
+.about-story-block {
+    padding: 0 0 1.1rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.about-story-card-accent {
-    background: linear-gradient(160deg, rgba(255, 243, 229, 0.96), var(--surface-bg));
+.about-story-flow ol,
+.about-story-list ul {
+    padding-left: 1.15rem;
 }
 
-.about-story-card-outline {
-    background: var(--surface-bg);
+.about-story-example {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .about-card-title,
@@ -401,10 +417,11 @@ body * {
 
 .about-diagram-panel {
     height: 100%;
-    padding: 1.4rem;
-    background:
-        radial-gradient(circle at top right, rgba(45, 106, 79, 0.08), transparent 42%),
-        var(--surface-bg);
+}
+
+.about-diagram-layout {
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--border-color);
 }
 
 .about-diagram-copy,
@@ -417,7 +434,8 @@ body * {
     height: auto;
     display: block;
     margin: 1rem auto 1.2rem;
-    border-radius: 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
 }
 
 .about-feature-card {
@@ -516,14 +534,18 @@ body * {
 }
 
 .about-data-banner {
-    padding: 1.35rem 1.4rem;
-    background:
-        linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(45, 106, 79, 0.1)),
-        var(--surface-bg);
+    padding: 1rem 0 0;
+    border-top: 1px solid var(--border-color);
 }
 
 .about-data-banner a {
     font-weight: 700;
+}
+
+.about-data-copy {
+    max-width: 72ch;
+    color: var(--muted-text-color);
+    line-height: 1.7;
 }
 
 .theme-dark .about-hero {
@@ -531,32 +553,21 @@ body * {
 }
 
 .theme-dark .about-intro-panel {
-    background:
-        linear-gradient(135deg, rgba(45, 106, 79, 0.2), rgba(22, 27, 34, 0.98)),
-        var(--surface-bg);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 
-.theme-dark .about-story-card-primary {
-    background: linear-gradient(160deg, rgba(26, 58, 45, 0.85), rgba(22, 27, 34, 0.98));
-}
-
-.theme-dark .about-story-card-accent {
-    background: linear-gradient(160deg, rgba(74, 54, 18, 0.82), rgba(22, 27, 34, 0.98));
-}
-
-.theme-dark .about-story-card-outline {
-    background: rgba(22, 27, 34, 0.98);
-}
-
-.theme-dark .about-diagram-panel {
-    background:
-        radial-gradient(circle at top right, rgba(86, 189, 138, 0.12), transparent 42%),
-        var(--surface-bg);
+.theme-dark .about-hero-kicker {
+    color: #7bd4a8;
 }
 
 .theme-dark .about-section-kicker {
     color: #7bd4a8;
 }
+
+.theme-dark .about-text-eyebrow {
+    color: #9fb3a8;
+}
+
 
 .theme-dark .about-feature-card-team {
     background: linear-gradient(150deg, rgba(20, 45, 74, 0.96), rgba(22, 27, 34, 0.98));
@@ -608,12 +619,6 @@ body * {
         repeating-linear-gradient(-45deg, rgba(123, 212, 168, 0.06), rgba(123, 212, 168, 0.06) 12px, transparent 12px, transparent 24px);
 }
 
-.theme-dark .about-data-banner {
-    background:
-        linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(45, 106, 79, 0.18)),
-        var(--surface-bg);
-}
-
 @media (max-width: 767.98px) {
     .about-hero {
         min-height: 300px;
@@ -628,13 +633,29 @@ body * {
         padding: 1.35rem;
     }
 
-    .about-intro-panel,
-    .about-story-card,
-    .about-diagram-panel,
     .about-feature-card,
-    .about-metric-card,
-    .about-data-banner {
+    .about-metric-card {
         border-radius: 20px;
+    }
+
+    .about-intro-panel {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .about-intro-support,
+    .about-diagram-layout {
+        padding-left: 0;
+        border-left: none;
+    }
+
+    .about-intro-support {
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .about-diagram-layout {
+        padding-top: 0.5rem;
     }
 }
 
@@ -859,4 +880,4 @@ body * {
     .analysis-card-body {
         padding: 1.1rem;
     }
-}
+    }
