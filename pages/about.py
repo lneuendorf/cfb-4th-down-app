@@ -57,7 +57,7 @@ layout = dbc.Container(
                                     },
                                 ),
                                 html.H1(
-                                    "A data-driven look at fourth-down decisions in college football.",
+                                    "Analyze fourth-down decisions across college football.",
                                     className="about-hero-title",
                                     style={
                                         "fontSize": "clamp(1.8rem, 8vw, 3.5rem)",  # Responsive font (smaller on mobile)
@@ -65,6 +65,16 @@ layout = dbc.Container(
                                         "lineHeight": "1.2",
                                         "marginBottom": "clamp(0.75rem, 2.5vw, 1.5rem)",  # Responsive margin
                                         "maxWidth": "800px",
+                                        "position": "relative",
+                                        "zIndex": 3,
+                                    },
+                                ),
+                                html.P(
+                                    "See how teams and coaches’ choices affect win probability and compare to analytical recommendations.",
+                                    className="about-hero-copy",
+                                    style={
+                                        "fontSize": "clamp(1rem, 3vw, 1.25rem)",  # Responsive font
+                                        "maxWidth": "600px",
                                         "position": "relative",
                                         "zIndex": 3,
                                     },
@@ -138,7 +148,7 @@ layout = dbc.Container(
                                             className="about-feature-title-row",
                                         ),
                                         html.P(
-                                            "Compare how often teams follow the model's recommendation and how much win probability they gain or lose from fourth-down decisions.",
+                                            "Compare how often teams follow analytical recommendations and how much win probability their decisions add or cost.",
                                             className="mb-0",
                                         ),
                                     ],
@@ -170,7 +180,7 @@ layout = dbc.Container(
                                             className="about-feature-title-row",
                                         ),
                                         html.P(
-                                            "See which coaches are more aggressive or conservative, and how their decision-making changes over time.",
+                                            "See which coaches are more aggressive or conservative and how their decision-making evolves over time.",
                                             className="mb-0",
                                         ),
                                     ],
@@ -202,7 +212,7 @@ layout = dbc.Container(
                                             className="about-feature-title-row",
                                         ),
                                         html.P(
-                                            "Inspect individual fourth-down decisions with full game context, model recommendations, and expected win probability by option.",
+                                            "Explore individual fourth-down plays with full game context, model recommendations, and expected win probability for each decision.",
                                             className="mb-0",
                                         ),
                                     ],
@@ -231,7 +241,7 @@ layout = dbc.Container(
                                     "Key Metrics", className="about-section-kicker"
                                 ),
                                 html.H2(
-                                    "How to read the main metrics",
+                                    "Understanding the key metrics",
                                 ),
                                 html.P(
                                     "These are the two main summary metrics used throughout the Teams and Coaches pages.",
@@ -250,7 +260,7 @@ layout = dbc.Container(
                                                 style={"fontWeight": "700"},
                                             ),
                                             html.P(
-                                                "The percentage of model-recommended go situations where the team or coach actually went for it.",
+                                                "The percentage of situations where the model recommends going for it and the team actually does.",
                                                 className="mb-0",
                                             ),
                                         ],
@@ -268,7 +278,7 @@ layout = dbc.Container(
                                                 style={"fontWeight": "700"},
                                             ),
                                             html.P(
-                                                "The total expected win probability lost when teams choose not to go for it on fourth down when the model recommends going.",
+                                                "The total expected win probability lost when teams decline to go for it in situations where the model recommends it.",
                                                 className="mb-0",
                                             ),
                                         ],
@@ -297,7 +307,7 @@ layout = dbc.Container(
                         ),
                         html.P(
                             [
-                                "College football play-by-play data used in this project was sourced from the ",
+                                "Play-by-play data was sourced from the ",
                                 html.A(
                                     "CollegeFootballData",
                                     href="https://collegefootballdata.com/",
@@ -307,7 +317,7 @@ layout = dbc.Container(
                                         "fontStyle": "italic",
                                     },
                                 ),
-                                " API using the ",
+                                " API via the ",
                                 html.A(
                                     "cfbd-python",
                                     href="https://github.com/CFBD/cfbd-python",
@@ -317,7 +327,7 @@ layout = dbc.Container(
                                         "fontStyle": "italic",
                                     },
                                 ),
-                                " Python package. Models and analysis were developed independently. See ",
+                                " Python package. All models and analysis were developed independently. See the ",
                                 html.A(
                                     "Analysis",
                                     href="/analysis",
