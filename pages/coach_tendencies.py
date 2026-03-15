@@ -96,7 +96,7 @@ layout = dbc.Container(
                     sm=12,
                     md=12,
                     lg=12,
-                    xl=8,
+                    xl=6,
                     className="mb-1",
                 ),
                 # From Season
@@ -167,6 +167,34 @@ layout = dbc.Container(
                     lg=6,
                     xl=2,
                 ),
+                dbc.Col(
+                    [
+                        dbc.RadioItems(
+                            id="coach-summary-metric-radio",
+                            options=[
+                                {
+                                    "label": "Go-for-it rate when recommended",
+                                    "value": "go_rate",
+                                },
+                                {
+                                    "label": "Win probability lost",
+                                    "value": "wp_lost",
+                                },
+                            ],
+                            value="wp_lost",
+                            inline=True,
+                            className="d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
+                            inputCheckedClassName="border border-dark bg-dark",
+                        )
+                    ],
+                    xs=12,
+                    sm=12,
+                    md=12,
+                    lg=12,
+                    xl=2,
+                    className="justify-content-xl-start justify-content-center",
+                    style={"flexWrap": "nowrap"},
+                ),
             ],
             className="mb-4 g-3 align-items-top",
         ),
@@ -186,7 +214,7 @@ layout = dbc.Container(
                                                     "height": "15px",
                                                     "cursor": "pointer",
                                                 },
-                                                id="info-icon4",
+                                                id="coach-summary-info-icon",
                                                 className="info-icon",
                                             ),
                                             style={
@@ -202,7 +230,7 @@ layout = dbc.Container(
                                             },
                                         ),
                                         dcc.Graph(
-                                            id="coach-tendency-graph",
+                                            id="coach-summary-graph",
                                             config={
                                                 "displayModeBar": False,
                                                 "responsive": True,
@@ -216,10 +244,8 @@ layout = dbc.Container(
                                     style={"position": "relative"},
                                 ),
                                 dbc.Tooltip(
-                                    "This chart shows the average go-for-it rate when recommended for the selected coach across the chosen date range, "
-                                    "summarizing how often the coach followed model recommendations. Higher rates indicate a greater tendency to go for "
-                                    "it when analytics suggest it is optimal.",
-                                    target="info-icon4",
+                                    id="coach-summary-tooltip",
+                                    target="coach-summary-info-icon",
                                     placement="left",
                                     style={
                                         "maxWidth": "300px",
@@ -240,78 +266,7 @@ layout = dbc.Container(
                         )
                     ],
                     xs=12,
-                    xl=6,
-                    className="mb-4 px-1 pb-1 pt-1",
-                ),
-                dbc.Col(
-                    [
-                        dbc.Container(
-                            [
-                                html.Div(
-                                    [
-                                        html.Div(
-                                            html.Img(
-                                                src="/assets/logos/more_info.png",
-                                                style={
-                                                    "width": "15px",
-                                                    "height": "15px",
-                                                    "cursor": "pointer",
-                                                },
-                                                id="info-icon5",
-                                                className="info-icon",
-                                            ),
-                                            style={
-                                                "position": "absolute",
-                                                "top": "10px",
-                                                "right": "0px",
-                                                "width": "24px",
-                                                "height": "24px",
-                                                "display": "flex",
-                                                "alignItems": "center",
-                                                "justifyContent": "center",
-                                                "zIndex": "100",
-                                            },
-                                        ),
-                                        dcc.Graph(
-                                            id="coach-wp-lost-graph",
-                                            config={
-                                                "displayModeBar": False,
-                                                "responsive": True,
-                                            },
-                                            style={
-                                                "height": "100%",
-                                                "min-height": "400px",
-                                            },
-                                        ),
-                                    ],
-                                    style={"position": "relative"},
-                                ),
-                                dbc.Tooltip(
-                                    "This chart summarizes the average win probability lost per season for the selected coach over the chosen date range. "
-                                    "Win probability is lost when a coach opts to punt or attempt a field goal despite going for it being recommended. "
-                                    "Higher values indicate a greater expected cost from conservative fourth down decisions across the selected seasons.",
-                                    target="info-icon5",
-                                    placement="left",
-                                    style={
-                                        "maxWidth": "300px",
-                                        "fontSize": "13px",
-                                        "zIndex": "1000",
-                                        "whiteSpace": "pre-line",
-                                    },
-                                ),
-                            ],
-                            className="bg-white",
-                            style={
-                                "padding-left": "20px",
-                                "border-radius": "16px",
-                                "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
-                                "height": "100%",
-                                "min-height": "400px",
-                            },
-                        )
-                    ],
-                    xs=12,
-                    xl=6,
+                    xl=12,
                     className="mb-4 px-1 pb-1 pt-1",
                 ),
             ]
@@ -481,18 +436,26 @@ layout = dbc.Container(
 
 
 @dash.callback(
-    Output("coach-tendency-graph", "figure"),
-    Output("coach-wp-lost-graph", "figure"),
+    Output("coach-summary-graph", "figure"),
+    Output("coach-summary-tooltip", "children"),
     Input("start-season", "value"),
     Input("end-season", "value"),
     Input("coach-dropdown", "value"),
+    Input("coach-summary-metric-radio", "value"),
     Input("screen-width-store", "data"),
     Input("theme-store", "data"),
 )
-def update_graphs(start_season, end_season, selected_coaches, screen_width, theme):
+def update_graphs(
+    start_season,
+    end_season,
+    selected_coaches,
+    selected_metric,
+    screen_width,
+    theme,
+):
     is_dark = theme == "dark"
     if not selected_coaches:
-        return go.Figure(), go.Figure()
+        return go.Figure(), ""
 
     dff = df[(df["season"] >= start_season) & (df["season"] <= end_season)]
 
@@ -672,7 +635,21 @@ def update_graphs(start_season, end_season, selected_coaches, screen_width, them
     apply_plotly_theme(fig1, is_dark)
     apply_plotly_theme(fig2, is_dark)
 
-    return fig1, fig2
+    tooltip_go_rate = (
+        "This chart shows the average go-for-it rate when recommended for the selected coach across the chosen date range, "
+        "summarizing how often the coach followed model recommendations. Higher rates indicate a greater tendency to go for "
+        "it when analytics suggest it is optimal."
+    )
+    tooltip_wp_lost = (
+        "This chart summarizes the average win probability lost per season for the selected coach over the chosen date range. "
+        "Win probability is lost when a coach opts to punt or attempt a field goal despite going for it being recommended. "
+        "Higher values indicate a greater expected cost from conservative fourth down decisions across the selected seasons."
+    )
+
+    if selected_metric == "go_rate":
+        return fig1, tooltip_go_rate
+
+    return fig2, tooltip_wp_lost
 
 
 @dash.callback(

@@ -79,7 +79,7 @@ layout = dbc.Container(
                     sm=12,
                     md=12,
                     lg=12,
-                    xl=6,
+                    xl=4,
                 ),
                 # Season
                 dbc.Col(
@@ -123,7 +123,35 @@ layout = dbc.Container(
                     sm=12,
                     md=12,
                     lg=12,
-                    xl=6,
+                    xl=3,
+                ),
+                dbc.Col(
+                    [
+                        dbc.RadioItems(
+                            id="team-summary-metric-radio",
+                            options=[
+                                {
+                                    "label": "Go-for-it rate when recommended",
+                                    "value": "go_rate",
+                                },
+                                {
+                                    "label": "Win probability lost",
+                                    "value": "wp_lost",
+                                },
+                            ],
+                            value="wp_lost",
+                            inline=True,
+                            className="d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
+                            inputCheckedClassName="border border-dark bg-dark",
+                        )
+                    ],
+                    xs=12,
+                    sm=12,
+                    md=12,
+                    lg=12,
+                    xl=5,
+                    className="justify-content-xl-start justify-content-center",
+                    style={"flexWrap": "nowrap"},
                 ),
             ],
             className="mb-4 g-3 align-items-center",
@@ -144,7 +172,7 @@ layout = dbc.Container(
                                                     "height": "15px",
                                                     "cursor": "pointer",
                                                 },
-                                                id="info-icon",
+                                                id="team-summary-info-icon",
                                                 className="info-icon",
                                             ),
                                             style={
@@ -160,7 +188,7 @@ layout = dbc.Container(
                                             },
                                         ),
                                         dcc.Graph(
-                                            id="team-tendency-graph",
+                                            id="team-summary-graph",
                                             config={
                                                 "displayModeBar": False,
                                                 "responsive": True,
@@ -174,83 +202,8 @@ layout = dbc.Container(
                                     style={"position": "relative"},
                                 ),
                                 dbc.Tooltip(
-                                    "A higher value indicates that a team frequently follows recommendations on fourth down. Lower "
-                                    "values suggest a more conservative approach, even when going for it would increase expected win "
-                                    "probability. This metric does not account for situations where punting or kicking was recommended.",
-                                    target="info-icon",
-                                    placement="left",
-                                    style={
-                                        "maxWidth": "300px",
-                                        "fontSize": "13px",
-                                        "zIndex": "1000",
-                                        "whiteSpace": "pre-line",
-                                    },
-                                ),
-                            ],
-                            className="bg-white",
-                            style={
-                                "padding-left": "20px",
-                                "border-radius": "16px",
-                                "box-shadow": "0 2px 6px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.1)",
-                                "height": "100%",
-                                "min-height": "400px",
-                                "position": "relative",
-                            },
-                        )
-                    ],
-                    xs=12,
-                    xl=6,
-                    className="mb-4 px-1 pb-1 pt-1",
-                ),
-                dbc.Col(
-                    [
-                        dbc.Container(
-                            [
-                                html.Div(
-                                    [
-                                        html.Div(
-                                            html.Img(
-                                                src="/assets/logos/more_info.png",
-                                                style={
-                                                    "width": "15px",
-                                                    "height": "15px",
-                                                    "cursor": "pointer",
-                                                },
-                                                id="info-icon2",
-                                                className="info-icon",
-                                            ),
-                                            style={
-                                                "position": "absolute",
-                                                "top": "10px",
-                                                "right": "0px",
-                                                "width": "24px",
-                                                "height": "24px",
-                                                "display": "flex",
-                                                "alignItems": "center",
-                                                "justifyContent": "center",
-                                                "zIndex": "100",
-                                            },
-                                        ),
-                                        dcc.Graph(
-                                            id="wp-lost-graph",
-                                            config={
-                                                "displayModeBar": False,
-                                                "responsive": True,
-                                            },
-                                            style={
-                                                "height": "100%",
-                                                "min-height": "400px",
-                                            },
-                                        ),
-                                    ],
-                                    style={"position": "relative"},
-                                ),
-                                dbc.Tooltip(
-                                    "This metric estimates how much win probability a team gives up over a season by choosing not to "
-                                    "go for it on fourth down when the model recommends doing so. Higher values indicate a greater "
-                                    "cumulative cost of conservative decisions, while lower values suggest teams are better at capitalizing "
-                                    "on high-leverage go-for-it opportunities.",
-                                    target="info-icon2",
+                                    id="team-summary-tooltip",
+                                    target="team-summary-info-icon",
                                     placement="left",
                                     style={
                                         "maxWidth": "300px",
@@ -271,7 +224,7 @@ layout = dbc.Container(
                         )
                     ],
                     xs=12,
-                    xl=6,
+                    xl=12,
                     className="mb-4 px-1 pb-1 pt-1",
                 ),
             ]
@@ -441,14 +394,17 @@ layout = dbc.Container(
 
 
 @dash.callback(
-    Output("team-tendency-graph", "figure"),
-    Output("wp-lost-graph", "figure"),
+    Output("team-summary-graph", "figure"),
+    Output("team-summary-tooltip", "children"),
     Input("season-dropdown", "value"),
     Input("conference-dropdown", "value"),
+    Input("team-summary-metric-radio", "value"),
     Input("screen-width-store", "data"),
     Input("theme-store", "data"),
 )
-def update_graphs(selected_season, selected_conference, screen_width, theme):
+def update_graphs(
+    selected_season, selected_conference, selected_metric, screen_width, theme
+):
     is_dark = theme == "dark"
     dff = df[df["season"] == selected_season]
     if selected_conference != "All":
@@ -646,7 +602,22 @@ def update_graphs(selected_season, selected_conference, screen_width, theme):
     apply_plotly_theme(fig1, is_dark)
     apply_plotly_theme(fig2, is_dark)
 
-    return fig1, fig2
+    tooltip_go_rate = (
+        "A higher value indicates that a team frequently follows recommendations on fourth down. Lower "
+        "values suggest a more conservative approach, even when going for it would increase expected win "
+        "probability. This metric does not account for situations where punting or kicking was recommended."
+    )
+    tooltip_wp_lost = (
+        "This metric estimates how much win probability a team gives up over a season by choosing not to "
+        "go for it on fourth down when the model recommends doing so. Higher values indicate a greater "
+        "cumulative cost of conservative decisions, while lower values suggest teams are better at capitalizing "
+        "on high-leverage go-for-it opportunities."
+    )
+
+    if selected_metric == "go_rate":
+        return fig1, tooltip_go_rate
+
+    return fig2, tooltip_wp_lost
 
 
 @dash.callback(

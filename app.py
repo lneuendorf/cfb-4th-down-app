@@ -28,17 +28,15 @@ server.config["ETAG_DISABLED"] = True
 def add_cache_headers(response):
     path = request.path
 
-    # Never cache dynamic app responses
-    if path == "/" or path.startswith("/_dash-") or path == "/favicon.ico":
+    # Only static assets should be cacheable; everything else should refresh with the latest layout/callback map.
+    if path.startswith("/assets/"):
+        response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+    else:
         response.headers[
             "Cache-Control"
         ] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
-
-    # Cache static assets
-    elif path.startswith("/assets/"):
-        response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
 
     return response
 

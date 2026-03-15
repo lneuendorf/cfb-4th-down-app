@@ -252,6 +252,8 @@ body * {
 
 .theme-dark #team-tendency-graph .imagelayer image,
 .theme-dark #wp-lost-graph .imagelayer image,
+.theme-dark #team-summary-graph .imagelayer image,
+.theme-dark #coach-summary-graph .imagelayer image,
 .theme-dark #team-trend-graph .imagelayer image {
     filter:
         drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
