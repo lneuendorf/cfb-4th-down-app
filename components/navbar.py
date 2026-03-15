@@ -65,7 +65,7 @@ navbar = dbc.Navbar(
     ),
     color="white",
     dark=False,
-    sticky="top",
+    fixed="top",
     expand="lg",
     className="app-navbar",
     style={"boxShadow": "0 1px 5px rgba(0,0,0,0.1)"},
@@ -73,5 +73,5 @@ navbar = dbc.Navbar(
 
 header = html.Div(
     [navbar],
-    style={"position": "sticky", "top": 0, "zIndex": 1000},
+    style={"position": "fixed", "top": 0, "left": 0, "right": 0, "zIndex": 1000},
 )

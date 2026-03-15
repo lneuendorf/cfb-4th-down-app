@@ -79,6 +79,13 @@ body * {
     color: var(--text-color) !important;
 }
 
+.app-footer a,
+.app-footer a:hover,
+.app-footer a:focus,
+.app-footer a:active {
+    color: var(--text-color);
+}
+
 .theme-dark .app-navbar.navbar.bg-white,
 .theme-dark .app-navbar.navbar[class*="bg-"] {
     background-color: var(--surface-bg) !important;

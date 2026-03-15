@@ -53,7 +53,31 @@ footer = html.Footer(
             ],
             style={"marginBottom": "18px", "marginTop": "20px"},
         ),
-        html.P("Built with Dash & Plotly", style={"marginTop": "10px"}),
+        # html.P(
+        #     [
+        #         "Data: ",
+        #         html.A(
+        #             "CollegeFootballData",
+        #             href="https://collegefootballdata.com/",
+        #             target="_blank",
+        #             style={
+        #                 "textDecoration": "none",
+        #                 "fontStyle": "italic",
+        #             },
+        #         ),
+        #         " using ",
+        #         html.A(
+        #             "cfbd-python",
+        #             href="https://github.com/CFBD/cfbd-python",
+        #             target="_blank",
+        #             style={
+        #                 "textDecoration": "none",
+        #                 "fontStyle": "italic",
+        #             },
+        #         ),
+        #     ],
+        #     style={"marginTop": "10px"},
+        # ),
     ],
     style={
         "width": "100%",

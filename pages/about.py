@@ -73,7 +73,7 @@ layout = dbc.Container(
                             style={
                                 "position": "relative",
                                 "zIndex": 3,
-                                "padding": "clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem)",  # Responsive padding
+                                "padding": "clamp(5.5rem, 12vw, 7rem) clamp(1rem, 4vw, 2rem) clamp(3rem, 6vw, 4.5rem)",  # Extra top inset keeps hero copy below the fixed navbar on small screens
                                 "maxWidth": "1100px",
                                 "margin": "0 auto",
                                 "width": "100%",
@@ -92,9 +92,7 @@ layout = dbc.Container(
                     },
                 )
             ],
-            style={
-                "marginTop": "-1rem",  # Remove any gap from navbar
-            },
+            style={"marginTop": "-76px"},
         ),
         # What you can explore
         html.Section(
@@ -294,14 +292,13 @@ layout = dbc.Container(
                         ),
                         html.P(
                             [
-                                "All data used in this project is sourced from the ",
+                                "College football play-by-play data used in this project was sourced from the ",
                                 html.A(
                                     "CollegeFootballData",
                                     href="https://collegefootballdata.com/",
                                     target="_blank",
                                     style={
-                                        "textDecoration": "none",
-                                        "fontWeight": "700",
+                                        "textDecoration": "underline",
                                         "fontStyle": "italic",
                                     },
                                 ),
@@ -311,12 +308,21 @@ layout = dbc.Container(
                                     href="https://github.com/CFBD/cfbd-python",
                                     target="_blank",
                                     style={
-                                        "textDecoration": "none",
-                                        "fontWeight": "700",
+                                        "textDecoration": "underline",
                                         "fontStyle": "italic",
                                     },
                                 ),
-                                " Python package.",
+                                " Python package. Models and analysis were developed independently. See ",
+                                html.A(
+                                    "Analysis",
+                                    href="/analysis",
+                                    target="_blank",
+                                    style={
+                                        "textDecoration": "underline",
+                                        "fontStyle": "italic",
+                                    },
+                                ),
+                                " tab for more details.",
                             ],
                             className="mb-0",
                         ),
@@ -324,14 +330,14 @@ layout = dbc.Container(
                     className="about-section-heading",
                 ),
             ],
-            className="about-section about-section-data mt-5",
+            className="about-section about-section-data mt-5 mb-5",
         ),
     ],
     fluid=True,
     style={
         "paddingLeft": CONFIG["padding-left"],
         "paddingRight": CONFIG["padding-right"],
-        "paddingBottom": "2rem",
+        "paddingTop": "2rem",
     },
     className="responsive-container about-page",
 )
