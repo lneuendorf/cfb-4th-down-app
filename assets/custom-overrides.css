@@ -340,6 +340,29 @@ body * {
     );
 }
 
+.tendencies-filter-panel {
+    margin: 0.8rem 0 1.2rem;
+    padding: 0.75rem 0.95rem 0.6rem;
+    background: var(--surface-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 18px var(--shadow-color);
+}
+
+.tendencies-filter-title {
+    margin: 0 0 0.6rem;
+    color: var(--accent-color);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.tendencies-filter-panel .mb-4,
+.tendencies-filter-panel .mb-1 {
+    margin-bottom: 0.45rem !important;
+}
+
 .tendencies-chart-card {
     position: relative;
     border: 2px solid transparent;
@@ -467,6 +490,59 @@ body * {
     background-color: rgba(38, 30, 22, 0.96);
 }
 
+.game-decisions-page {
+    padding-top: 1.25rem;
+    padding-bottom: 2rem;
+}
+
+.game-decisions-filter-panel {
+    margin: 0.8rem 0 1.2rem;
+    padding: 0.75rem 0.95rem 0.6rem;
+    background: var(--surface-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 18px var(--shadow-color);
+}
+
+.game-decisions-filter-title {
+    margin: 0 0 0.6rem;
+    color: var(--accent-color);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.game-decisions-filter-panel .mb-2,
+.game-decisions-filter-panel .mb-1 {
+    margin-bottom: 0.45rem !important;
+}
+
+.dash-table-tooltip,
+.dash-tooltip {
+    background-color: var(--surface-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 10px 24px var(--shadow-color) !important;
+}
+
+.dash-table-tooltip *,
+.dash-tooltip * {
+    color: inherit !important;
+}
+
+.theme-dark .dash-table-tooltip,
+.theme-dark .dash-tooltip {
+    background-color: var(--surface-bg) !important;
+    color: #f4f7fb !important;
+    border-color: rgba(244, 247, 251, 0.14) !important;
+}
+
+.theme-dark .dash-table-tooltip *,
+.theme-dark .dash-tooltip * {
+    color: #f4f7fb !important;
+}
+
 .theme-dark .card-text,
 .theme-dark .lead,
 .theme-dark p,
@@ -515,6 +591,10 @@ body * {
         padding-bottom: 2rem;
     }
 
+    .game-decisions-page {
+        padding-top: 0.75rem;
+    }
+
     .tendencies-section-header {
         margin-bottom: 1rem;
     }
@@ -525,6 +605,14 @@ body * {
 
     .tendencies-section-divider {
         margin: 2.25rem 0 1.75rem;
+    }
+
+    .tendencies-filter-panel {
+        padding: 0.95rem 0.95rem 0.8rem;
+    }
+
+    .game-decisions-filter-panel {
+        padding: 0.95rem 0.95rem 0.8rem;
     }
 }
 

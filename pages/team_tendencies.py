@@ -37,127 +37,135 @@ layout = dbc.Container(
             ],
             className="tendencies-section-header mt-2",
         ),
-        dbc.Row(
+        html.Div(
             [
-                # Conference Dropdown
-                dbc.Col(
+                html.Div("Filters", className="tendencies-filter-title"),
+                dbc.Row(
                     [
-                        dbc.InputGroup(
+                        # Conference Dropdown
+                        dbc.Col(
                             [
-                                dbc.InputGroupText(
-                                    "Conference:",
-                                    style={
-                                        "height": "34px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                    },
-                                ),
-                                dcc.Dropdown(
-                                    id="conference-dropdown",
-                                    options=[
-                                        {"label": conf, "value": conf}
-                                        for conf in ["All"]
-                                        + sorted(
-                                            df["offense_conference"].dropna().unique()
-                                        )
+                                dbc.InputGroup(
+                                    [
+                                        dbc.InputGroupText(
+                                            "Conference:",
+                                            style={
+                                                "height": "34px",
+                                                "border-top-right-radius": "0",
+                                                "border-bottom-right-radius": "0",
+                                            },
+                                        ),
+                                        dcc.Dropdown(
+                                            id="conference-dropdown",
+                                            options=[
+                                                {"label": conf, "value": conf}
+                                                for conf in ["All"]
+                                                + sorted(
+                                                    df["offense_conference"]
+                                                    .dropna()
+                                                    .unique()
+                                                )
+                                            ],
+                                            placeholder="Select Conference",
+                                            value="Big Ten",
+                                            style={
+                                                "minWidth": "200px",
+                                                "height": "36px",
+                                                "border-top-left-radius": "0",
+                                                "border-bottom-left-radius": "0",
+                                                "fontSize": "13px",
+                                                "whiteSpace": "nowrap",
+                                                "color": "#252626",
+                                            },
+                                        ),
                                     ],
-                                    placeholder="Select Conference",
-                                    value="Big Ten",
-                                    style={
-                                        "minWidth": "200px",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                        "whiteSpace": "nowrap",
-                                        "color": "#252626",
-                                    },
-                                ),
+                                    className="justify-content-xl-end justify-content-center px-xl-3",
+                                    style={"flexWrap": "nowrap"},
+                                )
                             ],
-                            className="justify-content-xl-end justify-content-center px-xl-3",
-                            style={"flexWrap": "nowrap"},
-                        )
-                    ],
-                    xs=12,
-                    sm=12,
-                    md=12,
-                    lg=12,
-                    xl=4,
-                ),
-                # Season
-                dbc.Col(
-                    [
-                        dbc.InputGroup(
+                            xs=12,
+                            sm=12,
+                            md=12,
+                            lg=12,
+                            xl=4,
+                        ),
+                        # Season
+                        dbc.Col(
                             [
-                                dbc.InputGroupText(
-                                    "Season:",
-                                    style={
-                                        "height": "34px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                    },
-                                ),
-                                dcc.Dropdown(
-                                    id="season-dropdown",
-                                    options=[
-                                        {"label": str(s), "value": s}
-                                        for s in sorted(df["season"].unique())
+                                dbc.InputGroup(
+                                    [
+                                        dbc.InputGroupText(
+                                            "Season:",
+                                            style={
+                                                "height": "34px",
+                                                "border-top-right-radius": "0",
+                                                "border-bottom-right-radius": "0",
+                                            },
+                                        ),
+                                        dcc.Dropdown(
+                                            id="season-dropdown",
+                                            options=[
+                                                {"label": str(s), "value": s}
+                                                for s in sorted(df["season"].unique())
+                                            ],
+                                            value=2025
+                                            if 2025 in df["season"].unique()
+                                            else df["season"].max(),
+                                            placeholder="Select Season",
+                                            style={
+                                                "minWidth": "120px",
+                                                "height": "36px",
+                                                "border-top-left-radius": "0",
+                                                "border-bottom-left-radius": "0",
+                                                "fontSize": "13px",
+                                                "whiteSpace": "nowrap",
+                                                "color": "#252626",
+                                            },
+                                        ),
                                     ],
-                                    value=2025
-                                    if 2025 in df["season"].unique()
-                                    else df["season"].max(),
-                                    placeholder="Select Season",
-                                    style={
-                                        "minWidth": "120px",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                        "whiteSpace": "nowrap",
-                                        "color": "#252626",
-                                    },
-                                ),
+                                    className="justify-content-xl-start justify-content-center",
+                                    style={"flexWrap": "nowrap"},
+                                )
                             ],
+                            xs=12,
+                            sm=12,
+                            md=12,
+                            lg=12,
+                            xl=3,
+                        ),
+                        dbc.Col(
+                            [
+                                dbc.RadioItems(
+                                    id="team-summary-metric-radio",
+                                    options=[
+                                        {
+                                            "label": "Go-for-it rate when recommended",
+                                            "value": "go_rate",
+                                        },
+                                        {
+                                            "label": "Win probability lost",
+                                            "value": "wp_lost",
+                                        },
+                                    ],
+                                    value="wp_lost",
+                                    inline=True,
+                                    className="tendencies-metric-radio d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
+                                    inputCheckedClassName="border border-dark bg-dark",
+                                )
+                            ],
+                            xs=12,
+                            sm=12,
+                            md=12,
+                            lg=12,
+                            xl=5,
                             className="justify-content-xl-start justify-content-center",
                             style={"flexWrap": "nowrap"},
-                        )
+                        ),
                     ],
-                    xs=12,
-                    sm=12,
-                    md=12,
-                    lg=12,
-                    xl=3,
-                ),
-                dbc.Col(
-                    [
-                        dbc.RadioItems(
-                            id="team-summary-metric-radio",
-                            options=[
-                                {
-                                    "label": "Go-for-it rate when recommended",
-                                    "value": "go_rate",
-                                },
-                                {
-                                    "label": "Win probability lost",
-                                    "value": "wp_lost",
-                                },
-                            ],
-                            value="wp_lost",
-                            inline=True,
-                            className="tendencies-metric-radio d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
-                            inputCheckedClassName="border border-dark bg-dark",
-                        )
-                    ],
-                    xs=12,
-                    sm=12,
-                    md=12,
-                    lg=12,
-                    xl=5,
-                    className="justify-content-xl-start justify-content-center",
-                    style={"flexWrap": "nowrap"},
+                    className="mb-0 g-3 align-items-center",
                 ),
             ],
-            className="mb-4 g-3 align-items-center",
+            className="tendencies-filter-panel",
         ),
         dbc.Row(
             [
@@ -251,72 +259,81 @@ layout = dbc.Container(
             ],
             className="tendencies-section-header",
         ),
-        dbc.Row(
+        html.Div(
             [
-                dbc.Col(
+                html.Div("Filters", className="tendencies-filter-title"),
+                dbc.Row(
                     [
-                        dbc.InputGroup(
+                        dbc.Col(
                             [
-                                dbc.InputGroupText(
-                                    "Team:",
-                                    style={
-                                        "height": "34px",
-                                        "border-top-right-radius": "0",
-                                        "border-bottom-right-radius": "0",
-                                    },
-                                ),
-                                dcc.Dropdown(
-                                    id="team-dropdown",
-                                    options=[
-                                        {"label": team, "value": team}
-                                        for team in sorted(df["offense_team"].unique())
+                                dbc.InputGroup(
+                                    [
+                                        dbc.InputGroupText(
+                                            "Team:",
+                                            style={
+                                                "height": "34px",
+                                                "border-top-right-radius": "0",
+                                                "border-bottom-right-radius": "0",
+                                            },
+                                        ),
+                                        dcc.Dropdown(
+                                            id="team-dropdown",
+                                            options=[
+                                                {"label": team, "value": team}
+                                                for team in sorted(
+                                                    df["offense_team"].unique()
+                                                )
+                                            ],
+                                            placeholder="Select Team",
+                                            value="Notre Dame",
+                                            style={
+                                                "minWidth": "200px",
+                                                "height": "36px",
+                                                "border-top-left-radius": "0",
+                                                "border-bottom-left-radius": "0",
+                                                "fontSize": "13px",
+                                                "whiteSpace": "nowrap",
+                                                "color": "#252626",
+                                            },
+                                        ),
                                     ],
-                                    placeholder="Select Team",
-                                    value="Notre Dame",
-                                    style={
-                                        "minWidth": "200px",
-                                        "height": "36px",
-                                        "border-top-left-radius": "0",
-                                        "border-bottom-left-radius": "0",
-                                        "fontSize": "13px",
-                                        "whiteSpace": "nowrap",
-                                        "color": "#252626",
-                                    },
-                                ),
+                                    className="justify-content-center",
+                                    style={"flexWrap": "nowrap"},
+                                )
                             ],
-                            className="justify-content-center",
-                            style={"flexWrap": "nowrap"},
-                        )
-                    ],
-                    xs=12,
-                    md=6,
-                    className="mb-4",
-                ),
-                dbc.Col(
-                    [
-                        dbc.RadioItems(
-                            id="trend-metric-radio",
-                            options=[
-                                {
-                                    "label": "Go-for-it rate when recommended",
-                                    "value": "go_rate",
-                                },
-                                {
-                                    "label": "Win probability lost",
-                                    "value": "wp_lost",
-                                },
+                            xs=12,
+                            md=6,
+                            className="mb-0",
+                        ),
+                        dbc.Col(
+                            [
+                                dbc.RadioItems(
+                                    id="trend-metric-radio",
+                                    options=[
+                                        {
+                                            "label": "Go-for-it rate when recommended",
+                                            "value": "go_rate",
+                                        },
+                                        {
+                                            "label": "Win probability lost",
+                                            "value": "wp_lost",
+                                        },
+                                    ],
+                                    value="wp_lost",
+                                    inline=True,
+                                    className="tendencies-metric-radio d-flex justify-content-center justify-content-md-start gap-3 pt-2",
+                                    inputCheckedClassName="border border-dark bg-dark",
+                                )
                             ],
-                            value="wp_lost",
-                            inline=True,
-                            className="tendencies-metric-radio d-flex justify-content-center justify-content-md-start gap-3 pt-2",
-                            inputCheckedClassName="border border-dark bg-dark",
-                        )
+                            xs=12,
+                            md=6,
+                            className="mb-0 d-flex align-items-center",
+                        ),
                     ],
-                    xs=12,
-                    md=6,
-                    className="mb-4 d-flex align-items-center",
+                    className="mb-0 g-3 align-items-center",
                 ),
-            ]
+            ],
+            className="tendencies-filter-panel",
         ),
         dbc.Row(
             [
@@ -490,7 +507,7 @@ def update_graphs(
         subtitle="Percentage of analytically-recommended go situations where the team actually goes for it.",
         screen_width=screen_width,
         columns=2,
-        subtitle_width_factor=0.4,
+        subtitle_width_factor=0.5,
     )
 
     fig1.update_layout(
