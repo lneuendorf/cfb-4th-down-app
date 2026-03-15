@@ -8,19 +8,14 @@ dash.register_page(
 )
 
 CARD_STYLE = {
-    "borderRadius": "22px",
-    "border": "none",
-    "transition": "all 0.25s ease",
     "height": "100%",
-    "backgroundColor": "var(--surface-bg)",
-    "boxShadow": "0 10px 28px var(--shadow-color)",
 }
 
 
 def create_section_header(kicker, title, description):
     return html.Div(
         [
-            html.Span(kicker, className="analysis-section-kicker"),
+            html.Div(kicker, className="tendencies-section-kicker"),
             html.H2(title, className="analysis-section-title"),
             html.P(description, className="analysis-section-copy"),
         ],
@@ -28,35 +23,43 @@ def create_section_header(kicker, title, description):
     )
 
 
-def create_model_card(image_path, title, description, link, badge_text=None):
-    badge = None
-    if badge_text:
-        badge = html.Span(badge_text, className="analysis-badge")
+def create_model_card(
+    image_path,
+    title,
+    description,
+    link,
+    badge_text=None,
+    card_class_name="",
+    card_number=None,
+    image_class_name="",
+):
+    media = None
+    if image_path:
+        media = html.A(
+            html.Div(
+                html.Img(
+                    src=image_path,
+                    className=f"analysis-card-image {image_class_name}".strip(),
+                ),
+                className="analysis-card-image-wrap",
+            ),
+            href=link,
+            target="_blank",
+            className="analysis-card-media-link",
+        )
 
     return dbc.Card(
         [
-            html.A(
-                html.Div(
-                    html.Img(
-                        src=image_path,
-                        className="analysis-card-image",
-                    ),
-                    className="analysis-card-image-wrap",
-                ),
-                href=link,
-                target="_blank",
-                className="analysis-card-media-link",
-            ),
+            media,
             dbc.CardBody(
                 [
-                    badge,
+                    html.Div(card_number, className="analysis-card-number")
+                    if card_number
+                    else None,
                     html.H3(title, className="analysis-card-title"),
                     html.P(description, className="analysis-card-description"),
                     html.A(
-                        [
-                            html.Span("Read more", className="analysis-card-cta-text"),
-                            html.I(className="fas fa-arrow-right"),
-                        ],
+                        "Continue →",
                         href=link,
                         target="_blank",
                         className="analysis-card-cta",
@@ -66,34 +69,28 @@ def create_model_card(image_path, title, description, link, badge_text=None):
             ),
         ],
         style=CARD_STYLE,
-        className="analysis-card hover-card h-100",
+        className=f"analysis-card h-100 {card_class_name}".strip(),
     )
 
 
 layout = dbc.Container(
     [
-        html.Section(
+        html.Div(
             [
-                html.Div(
-                    [
-                        html.Span("Analysis Library", className="analysis-hero-kicker"),
-                        html.H1("Analysis", className="analysis-hero-title"),
-                        html.P(
-                            "This section hosts various analysis articles related to 4th down decisions, team tendencies, and model insights.",
-                            className="analysis-hero-subtitle",
-                        ),
-                    ],
-                    className="analysis-hero-copy",
+                html.H1("Analysis", className="analysis-page-title"),
+                html.P(
+                    "Model notes, experiments, and methodology behind the fourth-down engine.",
+                    className="analysis-page-intro",
                 ),
             ],
-            className="analysis-hero",
+            className="analysis-page-header mt-2",
         ),
         html.Section(
             [
                 create_section_header(
                     "Start Here",
-                    "Featured Overview",
-                    "Begin with the full decision-engine walkthrough before diving into the model-specific articles.",
+                    "Decision Engine",
+                    "Understand how the full recommendation system fits together.",
                 ),
                 dbc.Card(
                     [
@@ -101,9 +98,17 @@ layout = dbc.Container(
                             [
                                 dbc.Col(
                                     html.A(
-                                        html.Img(
-                                            src="/assets/images/4th_down_trends.png",
-                                            className="analysis-feature-image",
+                                        html.Div(
+                                            [
+                                                html.Img(
+                                                    src="/assets/images/4th_down_trends_white.png",
+                                                    className="analysis-feature-image analysis-feature-image-light",
+                                                ),
+                                                html.Img(
+                                                    src="/assets/images/4th_down_trends.png",
+                                                    className="analysis-feature-image analysis-feature-image-dark",
+                                                ),
+                                            ]
                                         ),
                                         href="https://lukeneuendorf.substack.com/p/building-a-college-football-4th-down",
                                         target="_blank",
@@ -114,31 +119,22 @@ layout = dbc.Container(
                                             "height": "100%",
                                         },
                                     ),
-                                    lg=5,
+                                    lg=4,
                                     className="analysis-feature-media",
                                 ),
                                 dbc.Col(
                                     dbc.CardBody(
                                         [
-                                            html.Span(
-                                                "Overview",
-                                                className="analysis-badge",
-                                            ),
                                             html.H3(
                                                 "Building a College Football 4th Down Decision Engine",
                                                 className="analysis-feature-title",
                                             ),
                                             html.P(
-                                                "This article explains the methodology behind the decision engine, where four models combine to estimate expected win probability for going for it, punting, or attempting a field goal, while highlighting key modeling limitations.",
+                                                "A walkthrough of how the four-model engine evaluates go, punt, and field-goal decisions.",
                                                 className="analysis-feature-copy",
                                             ),
                                             html.A(
-                                                [
-                                                    html.I(
-                                                        className="fas fa-external-link-alt"
-                                                    ),
-                                                    html.Span("Read more"),
-                                                ],
+                                                "Read more →",
                                                 href="https://lukeneuendorf.substack.com/p/building-a-college-football-4th-down",
                                                 target="_blank",
                                                 className="analysis-feature-link",
@@ -146,86 +142,92 @@ layout = dbc.Container(
                                         ],
                                         className="analysis-feature-body",
                                     ),
-                                    lg=7,
+                                    lg=8,
                                 ),
                             ],
                             className="g-0 h-100",
                         )
                     ],
                     style=CARD_STYLE,
-                    className="analysis-feature-card hover-card",
+                    className="analysis-feature-card analysis-feature-card-primary",
                 ),
             ],
             className="analysis-section",
         ),
+        html.Div(className="tendencies-section-divider"),
         html.Section(
             [
                 create_section_header(
                     "Core Models",
-                    "Model Deep Dives",
-                    "Detailed explanations of the individual models powering the decision engine.",
+                    "Four Model Breakdowns",
+                    "The components behind go, field-goal, punt, and game-state estimates.",
                 ),
                 dbc.Row(
                     [
                         dbc.Col(
                             create_model_card(
-                                image_path="/assets/images/wp_chart.png",
+                                image_path=None,
                                 title="Win Probability Model",
-                                description="Discover how the win probability model was developed, its features, and evaluation results. Learn what factors most influence game outcomes.",
+                                description="How the win probability model turns game context into estimated chances of winning.",
                                 link="https://lukeneuendorf.substack.com/p/win-probability-model",
+                                card_number="01",
                             ),
                             xs=12,
                             md=6,
                             xl=3,
-                            className="mb-4",
+                            className="mb-3",
                         ),
                         dbc.Col(
                             create_model_card(
-                                image_path="/assets/images/feature_importance_4th_down_proba.png",
+                                image_path=None,
                                 title="4th Down Conversion Probability",
-                                description="Discover how the 4th down conversion probability model was developed, its features, and evaluation results.",
+                                description="How the fourth-down conversion model estimates the probability of converting and the factors that influence success.",
                                 link="https://lukeneuendorf.substack.com/p/4th-down-conversion-probability-model",
+                                card_number="02",
                             ),
                             xs=12,
                             md=6,
                             xl=3,
-                            className="mb-4",
+                            className="mb-3",
                         ),
                         dbc.Col(
                             create_model_card(
-                                image_path="/assets/images/fg_pressure_rating.png",
+                                image_path=None,
                                 title="Field Goal Probability",
-                                description="Discover how the field goal probability model was developed, its features, and evaluation results.",
+                                description="How the field-goal model estimates make probability from kick distance, game context, and conditions.",
                                 link="https://lukeneuendorf.substack.com/p/field-goal-probability-model",
+                                card_number="03",
                             ),
                             xs=12,
                             md=6,
                             xl=3,
-                            className="mb-4",
+                            className="mb-3",
                         ),
                         dbc.Col(
                             create_model_card(
-                                image_path="/assets/images/punt_model.png",
+                                image_path=None,
                                 title="Punt Return Yards",
-                                description="Discover how the punt return yards model was developed, its features, and evaluation results.",
+                                description="How the punt model estimates field-position outcomes after kicks and returns.",
                                 link="https://lukeneuendorf.substack.com/p/punt-return-yards-model",
+                                card_number="04",
                             ),
                             xs=12,
                             md=6,
                             xl=3,
-                            className="mb-4",
+                            className="mb-3",
                         ),
                     ]
                 ),
             ],
             className="analysis-section",
         ),
+        html.Div(className="tendencies-section-divider"),
         html.Section(
             [
                 create_section_header(
                     "Experiments",
-                    "Related Projects",
-                    "Experimental approaches and alternative methodologies explored during development.",
+                    "Related Project",
+                    "Alternative approaches and side work explored during development.",
                 ),
                 dbc.Row(
                     [
@@ -233,26 +235,28 @@ layout = dbc.Container(
                             create_model_card(
                                 image_path="/assets/images/monte_carlo_sim.png",
                                 title="Building a Monte Carlo College Football Game Simulator (and Why I Stopped)",
-                                description="An exploration of Monte Carlo simulation for football games. Despite promising potential, the simulator faced significant computational challenges - running 1000 simulations took 16 minutes, and evaluating all 156,472 fourth down decisions would require ~1.7 years of compute time. Learn valuable lessons about computational limitations and optimization strategies.",
+                                description="A postmortem on a simulation-first approach and why the compute cost made it impractical.",
                                 link="https://lukeneuendorf.substack.com/p/building-a-monte-carlo-college-football",
-                                badge_text="Case Study",
+                                card_class_name="analysis-card-compact",
+                                image_class_name="analysis-card-image-invert-light",
                             ),
                             xs=12,
-                            lg=6,
-                            xl=5,
-                            className="mb-4",
+                            lg=5,
+                            xl=4,
+                            className="mb-3",
                         ),
                     ]
                 ),
             ],
             className="analysis-section",
         ),
+        html.Div(className="tendencies-section-divider"),
         html.Section(
             [
                 html.Div(
                     [
                         html.I(className="fas fa-newspaper"),
-                        html.Span("More general analysis articles coming soon..."),
+                        html.Span("More analysis articles coming soon."),
                     ],
                     className="analysis-coming-soon",
                 )
