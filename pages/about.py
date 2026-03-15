@@ -86,8 +86,9 @@ layout = dbc.Container(
                         "width": "100vw",
                         "marginLeft": "calc(-50vw + 50%)",
                         "marginRight": "calc(-50vw + 50%)",
-                        "height": "clamp(300px, 50vh, 1000px)",  # Responsive height: min 300px, max 500px, 50% of viewport height
+                        "height": "clamp(300px, 50svh, 1000px)",  # Use stable viewport height to avoid mobile scroll resizing
                         "minHeight": "300px",  # Ensure minimum height on very small screens
+                        "overflow": "hidden",
                     },
                 )
             ],
