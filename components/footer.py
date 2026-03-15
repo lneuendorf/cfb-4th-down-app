@@ -8,6 +8,15 @@ footer = html.Footer(
             [
                 html.A(
                     html.Img(
+                        src="/assets/logos/x.png",
+                        className="social-icon social-icon-invertable",
+                        style={"height": "24px", "margin": "0 10px"},
+                    ),
+                    href="https://x.com/CFB4thDown",
+                    target="_blank",
+                ),
+                html.A(
+                    html.Img(
                         src="/assets/logos/substack.png",
                         className="social-icon social-icon-invertable",
                         style={"height": "24px", "margin": "0 10px"},
@@ -22,15 +31,6 @@ footer = html.Footer(
                         style={"height": "24px", "margin": "0 10px"},
                     ),
                     href="https://bsky.app/profile/lukeneuendorf.bsky.social",
-                    target="_blank",
-                ),
-                html.A(
-                    html.Img(
-                        src="/assets/logos/x.png",
-                        className="social-icon social-icon-invertable",
-                        style={"height": "24px", "margin": "0 10px"},
-                    ),
-                    href="https://x.com/lukeneuendorf",
                     target="_blank",
                 ),
                 html.A(
