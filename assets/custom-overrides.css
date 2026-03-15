@@ -369,8 +369,8 @@ body * {
 }
 
 .about-section {
-    padding-top: clamp(5rem, 10vw, 15rem);
-    padding-bottom: clamp(5rem, 10vw, 15rem);
+    padding-top: clamp(5rem, 15vw, 15rem);
+    padding-bottom: clamp(5rem, 15vw, 15rem);
     margin-bottom: 0;
 }
 
@@ -731,8 +731,8 @@ body * {
     }
 
     .about-section-metrics {
-        padding-top: clamp(5rem, 10vw, 15rem);
-        padding-bottom: clamp(5rem, 10vw, 15rem);
+        padding-top: clamp(5rem, 15vw, 15rem);
+        padding-bottom: clamp(5rem, 15vw, 15rem);
     }
 }
 

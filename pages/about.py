@@ -18,9 +18,9 @@ layout = dbc.Container(
                             style={
                                 "backgroundImage": 'url("/assets/images/4th_down.jpg")',
                                 "backgroundSize": "cover",
-                                "backgroundPosition": "center 30%",
+                                "backgroundPosition": "center center",
                                 "backgroundAttachment": "fixed",
-                                "minHeight": "100dvh",
+                                "minHeight": "100lvh",
                                 "position": "absolute",
                                 "top": 0,
                                 "left": 0,
