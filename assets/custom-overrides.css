@@ -302,6 +302,7 @@ body * {
     color: #f7fbff;
 }
 
+
 .about-hero-title {
     margin: 0;
     font-size: clamp(2rem, 4.5vw, 3.6rem);
@@ -359,7 +360,7 @@ body * {
 .about-section-kicker {
     display: inline-block;
     margin-bottom: 0.45rem;
-    color: #2d6a4f;
+    color: #3b906a;
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -413,6 +414,24 @@ body * {
     margin-bottom: 0.65rem;
     font-size: 1.05rem;
     color: var(--text-color);
+}
+
+.about-feature-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+}
+
+.about-feature-title-row .about-feature-title {
+    margin-bottom: 0;
+}
+
+.about-feature-icon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    flex: 0 0 auto;
 }
 
 .about-diagram-panel {
@@ -539,6 +558,23 @@ body * {
     line-height: 1.7;
 }
 
+.about-section-band-inner {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.about-section-metrics {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: #e9e4e4;
+}
+
 .theme-dark .about-hero {
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
@@ -551,8 +587,20 @@ body * {
     color: #7bd4a8;
 }
 
+.theme-light .about-hero-kicker {
+    color: #7bd4a8;
+}
+
 .theme-dark .about-section-kicker {
     color: #7bd4a8;
+}
+
+.theme-dark .about-feature-icon {
+    filter: invert(1);
+}
+
+.theme-dark .about-section-metrics {
+    background-color: #1a2028;
 }
 
 .theme-dark .about-text-eyebrow {
@@ -647,6 +695,46 @@ body * {
 
     .about-diagram-layout {
         padding-top: 0.5rem;
+    }
+
+    .about-section-band-inner {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .about-section-metrics {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+}
+
+@media (min-width: 600px) {
+    .about-section-band-inner {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 800px) {
+    .about-section-band-inner {
+        max-width: 700px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .about-section-band-inner {
+        max-width: 950px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .about-section-band-inner {
+        max-width: 1150px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .about-section-band-inner {
+        max-width: 1200px;
     }
 }
 

@@ -8,39 +8,92 @@ dash.register_page(__name__, path="/", name="Home", title="CFB 4th Down")
 
 layout = dbc.Container(
     [
-        # Hero
+        # Hero - Full width, touching navbar
         html.Section(
             [
                 html.Div(
                     [
-                        html.Img(
-                            src="/assets/images/4th_down.jpg",
-                            alt="Fourth down play",
-                            className="about-hero-image",
+                        html.Div(
+                            className="hero-background",
+                            style={
+                                "backgroundImage": 'url("/assets/images/4th_down.jpg")',
+                                "backgroundSize": "cover",
+                                "backgroundPosition": "center 30%",
+                                "opacity": 0.7,
+                                "position": "absolute",
+                                "top": 0,
+                                "left": 0,
+                                "right": 0,
+                                "bottom": 0,
+                                "zIndex": 1,
+                            },
                         ),
-                        html.Div(className="about-hero-scrim"),
+                        html.Div(
+                            className="hero-overlay",
+                            style={
+                                "position": "absolute",
+                                "top": 0,
+                                "left": 0,
+                                "right": 0,
+                                "bottom": 0,
+                                "backgroundColor": "rgba(0, 0, 0, 0.5)",  # Dark overlay for text contrast
+                                "zIndex": 2,
+                            },
+                        ),
                         html.Div(
                             [
                                 html.Div(
                                     "College Football 4th-Down Analytics",
                                     className="about-hero-kicker",
+                                    style={
+                                        "fontSize": "clamp(0.9rem, 3vw, 1.2rem)",  # Responsive font
+                                        "fontWeight": "700",
+                                        "letterSpacing": "2px",
+                                        "textTransform": "uppercase",
+                                        "marginBottom": "clamp(0.5rem, 2vw, 1rem)",  # Responsive margin
+                                        "position": "relative",
+                                        "zIndex": 3,
+                                    },
                                 ),
                                 html.H1(
-                                    "See when teams and coaches made the right fourth-down call.",
+                                    "A data-driven look at fourth-down decisions in college football.",
                                     className="about-hero-title",
-                                ),
-                                html.P(
-                                    "A data-driven look at fourth-down decision-making through the lens of expected win probability.",
-                                    className="about-hero-subtitle",
+                                    style={
+                                        "fontSize": "clamp(1.8rem, 8vw, 3.5rem)",  # Responsive font (smaller on mobile)
+                                        "fontWeight": "700",
+                                        "lineHeight": "1.2",
+                                        "marginBottom": "clamp(0.75rem, 2.5vw, 1.5rem)",  # Responsive margin
+                                        "maxWidth": "800px",
+                                        "position": "relative",
+                                        "zIndex": 3,
+                                    },
                                 ),
                             ],
                             className="about-hero-content",
+                            style={
+                                "position": "relative",
+                                "zIndex": 3,
+                                "padding": "clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem)",  # Responsive padding
+                                "maxWidth": "1100px",
+                                "margin": "0 auto",
+                                "width": "100%",
+                                "boxSizing": "border-box",
+                            },
                         ),
                     ],
-                    className="about-hero about-hero-simple",
+                    style={
+                        "position": "relative",
+                        "width": "100vw",
+                        "marginLeft": "calc(-50vw + 50%)",
+                        "marginRight": "calc(-50vw + 50%)",
+                        "height": "clamp(300px, 50vh, 1000px)",  # Responsive height: min 300px, max 500px, 50% of viewport height
+                        "minHeight": "300px",  # Ensure minimum height on very small screens
+                    },
                 )
             ],
-            className="about-section about-section-hero",
+            style={
+                "marginTop": "-1rem",  # Remove any gap from navbar
+            },
         ),
         # What you can explore
         html.Section(
@@ -57,7 +110,7 @@ layout = dbc.Container(
                             className="about-section-copy",
                         ),
                     ],
-                    className="about-section-heading",
+                    className="about-section-heading mt-5",
                 ),
                 dbc.Row(
                     [
@@ -65,14 +118,23 @@ layout = dbc.Container(
                             dcc.Link(
                                 html.Div(
                                     [
-                                        html.Div("01", className="about-feature-number"),
-                                        html.H3(
-                                            "Teams",
-                                            className="about-feature-title",
-                                            style={"fontWeight": "700"},
+                                        html.Div(
+                                            [
+                                                html.Img(
+                                                    src="/assets/logos/team.png",
+                                                    alt="Teams",
+                                                    className="about-feature-icon",
+                                                ),
+                                                html.H3(
+                                                    "Teams",
+                                                    className="about-feature-title",
+                                                    style={"fontWeight": "700"},
+                                                ),
+                                            ],
+                                            className="about-feature-title-row",
                                         ),
                                         html.P(
-                                            "Compare how often teams follow the model’s recommendation and how much win probability they gain or lose from fourth-down decisions.",
+                                            "Compare how often teams follow the model's recommendation and how much win probability they gain or lose from fourth-down decisions.",
                                             className="mb-0",
                                         ),
                                     ],
@@ -88,11 +150,20 @@ layout = dbc.Container(
                             dcc.Link(
                                 html.Div(
                                     [
-                                        html.Div("02", className="about-feature-number"),
-                                        html.H3(
-                                            "Coaches",
-                                            className="about-feature-title",
-                                            style={"fontWeight": "700"},
+                                        html.Div(
+                                            [
+                                                html.Img(
+                                                    src="/assets/logos/coach.png",
+                                                    alt="Coaches",
+                                                    className="about-feature-icon",
+                                                ),
+                                                html.H3(
+                                                    "Coaches",
+                                                    className="about-feature-title",
+                                                    style={"fontWeight": "700"},
+                                                ),
+                                            ],
+                                            className="about-feature-title-row",
                                         ),
                                         html.P(
                                             "See which coaches are more aggressive or conservative, and how their decision-making changes over time.",
@@ -111,11 +182,20 @@ layout = dbc.Container(
                             dcc.Link(
                                 html.Div(
                                     [
-                                        html.Div("03", className="about-feature-number"),
-                                        html.H3(
-                                            "Plays",
-                                            className="about-feature-title",
-                                            style={"fontWeight": "700"},
+                                        html.Div(
+                                            [
+                                                html.Img(
+                                                    src="/assets/logos/play.png",
+                                                    alt="Plays",
+                                                    className="about-feature-icon",
+                                                ),
+                                                html.H3(
+                                                    "Plays",
+                                                    className="about-feature-title",
+                                                    style={"fontWeight": "700"},
+                                                ),
+                                            ],
+                                            className="about-feature-title-row",
                                         ),
                                         html.P(
                                             "Inspect individual fourth-down decisions with full game context, model recommendations, and expected win probability by option.",
@@ -134,66 +214,79 @@ layout = dbc.Container(
                     className="g-3",
                 ),
             ],
-            className="about-section about-section-features",
+            className="about-section about-section-features mt-5",
         ),
         # Key metrics
         html.Section(
             [
                 html.Div(
                     [
-                        html.Span("Key Metrics", className="about-section-kicker"),
-                        html.H2(
-                            "How to read the main metrics",
+                        html.Div(
+                            [
+                                html.Span(
+                                    "Key Metrics", className="about-section-kicker"
+                                ),
+                                html.H2(
+                                    "How to read the main metrics",
+                                ),
+                                html.P(
+                                    "These are the two main summary metrics used throughout the Teams and Coaches pages.",
+                                ),
+                            ],
+                            className="about-section-heading",
                         ),
-                        html.P(
-                            "These are the two main summary metrics used throughout the Teams and Coaches pages.",
+                        dbc.Row(
+                            [
+                                dbc.Col(
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                "01", className="about-feature-number"
+                                            ),
+                                            html.H3(
+                                                "Go-For-It Rate When Recommended",
+                                                className="about-metric-title",
+                                                style={"fontWeight": "700"},
+                                            ),
+                                            html.P(
+                                                "The percentage of model-recommended go situations where the team or coach actually went for it.",
+                                                className="mb-0",
+                                            ),
+                                        ],
+                                        className="about-metric-card",
+                                    ),
+                                    md=6,
+                                    className="mb-3 mb-md-0",
+                                ),
+                                dbc.Col(
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                "02", className="about-feature-number"
+                                            ),
+                                            html.H3(
+                                                "Win Probability Lost Per Season",
+                                                className="about-metric-title",
+                                                style={"fontWeight": "700"},
+                                            ),
+                                            html.P(
+                                                "The total expected win probability lost when teams choose not to go for it on fourth down when the model recommends going.",
+                                                className="mb-0",
+                                            ),
+                                        ],
+                                        className="about-metric-card",
+                                    ),
+                                    md=6,
+                                    className="mb-3 mb-md-0",
+                                ),
+                            ],
+                            className="g-3",
                         ),
                     ],
-                    className="about-section-heading",
-                ),
-                dbc.Row(
-                    [
-                        dbc.Col(
-                            html.Div(
-                                [
-                                    html.H3(
-                                        "Go-For-It Rate When Recommended",
-                                        className="about-metric-title",
-                                        style={"fontWeight": "700"},
-                                    ),
-                                    html.P(
-                                        "The percentage of model-recommended go situations where the team or coach actually went for it.",
-                                        className="mb-0",
-                                    ),
-                                ],
-                                className="about-metric-card",
-                            ),
-                            md=6,
-                            className="mb-3 mb-md-0",
-                        ),
-                        dbc.Col(
-                            html.Div(
-                                [
-                                    html.H3(
-                                        "Win Probability Lost Per Season",
-                                        className="about-metric-title",
-                                        style={"fontWeight": "700"},
-                                    ),
-                                    html.P(
-                                        "The total expected win probability given up by choosing a lower-value option on fourth down.",
-                                        className="mb-0",
-                                    ),
-                                ],
-                                className="about-metric-card",
-                            ),
-                            md=6,
-                            className="mb-3 mb-md-0",
-                        ),
-                    ],
-                    className="g-3",
+                    className="about-section-band-inner",
                 ),
             ],
-            className="about-section about-section-metrics",
+            className="about-section about-section-metrics mt-5",
         ),
         # Data attribution
         html.Section(
@@ -211,14 +304,22 @@ layout = dbc.Container(
                                     "CollegeFootballData",
                                     href="https://collegefootballdata.com/",
                                     target="_blank",
-                                    style={"textDecoration": "none"},
+                                    style={
+                                        "textDecoration": "none",
+                                        "fontWeight": "700",
+                                        "fontStyle": "italic",
+                                    },
                                 ),
                                 " API using the ",
                                 html.A(
                                     "cfbd-python",
                                     href="https://github.com/CFBD/cfbd-python",
                                     target="_blank",
-                                    style={"textDecoration": "none"},
+                                    style={
+                                        "textDecoration": "none",
+                                        "fontWeight": "700",
+                                        "fontStyle": "italic",
+                                    },
                                 ),
                                 " Python package.",
                             ],
@@ -228,12 +329,11 @@ layout = dbc.Container(
                     className="about-section-heading",
                 ),
             ],
-            className="about-section about-section-data",
+            className="about-section about-section-data mt-5",
         ),
     ],
     fluid=True,
     style={
-        "maxWidth": "1100px",
         "paddingLeft": CONFIG["padding-left"],
         "paddingRight": CONFIG["padding-right"],
         "paddingBottom": "2rem",
