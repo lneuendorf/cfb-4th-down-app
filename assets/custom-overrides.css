@@ -398,6 +398,24 @@ body * {
     margin-bottom: 0.45rem !important;
 }
 
+.tendencies-filter-group {
+    width: 100%;
+    min-height: 100%;
+    padding: 0.7rem 0.85rem;
+    background: var(--surface-alt-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.tendencies-filter-group-title {
+    margin: 0 0 0.55rem;
+    color: var(--muted-text-color);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
 .tendencies-chart-card {
     position: relative;
     border: 1px solid var(--border-color);
@@ -413,6 +431,10 @@ body * {
 
 .tendencies-metric-radio .form-check {
     margin-bottom: 0;
+}
+
+.tendencies-metric-radio {
+    row-gap: 0.55rem;
 }
 
 .tendencies-metric-radio .form-check-input {

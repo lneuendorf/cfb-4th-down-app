@@ -135,22 +135,31 @@ layout = dbc.Container(
                         ),
                         dbc.Col(
                             [
-                                dbc.RadioItems(
-                                    id="team-summary-metric-radio",
-                                    options=[
-                                        {
-                                            "label": "Go-for-it rate when recommended",
-                                            "value": "go_rate",
-                                        },
-                                        {
-                                            "label": "Win probability lost",
-                                            "value": "wp_lost",
-                                        },
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            "Metric Type",
+                                            className="tendencies-filter-group-title",
+                                        ),
+                                        dbc.RadioItems(
+                                            id="team-summary-metric-radio",
+                                            options=[
+                                                {
+                                                    "label": "Go-for-it rate when recommended",
+                                                    "value": "go_rate",
+                                                },
+                                                {
+                                                    "label": "Win probability lost",
+                                                    "value": "wp_lost",
+                                                },
+                                            ],
+                                            value="wp_lost",
+                                            inline=True,
+                                            className="tendencies-metric-radio d-flex flex-wrap justify-content-center justify-content-xl-start gap-3",
+                                            inputCheckedClassName="border border-dark bg-dark",
+                                        ),
                                     ],
-                                    value="wp_lost",
-                                    inline=True,
-                                    className="tendencies-metric-radio d-flex justify-content-center justify-content-xl-start gap-3 pt-2",
-                                    inputCheckedClassName="border border-dark bg-dark",
+                                    className="tendencies-filter-group",
                                 )
                             ],
                             xs=12,
@@ -307,27 +316,36 @@ layout = dbc.Container(
                         ),
                         dbc.Col(
                             [
-                                dbc.RadioItems(
-                                    id="trend-metric-radio",
-                                    options=[
-                                        {
-                                            "label": "Go-for-it rate when recommended",
-                                            "value": "go_rate",
-                                        },
-                                        {
-                                            "label": "Win probability lost",
-                                            "value": "wp_lost",
-                                        },
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            "Metric Type",
+                                            className="tendencies-filter-group-title",
+                                        ),
+                                        dbc.RadioItems(
+                                            id="trend-metric-radio",
+                                            options=[
+                                                {
+                                                    "label": "Go-for-it rate when recommended",
+                                                    "value": "go_rate",
+                                                },
+                                                {
+                                                    "label": "Win probability lost",
+                                                    "value": "wp_lost",
+                                                },
+                                            ],
+                                            value="wp_lost",
+                                            inline=True,
+                                            className="tendencies-metric-radio d-flex flex-wrap justify-content-center justify-content-md-start gap-3",
+                                            inputCheckedClassName="border border-dark bg-dark",
+                                        ),
                                     ],
-                                    value="wp_lost",
-                                    inline=True,
-                                    className="tendencies-metric-radio d-flex justify-content-center justify-content-md-start gap-3 pt-2",
-                                    inputCheckedClassName="border border-dark bg-dark",
+                                    className="tendencies-filter-group",
                                 )
                             ],
                             xs=12,
                             md=6,
-                            className="mb-0 d-flex align-items-center",
+                            className="mb-0 d-flex align-items-stretch",
                         ),
                     ],
                     className="mb-0 g-3 align-items-center",
