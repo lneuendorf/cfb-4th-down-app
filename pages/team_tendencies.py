@@ -525,6 +525,7 @@ def update_graphs(
         subtitle="Percentage of analytically-recommended go situations where the team actually goes for it.",
         screen_width=screen_width,
         columns=2,
+        title_width_factor=0.6,
         subtitle_width_factor=0.5,
     )
 
@@ -719,7 +720,7 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
     if selected_metric == "go_rate":
         y_col = "go_rate"
         y_title = "Go-For-It Rate When Recommended"
-        chart_title = f"{selected_team} Go-For-It Rate When Recommended Over Time"
+        chart_title = f"{selected_team} Go-For-It Rate When Recommended"
         chart_subtitle = "Percentage of analytically-recommended go situations where the team actually goes for it."
         hovertemplate = "<b>Season %{x}</b><br>Go Rate: %{y:.1%}<extra></extra>"
         tooltip_text = (
@@ -731,6 +732,7 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
             tickformat=".0%",
             range=[0, min(1.1, max(team_data[y_col].max() * 1.1, 0.1))],
         )
+        title_fontsize = title_fontsize * 0.8
     else:
         y_col = "wp_lost"
         y_title = "Win Probability Lost"
@@ -803,7 +805,7 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
         screen_width=screen_width,
         columns=1,
         title_font_size=title_fontsize,
-        title_width_factor=0.7,
+        title_width_factor=0.9,
         subtitle_width_factor=0.55,
     )
 

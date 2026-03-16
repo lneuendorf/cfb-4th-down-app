@@ -390,7 +390,7 @@ layout = dbc.Container(
                             ],
                             xs=12,
                             md=6,
-                            className="mb-0 d-flex align-items-stretch",
+                            className="mb-0 mt-2 mt-md-0 d-flex align-items-stretch",
                         ),
                     ]
                 ),
@@ -759,7 +759,7 @@ def update_trend_graph(
     if selected_metric == "go_rate":
         y_col = "go_rate"
         y_title = "Go-For-It Rate When Recommended"
-        chart_title = f"{selected_coach} Go-For-It Rate When Recommended Over Time"
+        chart_title = f"{selected_coach} Go-For-It Rate When Recommended"
         chart_subtitle = "Percentage of analytically-recommended go situations where the team actually goes for it."
         hovertemplate = "<b>Season %{x}</b><br>Go Rate: %{y:.1%}<br>Plays: %{customdata}<extra></extra>"
         tooltip_text = (
@@ -772,6 +772,7 @@ def update_trend_graph(
             range=[0, min(1.1, max(coach_data[y_col].max() * 1.1, 0.1))],
         )
         customdata = coach_data["n_go_rec"]
+        title_fontsize = title_fontsize * 0.8
     else:
         y_col = "wp_lost"
         y_title = "Win Probability Lost"
@@ -830,7 +831,7 @@ def update_trend_graph(
         screen_width=screen_width,
         columns=1,
         title_font_size=title_fontsize,
-        title_width_factor=0.35,
+        title_width_factor=0.9,
         subtitle_width_factor=0.55,
     )
 
