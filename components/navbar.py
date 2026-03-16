@@ -31,7 +31,7 @@ navbar = dbc.Navbar(
                                     className="app-navbar-logo app-navbar-logo-light",
                                 ),
                                 html.Img(
-                                    src="/assets/logos/logo_dark_mode_v2.png",
+                                    src="/assets/logos/logo_dark_mode.png",
                                     alt="CFB 4th Down",
                                     className="app-navbar-logo app-navbar-logo-dark",
                                 ),
