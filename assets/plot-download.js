@@ -2,6 +2,9 @@
     const EXPORT_SCALE = 2;
     const EXPORT_TITLE_FONT_SIZE = 16;
     const EXPORT_SUBTITLE_FONT_SIZE = 16;
+    const EXPORT_CREDIT_TEXT = "@CFB4thDown";
+    const EXPORT_CREDIT_FONT_SIZE = 10;
+    const EXPORT_CREDIT_MARGIN_BOTTOM = 48;
 
     function sanitizeFilename(name) {
         return (name || "chart")
@@ -18,6 +21,39 @@
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
+    }
+
+    function isDarkTheme() {
+        const appShell = document.getElementById("app-shell");
+        return appShell ? appShell.classList.contains("theme-dark") : false;
+    }
+
+    function getCreditPosition(graphId) {
+        if (graphId && graphId.includes("trend")) {
+            return { x: 1.1, y: -0.17 };
+        }
+
+        return { x: 1.14, y: -0.2 };
+    }
+
+    function buildExportCreditAnnotation(graphId) {
+        const position = getCreditPosition(graphId);
+
+        return {
+            x: position.x,
+            y: position.y,
+            xref: "paper",
+            yref: "paper",
+            xanchor: "right",
+            yanchor: "bottom",
+            showarrow: false,
+            text: EXPORT_CREDIT_TEXT,
+            font: {
+                size: EXPORT_CREDIT_FONT_SIZE,
+                color: isDarkTheme() ? "#ffffff" : "#000000",
+            },
+            align: "right",
+        };
     }
 
     function getPlotElement(graphId) {
@@ -71,6 +107,15 @@
         exportLayout.title.text = buildExportTitle(exportLayout);
         exportLayout.title.x = exportLayout.title.x ?? 0.5;
         exportLayout.title.xanchor = exportLayout.title.xanchor || "center";
+        exportLayout.margin = exportLayout.margin || {};
+        exportLayout.margin.b = Math.max(
+            exportLayout.margin.b || 0,
+            EXPORT_CREDIT_MARGIN_BOTTOM
+        );
+        exportLayout.annotations = Array.isArray(exportLayout.annotations)
+            ? exportLayout.annotations
+            : [];
+        exportLayout.annotations.push(buildExportCreditAnnotation(options.graphId));
 
         const tempContainer = document.createElement("div");
         tempContainer.style.position = "fixed";
@@ -111,6 +156,7 @@
         await downloadFromTempPlot(plot, {
             format: "png",
             filename,
+            graphId,
             width,
             height,
             scale: EXPORT_SCALE,
