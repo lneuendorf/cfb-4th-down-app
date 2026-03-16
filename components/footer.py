@@ -8,7 +8,7 @@ footer = html.Footer(
             [
                 html.A(
                     html.Img(
-                        src="/assets/logos/x.png",
+                        src="/assets/logos/x_v2.png",
                         className="social-icon social-icon-invertable",
                         style={"height": "24px", "margin": "0 10px"},
                     ),
@@ -44,7 +44,7 @@ footer = html.Footer(
                 ),
                 html.A(
                     html.Img(
-                        src="/assets/logos/linkedin.png",
+                        src="/assets/logos/linkedin_v2.png",
                         className="social-icon social-icon-invertable",
                         style={"height": "24px", "margin": "0 10px"},
                     ),
