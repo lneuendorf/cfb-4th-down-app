@@ -14,7 +14,7 @@ dash.register_page(
     __name__,
     path="/team-tendencies",
     name="Team Tendencies",
-    title="Team Tendencies | CFB 4th Down",
+    title="Team Tendencies | CFB4thDown",
 )
 
 df = pd.read_parquet("data/team_tendencies.parquet")

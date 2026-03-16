@@ -10,7 +10,7 @@ dash.register_page(
     __name__,
     path="/game-decisions",
     name="Game Decisions",
-    title="Game Decisions | CFB 4th Down",
+    title="Game Decisions | CFB4thDown",
 )
 
 # Load the data

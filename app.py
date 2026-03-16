@@ -41,7 +41,7 @@ def add_cache_headers(response):
     return response
 
 
-app.title = "CFB 4th Down Decisions"
+app.title = "CFB4thDown Decisions"
 
 app.layout = html.Div(
     [
