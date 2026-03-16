@@ -23,7 +23,21 @@ navbar = dbc.Navbar(
             html.Div(
                 [
                     dbc.NavbarBrand(
-                        html.B("CFB4thDown", style={"fontSize": "28px"}),
+                        html.Span(
+                            [
+                                html.Img(
+                                    src="/assets/logos/logo_light_mode.png",
+                                    alt="CFB 4th Down",
+                                    className="app-navbar-logo app-navbar-logo-light",
+                                ),
+                                html.Img(
+                                    src="/assets/logos/logo_dark_mode.png",
+                                    alt="CFB 4th Down",
+                                    className="app-navbar-logo app-navbar-logo-dark",
+                                ),
+                            ],
+                            className="app-navbar-brand-wrap",
+                        ),
                         href="/",
                     ),
                     html.Div(
