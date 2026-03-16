@@ -101,11 +101,11 @@ layout = dbc.Container(
                                         html.Div(
                                             [
                                                 html.Img(
-                                                    src="/assets/images/4th_down_trends_light.png",
+                                                    src="/assets/images/4th_down_trends_light_v2.png",
                                                     className="analysis-feature-image analysis-feature-image-light",
                                                 ),
                                                 html.Img(
-                                                    src="/assets/images/4th_down_trends_dark.png",
+                                                    src="/assets/images/4th_down_trends_dark_v2.png",
                                                     className="analysis-feature-image analysis-feature-image-dark",
                                                 ),
                                             ]
