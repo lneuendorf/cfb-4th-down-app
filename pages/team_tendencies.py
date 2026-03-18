@@ -106,7 +106,7 @@ layout = dbc.Container(
                             for conf in ["All"]
                             + sorted(df["offense_conference"].dropna().unique())
                         ],
-                        placeholder="Select Conference",
+                        placeholder="Select",
                         value="Big Ten",
                         className="dashboard-control-dropdown",
                     ),
@@ -123,7 +123,7 @@ layout = dbc.Container(
                         value=2025
                         if 2025 in df["season"].unique()
                         else df["season"].max(),
-                        placeholder="Select Season",
+                        placeholder="Select",
                         className="dashboard-control-dropdown",
                     ),
                     class_name="dashboard-control dashboard-control--compact",
@@ -239,7 +239,7 @@ layout = dbc.Container(
                             build_dropdown_option(team)
                             for team in sorted(df["offense_team"].unique())
                         ],
-                        placeholder="Select Team",
+                        placeholder="Select",
                         value="Notre Dame",
                         className="dashboard-control-dropdown",
                     ),

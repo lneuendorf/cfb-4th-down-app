@@ -54,7 +54,7 @@ layout = html.Div(
                                     for conf in all_conferences
                                 ],
                                 value="Big Ten",
-                                placeholder="Select Conference",
+                                placeholder="Select",
                                 className="dashboard-control-dropdown",
                             ),
                             class_name="dashboard-control dashboard-control--medium",
@@ -68,7 +68,7 @@ layout = html.Div(
                                     for year in all_years
                                 ],
                                 value=df["Season"].max(),
-                                placeholder="Select Season",
+                                placeholder="Select",
                                 className="dashboard-control-dropdown",
                             ),
                             class_name="dashboard-control dashboard-control--compact",

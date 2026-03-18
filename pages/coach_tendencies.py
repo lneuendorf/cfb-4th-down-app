@@ -116,7 +116,7 @@ layout = dbc.Container(
                     dcc.Dropdown(
                         id="coach-dropdown",
                         options=[build_dropdown_option(coach) for coach in all_coaches],
-                        placeholder="Select Coaches...",
+                        placeholder="Select",
                         value=default_coaches,
                         multi=True,
                         className="dashboard-control-dropdown",
@@ -132,7 +132,7 @@ layout = dbc.Container(
                             for s in sorted(df["season"].unique())
                         ],
                         value=df["season"].min(),
-                        placeholder="Start",
+                        placeholder="Select",
                         className="dashboard-control-dropdown",
                     ),
                     class_name="dashboard-control dashboard-control--compact",
@@ -146,7 +146,7 @@ layout = dbc.Container(
                             for s in sorted(df["season"].unique())
                         ],
                         value=df["season"].max(),
-                        placeholder="End",
+                        placeholder="Select",
                         className="dashboard-control-dropdown",
                     ),
                     class_name="dashboard-control dashboard-control--compact",
@@ -259,7 +259,7 @@ layout = dbc.Container(
                     dcc.Dropdown(
                         id="trend-coach-dropdown",
                         options=[build_dropdown_option(coach) for coach in all_coaches],
-                        placeholder="Select Coach...",
+                        placeholder="Select",
                         value="Lane Kiffin",
                         className="dashboard-control-dropdown",
                     ),
