@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objects as go
 from config.config import CONFIG
+from components.dropdown_options import build_dropdown_option
 from components.theme import (
     apply_plotly_theme,
     build_responsive_plot_title,
@@ -114,9 +115,7 @@ layout = dbc.Container(
                     "Coaches",
                     dcc.Dropdown(
                         id="coach-dropdown",
-                        options=[
-                            {"label": coach, "value": coach} for coach in all_coaches
-                        ],
+                        options=[build_dropdown_option(coach) for coach in all_coaches],
                         placeholder="Select Coaches...",
                         value=default_coaches,
                         multi=True,
@@ -129,7 +128,7 @@ layout = dbc.Container(
                     dcc.Dropdown(
                         id="start-season",
                         options=[
-                            {"label": str(s), "value": s}
+                            build_dropdown_option(str(s), s)
                             for s in sorted(df["season"].unique())
                         ],
                         value=df["season"].min(),
@@ -143,7 +142,7 @@ layout = dbc.Container(
                     dcc.Dropdown(
                         id="end-season",
                         options=[
-                            {"label": str(s), "value": s}
+                            build_dropdown_option(str(s), s)
                             for s in sorted(df["season"].unique())
                         ],
                         value=df["season"].max(),
@@ -259,9 +258,7 @@ layout = dbc.Container(
                     "Coach",
                     dcc.Dropdown(
                         id="trend-coach-dropdown",
-                        options=[
-                            {"label": coach, "value": coach} for coach in all_coaches
-                        ],
+                        options=[build_dropdown_option(coach) for coach in all_coaches],
                         placeholder="Select Coach...",
                         value="Lane Kiffin",
                         className="dashboard-control-dropdown",

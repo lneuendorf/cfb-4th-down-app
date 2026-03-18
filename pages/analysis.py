@@ -88,7 +88,7 @@ layout = dbc.Container(
         html.Section(
             [
                 create_section_header(
-                    "Start Here",
+                    "Process Overview",
                     "Decision Engine",
                     "Understand how the full recommendation system fits together.",
                 ),

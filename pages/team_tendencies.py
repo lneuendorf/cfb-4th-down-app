@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objects as go
 from config.config import CONFIG
+from components.dropdown_options import build_dropdown_option
 from components.theme import (
     apply_plotly_theme,
     build_responsive_plot_title,
@@ -101,7 +102,7 @@ layout = dbc.Container(
                     dcc.Dropdown(
                         id="conference-dropdown",
                         options=[
-                            {"label": conf, "value": conf}
+                            build_dropdown_option(conf)
                             for conf in ["All"]
                             + sorted(df["offense_conference"].dropna().unique())
                         ],
@@ -116,7 +117,7 @@ layout = dbc.Container(
                     dcc.Dropdown(
                         id="season-dropdown",
                         options=[
-                            {"label": str(s), "value": s}
+                            build_dropdown_option(str(s), s)
                             for s in sorted(df["season"].unique())
                         ],
                         value=2025
@@ -235,7 +236,7 @@ layout = dbc.Container(
                     dcc.Dropdown(
                         id="team-dropdown",
                         options=[
-                            {"label": team, "value": team}
+                            build_dropdown_option(team)
                             for team in sorted(df["offense_team"].unique())
                         ],
                         placeholder="Select Team",

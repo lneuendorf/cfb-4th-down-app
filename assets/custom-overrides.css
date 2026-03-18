@@ -469,6 +469,11 @@ body * {
     color: var(--muted-text-color) !important;
 }
 
+/* Dash 4 renders placeholders with .dash-dropdown-placeholder instead of legacy .Select-* nodes. */
+.dashboard-control-dropdown.dash-dropdown .dash-dropdown-placeholder {
+    color: var(--muted-text-color) !important;
+}
+
 .dashboard-control-dropdown .Select-placeholder,
 .dashboard-control-dropdown .Select--single > .Select-control .Select-value {
     line-height: 38px;
@@ -491,11 +496,15 @@ body * {
 
 .dashboard-control-dropdown .Select-value,
 .dashboard-control-dropdown .Select-value-label,
-.dashboard-control-dropdown .Select-input > input,
-.dashboard-control-dropdown .Select-menu-outer,
-.dashboard-control-dropdown .VirtualizedSelectOption,
-.dashboard-control-dropdown .VirtualizedSelectFocusedOption {
+.dashboard-control-dropdown .Select-input > input {
     color: var(--text-color) !important;
+}
+
+.dashboard-control-dropdown {
+    --dropdown-menu-bg: #ffffff;
+    --dropdown-menu-text: #252626;
+    --dropdown-menu-border: rgba(37, 38, 38, 0.12);
+    --dropdown-menu-hover-bg: rgba(230, 126, 34, 0.14);
 }
 
 .dashboard-control-dropdown .Select-arrow-zone:hover .Select-arrow,
@@ -516,14 +525,29 @@ body * {
 
 .dashboard-control-dropdown .Select-menu-outer {
     margin-top: 0.3rem;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--dropdown-menu-border);
     border-radius: 10px;
-    background-color: var(--surface-bg);
+    background-color: var(--dropdown-menu-bg);
     box-shadow: 0 12px 28px var(--shadow-color);
 }
 
+.dashboard-control-dropdown .Select-menu,
+.dashboard-control-dropdown .Select-option,
+.dashboard-control-dropdown .Select-noresults,
+.dashboard-control-dropdown .VirtualizedSelectOption,
+.dashboard-control-dropdown .VirtualizedSelectFocusedOption,
+.dashboard-control-dropdown .VirtualizedSelectOption > *,
+.dashboard-control-dropdown .Select-option > * {
+    color: var(--dropdown-menu-text) !important;
+    -webkit-text-fill-color: var(--dropdown-menu-text) !important;
+}
+
+.dashboard-control-dropdown .Select-menu {
+    background-color: var(--dropdown-menu-bg);
+}
+
 .dashboard-control-dropdown .VirtualizedSelectFocusedOption {
-    background-color: var(--accent-soft);
+    background-color: var(--dropdown-menu-hover-bg);
 }
 
 .dashboard-control-dropdown .Select-option,
@@ -547,45 +571,6 @@ body * {
     text-align: center !important;
 }
 
-.theme-dark .dashboard-control-dropdown .Select-placeholder,
-.theme-dark .dashboard-control-dropdown.Select--single > .Select-control .Select-value,
-.theme-dark .dashboard-control-dropdown.has-value.Select--single > .Select-control .Select-value .Select-value-label,
-.theme-dark .dashboard-control-dropdown.has-value.Select--single > .Select-control .Select-value a.Select-value-label,
-.theme-dark .dashboard-control-dropdown.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label,
-.theme-dark .dashboard-control-dropdown.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label,
-.theme-dark .dashboard-control-dropdown .Select-input > input,
-.theme-dark .dashboard-control-dropdown .Select-option,
-.theme-dark .dashboard-control-dropdown .Select-option *,
-.theme-dark .dashboard-control-dropdown .VirtualizedSelectOption,
-.theme-dark .dashboard-control-dropdown .VirtualizedSelectOption *,
-.theme-dark .dashboard-control-dropdown .Select-noresults,
-.theme-dark .dashboard-control-dropdown .Select-arrow-zone,
-.theme-dark .dashboard-control-dropdown .Select-clear-zone {
-    color: #252626 !important;
-    fill: #252626 !important;
-    -webkit-text-fill-color: #252626 !important;
-}
-
-.theme-dark .dashboard-control-dropdown .Select-control,
-.theme-dark .dashboard-control-dropdown .Select-control *,
-.theme-dark .dashboard-control-dropdown .Select-menu-outer,
-.theme-dark .dashboard-control-dropdown .Select-menu-outer *,
-.theme-dark .dashboard-control-dropdown .Select-menu,
-.theme-dark .dashboard-control-dropdown .Select-menu * {
-    color: #252626 !important;
-    fill: #252626 !important;
-    -webkit-text-fill-color: #252626 !important;
-}
-
-.theme-dark .dashboard-control-dropdown .Select-arrow,
-.theme-dark .dashboard-control-dropdown .Select-arrow-zone:hover > .Select-arrow {
-    border-top-color: #252626 !important;
-}
-
-.theme-dark .dashboard-control-dropdown.is-open > .Select-control > .Select-arrow {
-    border-color: transparent transparent #252626 !important;
-}
-
 .dashboard-control-dropdown .Select--multi .Select-value {
     margin-top: 0;
     border: 0;
@@ -602,17 +587,21 @@ body * {
     color: var(--text-color) !important;
 }
 
-.theme-dark .dashboard-control-dropdown,
-.theme-dark .dashboard-control-dropdown div,
-.theme-dark .dashboard-control-dropdown span,
-.theme-dark .dashboard-control-dropdown input,
-.theme-dark .dashboard-control-dropdown .Select-value-label,
-.theme-dark .dashboard-control-dropdown .Select-placeholder,
-.theme-dark .dashboard-control-dropdown .Select-option,
-.theme-dark .dashboard-control-dropdown .VirtualizedSelectOption,
-.theme-dark .dashboard-control-dropdown .Select-noresults {
-    color: #252626 !important;
-    -webkit-text-fill-color: #252626 !important;
+.theme-dark .dashboard-control-dropdown {
+    --dropdown-menu-bg: #f8f9fa;
+    --dropdown-menu-text: #252626;
+    --dropdown-menu-border: rgba(37, 38, 38, 0.12);
+    --dropdown-menu-hover-bg: rgba(230, 126, 34, 0.16);
+}
+
+.theme-dark .dashboard-control-dropdown.dash-dropdown .dash-dropdown-placeholder {
+    color: var(--dropdown-menu-text) !important;
+}
+
+.theme-dark .dashboard-control-dropdown.dash-dropdown .dash-dropdown-value-count {
+    color: var(--dropdown-menu-text) !important;
+    -webkit-text-fill-color: var(--dropdown-menu-text) !important;
+    background-color: rgba(139, 139, 139, 0.2);
 }
 
 [id$="-metric-tooltip"] .tooltip-inner {
@@ -868,6 +857,61 @@ body * {
     color: inherit;
 }
 
+.theme-dark .dashboard-control-dropdown .Select-control,
+.theme-dark .dashboard-control-dropdown .Select-control .Select-value,
+.theme-dark .dashboard-control-dropdown .Select-control .Select-value-label,
+.theme-dark .dashboard-control-dropdown .Select-control .Select-input > input,
+.theme-dark .dashboard-control-dropdown .Select-control .Select-arrow-zone,
+.theme-dark .dashboard-control-dropdown .Select-control .Select-clear-zone {
+    color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+}
+
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control,
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control *,
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control .Select-placeholder,
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control .Select-input > input {
+    color: var(--dropdown-menu-text) !important;
+    -webkit-text-fill-color: var(--dropdown-menu-text) !important;
+}
+
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control .Select-input > input::placeholder,
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control .Select-input > input::-webkit-input-placeholder,
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control .Select-input > input::-moz-placeholder,
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control .Select-input > input:-ms-input-placeholder,
+.theme-dark .dashboard-control-dropdown:not(.has-value) .Select-control .Select-input > input::-ms-input-placeholder {
+    color: var(--dropdown-menu-text) !important;
+    -webkit-text-fill-color: var(--dropdown-menu-text) !important;
+    opacity: 1 !important;
+}
+
+.theme-dark .dashboard-control-dropdown .Select-placeholder {
+    color: var(--dropdown-menu-text) !important;
+    -webkit-text-fill-color: var(--dropdown-menu-text) !important;
+    opacity: 1 !important;
+}
+
+.theme-dark .dashboard-control-dropdown .Select-menu-outer,
+.theme-dark .dashboard-control-dropdown .Select-menu-outer *,
+.theme-dark .dashboard-control-dropdown .Select-menu,
+.theme-dark .dashboard-control-dropdown .Select-menu *,
+.theme-dark .dashboard-control-dropdown .Select-option,
+.theme-dark .dashboard-control-dropdown .Select-option *,
+.theme-dark .dashboard-control-dropdown .Select-noresults,
+.theme-dark .dashboard-control-dropdown .VirtualizedSelectOption,
+.theme-dark .dashboard-control-dropdown .VirtualizedSelectOption *,
+.theme-dark .dashboard-control-dropdown .VirtualizedSelectFocusedOption,
+.theme-dark .dashboard-control-dropdown .VirtualizedSelectFocusedOption * {
+    color: #252626 !important;
+    -webkit-text-fill-color: #252626 !important;
+}
+
+.theme-dark .dashboard-control-dropdown .Select--multi .Select-value-label,
+.theme-dark .dashboard-control-dropdown .Select--multi .Select-value-icon {
+    color: #252626 !important;
+    -webkit-text-fill-color: #252626 !important;
+}
+
 .theme-dark #decision-table img {
     filter:
         drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
@@ -934,6 +978,55 @@ body * {
 
     .dashboard-segmented-control {
         width: 100%;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-trigger {
+        --mobile-dropdown-balance-space: 2rem;
+        grid-template-columns: var(--mobile-dropdown-balance-space) minmax(0, 1fr) auto auto auto;
+        justify-items: stretch;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-trigger::before {
+        content: "";
+        grid-column: 1;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-trigger:has(.dash-dropdown-clear) {
+        --mobile-dropdown-balance-space: 3.35rem;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-trigger:has(.dash-dropdown-value-count) {
+        --mobile-dropdown-balance-space: 5rem;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-trigger:has(.dash-dropdown-value-count):has(.dash-dropdown-clear) {
+        --mobile-dropdown-balance-space: 6.35rem;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-value,
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-placeholder {
+        grid-column: 2;
+        width: 100%;
+        text-align: center;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-value-count,
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-clear,
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-trigger-icon {
+        grid-row: 1;
+        justify-self: end;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-value-count {
+        grid-column: 3;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-clear {
+        grid-column: 4;
+    }
+
+    .dashboard-control-dropdown.dash-dropdown .dash-dropdown-trigger-icon {
+        grid-column: 5;
     }
 }
 

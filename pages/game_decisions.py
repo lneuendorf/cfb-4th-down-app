@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output
 import pandas as pd
 from dash.dash_table import DataTable
 from config.config import CONFIG
+from components.dropdown_options import build_dropdown_option
 
 dash.register_page(
     __name__,
@@ -49,7 +50,7 @@ layout = html.Div(
                             dcc.Dropdown(
                                 id="conference-dropdown",
                                 options=[
-                                    {"label": conf, "value": conf}
+                                    build_dropdown_option(conf)
                                     for conf in all_conferences
                                 ],
                                 value="Big Ten",
@@ -63,7 +64,7 @@ layout = html.Div(
                             dcc.Dropdown(
                                 id="year-dropdown",
                                 options=[
-                                    {"label": str(year), "value": year}
+                                    build_dropdown_option(str(year), year)
                                     for year in all_years
                                 ],
                                 value=df["Season"].max(),
@@ -390,18 +391,18 @@ def update_dropdown_options(selected_conference, selected_year):
     dff = dff[dff["Offense Conference"] == selected_conference]
 
     offense_teams = [
-        {"label": team, "value": team} for team in sorted(dff["Offense Team"].unique())
+        build_dropdown_option(team) for team in sorted(dff["Offense Team"].unique())
     ]
-    weeks = [{"label": week, "value": week} for week in sorted(dff["Week"].unique())]
+    weeks = [build_dropdown_option(week) for week in sorted(dff["Week"].unique())]
 
     # Only show these three options in recommendation dropdown
     recommendations = [
-        {"label": "Field Goal", "value": "Field Goal"},
-        {"label": "Go", "value": "Go"},
-        {"label": "Punt", "value": "Punt"},
+        build_dropdown_option("Field Goal"),
+        build_dropdown_option("Go"),
+        build_dropdown_option("Punt"),
     ]
 
-    decisions = [{"label": dec, "value": dec} for dec in sorted(dff["Decision"].unique())]
+    decisions = [build_dropdown_option(dec) for dec in sorted(dff["Decision"].unique())]
 
     return offense_teams, weeks, recommendations, decisions
 
