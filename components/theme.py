@@ -1,5 +1,6 @@
 import html
 import textwrap
+import plotly.graph_objects as go
 
 
 def apply_plotly_theme(fig, is_dark):
@@ -33,6 +34,49 @@ def apply_plotly_theme(fig, is_dark):
         title_font=dict(color=font_color),
     )
 
+    return fig
+
+
+def build_empty_state_figure(
+    is_dark,
+    message="Make selections to view data.",
+    height=400,
+):
+    muted_color = "#b7c0cb" if is_dark else "#5f6368"
+
+    fig = go.Figure()
+    apply_plotly_theme(fig, is_dark)
+    fig.update_layout(
+        height=height,
+        showlegend=False,
+        hovermode=False,
+        dragmode=False,
+        margin=dict(l=20, r=20, t=20, b=20),
+        annotations=[
+            dict(
+                text=html.escape(message),
+                x=0.5,
+                y=0.5,
+                xref="paper",
+                yref="paper",
+                showarrow=False,
+                align="center",
+                font=dict(size=15, color=muted_color),
+            )
+        ],
+    )
+    fig.update_xaxes(
+        visible=False,
+        showgrid=False,
+        zeroline=False,
+        fixedrange=True,
+    )
+    fig.update_yaxes(
+        visible=False,
+        showgrid=False,
+        zeroline=False,
+        fixedrange=True,
+    )
     return fig
 
 

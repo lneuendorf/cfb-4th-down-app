@@ -7,6 +7,7 @@ from config.config import CONFIG
 from components.dropdown_options import build_dropdown_option
 from components.theme import (
     apply_plotly_theme,
+    build_empty_state_figure,
     build_responsive_plot_title,
     get_plot_title_margin,
 )
@@ -354,6 +355,9 @@ def update_graphs(
     selected_season, selected_conference, selected_metric, screen_width, theme
 ):
     is_dark = theme == "dark"
+    if selected_season is None or selected_conference is None or selected_metric is None:
+        return build_empty_state_figure(is_dark), "Make selections to view data."
+
     dff = df[df["season"] == selected_season]
     if selected_conference != "All":
         dff = dff[dff["offense_conference"] == selected_conference]
@@ -370,6 +374,15 @@ def update_graphs(
     grouped = grouped[grouped["n_go_rec"] > 0].copy()
     grouped["go_for_it_rate"] = grouped["n_go"] / grouped["n_go_rec"]
     grouped["avg_wp_lost_per_season"] = grouped["net_wp_lost"]
+
+    if grouped.empty:
+        return (
+            build_empty_state_figure(
+                is_dark,
+                "Make selections to view data.",
+            ),
+            "",
+        )
 
     ### PLOT 1
     grouped_sorted1 = grouped.sort_values("go_for_it_rate", ascending=True)
@@ -581,7 +594,7 @@ def update_graphs(
 def update_trend_graph(selected_team, selected_metric, screen_width, theme):
     is_dark = theme == "dark"
     if selected_team is None:
-        return go.Figure(), ""
+        return build_empty_state_figure(is_dark, "Make selections to view data."), ""
 
     team_df = df[df["offense_team"] == selected_team]
     team_data = (
@@ -603,7 +616,13 @@ def update_trend_graph(selected_team, selected_metric, screen_width, theme):
     team_data["wp_lost"] = team_data["net_wp_lost"]
 
     if team_data.empty:
-        return go.Figure(), ""
+        return (
+            build_empty_state_figure(
+                is_dark,
+                "Make selections to view data.",
+            ),
+            "",
+        )
 
     if screen_width < 768:
         axis_fontsize = 11

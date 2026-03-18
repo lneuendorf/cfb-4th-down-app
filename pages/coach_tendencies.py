@@ -7,6 +7,7 @@ from config.config import CONFIG
 from components.dropdown_options import build_dropdown_option
 from components.theme import (
     apply_plotly_theme,
+    build_empty_state_figure,
     build_responsive_plot_title,
     get_plot_title_margin,
 )
@@ -381,7 +382,13 @@ def update_graphs(
 ):
     is_dark = theme == "dark"
     if not selected_coaches:
-        return go.Figure(), ""
+        return (
+            build_empty_state_figure(
+                is_dark,
+                "Make selections to view data.",
+            ),
+            "",
+        )
 
     dff = df[(df["season"] >= start_season) & (df["season"] <= end_season)]
 
@@ -411,6 +418,15 @@ def update_graphs(
     grouped = grouped[grouped["n_go_rec"] > 0].copy()
     grouped["go_for_it_rate"] = grouped["n_go"] / grouped["n_go_rec"]
     grouped["avg_wp_lost_per_season"] = grouped["net_wp_lost"] / grouped["n_season"]
+
+    if grouped.empty:
+        return (
+            build_empty_state_figure(
+                is_dark,
+                "Make selections to view data.",
+            ),
+            "",
+        )
 
     ### PLOT 1
     grouped_sorted1 = grouped.sort_values("go_for_it_rate", ascending=True)
@@ -595,7 +611,7 @@ def update_trend_graph(
 ):
     is_dark = theme == "dark"
     if selected_coach is None:
-        return go.Figure(), ""
+        return build_empty_state_figure(is_dark, "Make selections to view data."), ""
 
     coach_df = df[
         (df["coach_name"] == selected_coach)
@@ -621,7 +637,13 @@ def update_trend_graph(
     coach_data["wp_lost"] = coach_data["net_wp_lost"]
 
     if coach_data.empty:
-        return go.Figure(), ""
+        return (
+            build_empty_state_figure(
+                is_dark,
+                "Make selections to view data.",
+            ),
+            "",
+        )
 
     if screen_width < 768:
         axis_fontsize = 11
