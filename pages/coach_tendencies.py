@@ -40,9 +40,22 @@ METRIC_OPTIONS = [
     {"label": "Go-for-it Rate", "value": "go_rate"},
     {"label": "WP Lost", "value": "wp_lost"},
 ]
-METRIC_TOOLTIP = (
-    "Go-for-it Rate: How often the coach went for it when the model recommended going.\n"
-    "WP Lost: Estimated win probability lost by punting or kicking when a go-for-it was recommended."
+METRIC_TOOLTIP = html.Div(
+    [
+        html.Div(
+            [
+                html.U(html.B("Go-for-it Rate")),
+                ": How often the coach went for it when the model recommended going.",
+            ],
+            style={"marginBottom": "0.35rem"},
+        ),
+        html.Div(
+            [
+                html.U(html.B("WP Lost")),
+                ": Estimated win probability lost by punting or kicking when a go-for-it was recommended.",
+            ]
+        ),
+    ]
 )
 
 
