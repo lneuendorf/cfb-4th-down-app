@@ -26,12 +26,12 @@ navbar = dbc.Navbar(
                         html.Span(
                             [
                                 html.Img(
-                                    src="/assets/logos/logo_light_mode.png",
+                                    src="/assets/logos/light_mode_logo_v2.jpg",
                                     alt="CFB4thDown",
                                     className="app-navbar-logo app-navbar-logo-light",
                                 ),
                                 html.Img(
-                                    src="/assets/logos/logo_dark_mode.png",
+                                    src="/assets/logos/dark_mode_logo_v2.png",
                                     alt="CFB4thDown",
                                     className="app-navbar-logo app-navbar-logo-dark",
                                 ),

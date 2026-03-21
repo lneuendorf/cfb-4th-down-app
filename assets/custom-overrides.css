@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 :root {
-    --accent-color: #e67d22;
+    --accent-color: #ff6a00;
     --accent-strong: #d96906;
     --accent-soft: rgba(230, 126, 34, 0.16);
     --accent-soft-strong: rgba(230, 126, 34, 0.24);
@@ -22,7 +22,7 @@
 }
 
 .theme-light {
-    --accent-color: #e67d22;
+    --accent-color: #ff6a00;
     --accent-strong: #b45309;
     --accent-soft: rgba(230, 126, 34, 0.16);
     --accent-soft-strong: rgba(230, 126, 34, 0.24);
@@ -38,7 +38,7 @@
 }
 
 .theme-dark {
-    --accent-color: #e67d22;
+    --accent-color: #ff6a00;
     --accent-strong: #d96906;
     --accent-soft: rgba(255, 159, 67, 0.18);
     --accent-soft-strong: rgba(255, 159, 67, 0.28);
