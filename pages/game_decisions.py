@@ -2,6 +2,7 @@ import dash
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
+from html import escape
 import pandas as pd
 from dash.dash_table import DataTable
 from config.config import CONFIG
@@ -20,6 +21,70 @@ df = pd.read_parquet("data/game_decisions.parquet")
 # Get unique conferences and years for dropdowns
 all_conferences = sorted(df["Offense Conference"].dropna().unique())
 all_years = sorted(df["Season"].unique(), reverse=True)
+
+
+def format_pct(value):
+    return f"{float(value) * 100:.1f}%"
+
+
+def build_team_cell(abbreviation, team_name, logo_url):
+    full_name = "" if pd.isna(team_name) else str(team_name).strip()
+    short_name = "" if pd.isna(abbreviation) else str(abbreviation).strip()
+    display_name = short_name or full_name
+    tooltip_name = full_name or display_name
+    escaped_display_name = escape(display_name)
+    escaped_tooltip_name = escape(tooltip_name, quote=True)
+
+    logo_html = ""
+    if pd.notna(logo_url) and str(logo_url).strip():
+        escaped_logo_url = escape(str(logo_url).strip(), quote=True)
+        logo_html = (
+            f"<span title='{escaped_tooltip_name}' style='display:inline-flex;'>"
+            f"<img src='{escaped_logo_url}' alt='{escaped_display_name}' "
+            "style='height:24px; width:24px; object-fit:contain; margin-right:6px;'>"
+            "</span>"
+        )
+
+    return (
+        "<span style='display:inline-flex; align-items:center; white-space:nowrap;'>"
+        + logo_html
+        + f"<span title='{escaped_tooltip_name}'>{escaped_display_name}</span>"
+        + "</span>"
+    )
+
+
+def build_wp_summary_cell(row):
+    options = [
+        ("Go", float(row["Win Probability Go"]), "go"),
+        ("FG", float(row["Win Probability Field Goal"]), "fg"),
+        ("Punt", float(row["Win Probability Punt"]), "punt"),
+    ]
+    best_value = max(value for _, value, _ in options)
+    return (
+        "<div class='wp-summary-cell'>"
+        + "".join(
+            [
+                (
+                    (
+                        "<div class='wp-summary-row wp-summary-row-best'>"
+                        if abs(value - best_value) < 1e-9
+                        else "<div class='wp-summary-row'>"
+                    )
+                    + f"<span class='wp-summary-label'>{label}</span>"
+                    + "<span class='wp-summary-track'>"
+                    + f"<span class='wp-summary-fill wp-summary-fill-{css_name}' style='width: {value * 100:.1f}%;'></span>"
+                    + "</span>"
+                    + "<span class='wp-summary-value-block'>"
+                    + f"<span class='wp-summary-value'>{format_pct(value)}</span>"
+                    + f"<span class='wp-summary-delta'>{(value - best_value) * 100:+.1f}</span>"
+                    + "</span>"
+                    + "</div>"
+                )
+                for label, value, css_name in options
+            ]
+        )
+        + "</div>"
+    )
 
 
 def build_filter_control(label, control, class_name="dashboard-control"):
@@ -150,11 +215,6 @@ layout = html.Div(
                                             "type": "numeric",
                                         },
                                         {
-                                            "name": ["Offense", "Score"],
-                                            "id": "Offense Score",
-                                            "type": "numeric",
-                                        },
-                                        {
                                             "name": ["Defense", "Team"],
                                             "id": "Defense Team",
                                             "presentation": "markdown",
@@ -164,11 +224,7 @@ layout = html.Div(
                                             "id": "Pregame Defense Elo",
                                             "type": "numeric",
                                         },
-                                        {
-                                            "name": ["Defense", "Score"],
-                                            "id": "Defense Score",
-                                            "type": "numeric",
-                                        },
+                                        {"name": ["Game State", "Score"], "id": "Score"},
                                         {"name": ["Game State", "Time"], "id": "Time"},
                                         {
                                             "name": ["Game State", "Down & Dist"],
@@ -179,28 +235,17 @@ layout = html.Div(
                                             "id": "Yards to Goal",
                                             "type": "numeric",
                                         },
-                                        # New Win Probability columns
                                         {
-                                            "name": ["Expected Win Prob", "Go"],
-                                            "id": "Win Probability Go",
-                                            "type": "numeric",
-                                            "format": {"specifier": ".2%"},
-                                        },
-                                        {
-                                            "name": ["Expected Win Prob", "Field Goal"],
-                                            "id": "Win Probability Field Goal",
-                                            "type": "numeric",
-                                            "format": {"specifier": ".2%"},
-                                        },
-                                        {
-                                            "name": ["Expected Win Prob", "Punt"],
-                                            "id": "Win Probability Punt",
-                                            "type": "numeric",
-                                            "format": {"specifier": ".2%"},
+                                            "name": [
+                                                "Expected Win Prob ⓘ",
+                                                "Go / FG / Punt ⓘ",
+                                            ],
+                                            "id": "WP Summary",
+                                            "presentation": "markdown",
                                         },
                                         # Play Outcome columns
                                         {
-                                            "name": ["Play Outcome", "Recommendation"],
+                                            "name": ["Play Outcome", "Rec"],
                                             "id": "Recommendation",
                                         },
                                         {
@@ -209,14 +254,20 @@ layout = html.Div(
                                             "presentation": "markdown",
                                         },
                                         {
+                                            "name": ["Play Outcome", "WP Lost ⓘ"],
+                                            "id": "WP Lost",
+                                            "presentation": "markdown",
+                                        },
+                                        {
                                             "name": ["Play Outcome", "Play Desc"],
                                             "id": "Desc",
                                         },
                                     ],
                                     cell_selectable=False,
+                                    fill_width=False,
                                     page_size=20,
                                     page_action="native",
-                                    sort_action="native",
+                                    sort_action="custom",
                                     filter_action="none",  # Disable the built-in filtering
                                     merge_duplicate_headers=True,
                                     style_table={
@@ -224,14 +275,18 @@ layout = html.Div(
                                         "height": "100%",
                                         "minHeight": "400px",
                                         "fontFamily": "Arial, sans-serif",
-                                        "width": "100%",
-                                        "minWidth": "none",
+                                        "width": "fit-content",
+                                        "maxWidth": "100%",
+                                        "minWidth": "auto",
                                     },
                                     style_header={
                                         "fontWeight": "bold",
                                         "border": "none",
+                                        "backgroundColor": "var(--surface-bg-darker)",
+                                        "color": "var(--text-color)",
                                         "fontFamily": "Arial, sans-serif",
                                         "textAlign": "center",
+                                        "padding": "6px 8px",
                                     },
                                     style_header_conditional=[
                                         {
@@ -244,54 +299,107 @@ layout = html.Div(
                                     style_cell={
                                         "backgroundColor": "var(--surface-bg-darker)",
                                         "textAlign": "center",
-                                        "padding": "8px 10px",
-                                        "whiteSpace": "normal",
+                                        "padding": "6px 8px",
+                                        "whiteSpace": "nowrap",
                                         "height": "auto",
                                         "border": "none",
                                         "fontFamily": "Arial, sans-serif",
                                         "fontSize": "14px",
                                         "lineHeight": "1.3",
-                                        "minWidth": "80px",
-                                        "maxWidth": "300px",
+                                        "minWidth": "64px",
+                                        "maxWidth": "240px",
                                         "overflow": "hidden",
                                         "textOverflow": "ellipsis",
                                     },
                                     style_cell_conditional=[
                                         {
                                             "if": {"column_id": "Desc"},
-                                            "minWidth": "200px",
+                                            "minWidth": "280px",
+                                            "maxWidth": "560px",
                                             "textAlign": "left",
+                                            "whiteSpace": "normal",
                                         },
                                         {
                                             "if": {"column_id": "Recommendation"},
-                                            "minWidth": "150px",
+                                            "minWidth": "88px",
+                                            "maxWidth": "96px",
                                         },
                                         {
                                             "if": {"column_id": "Offense Team"},
-                                            "minWidth": "150px",
+                                            "minWidth": "94px",
+                                            "maxWidth": "112px",
                                             "textAlign": "left",
                                         },
                                         {
                                             "if": {"column_id": "Defense Team"},
-                                            "minWidth": "150px",
+                                            "minWidth": "94px",
+                                            "maxWidth": "112px",
                                             "textAlign": "left",
                                         },
                                         {
                                             "if": {"column_id": "Decision"},
-                                            "minWidth": "100px",
+                                            "minWidth": "88px",
+                                            "maxWidth": "96px",
+                                        },
+                                        {
+                                            "if": {"column_id": "WP Lost"},
+                                            "minWidth": "82px",
+                                            "maxWidth": "90px",
+                                            "textAlign": "center",
+                                        },
+                                        {
+                                            "if": {"column_id": "WP Summary"},
+                                            "minWidth": "220px",
+                                            "maxWidth": "236px",
+                                            "textAlign": "left",
+                                            "whiteSpace": "normal",
                                         },
                                         {
                                             "if": {
                                                 "column_id": [
                                                     "Week",
                                                     "Pregame Offense Elo",
-                                                    "Offense Score",
                                                     "Pregame Defense Elo",
-                                                    "Defense Score",
+                                                    "Score",
                                                     "Yards to Goal",
                                                 ]
                                             },
                                             "textAlign": "center",
+                                        },
+                                        {
+                                            "if": {"column_id": "Week"},
+                                            "minWidth": "48px",
+                                            "maxWidth": "52px",
+                                        },
+                                        {
+                                            "if": {"column_id": "Score"},
+                                            "minWidth": "60px",
+                                            "maxWidth": "70px",
+                                        },
+                                        {
+                                            "if": {"column_id": "Pregame Offense Elo"},
+                                            "minWidth": "72px",
+                                            "maxWidth": "78px",
+                                        },
+                                        {
+                                            "if": {"column_id": "Pregame Defense Elo"},
+                                            "minWidth": "72px",
+                                            "maxWidth": "78px",
+                                        },
+                                        {
+                                            "if": {"column_id": "Time"},
+                                            "minWidth": "70px",
+                                            "maxWidth": "78px",
+                                        },
+                                        {
+                                            "if": {"column_id": "Down & Distance"},
+                                            "minWidth": "96px",
+                                            "maxWidth": "108px",
+                                        },
+                                        {
+                                            "if": {"column_id": "Yards to Goal"},
+                                            "minWidth": "64px",
+                                            "maxWidth": "72px",
                                         },
                                         # Add vertical borders between major sections
                                         {
@@ -299,11 +407,11 @@ layout = html.Div(
                                             "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
-                                            "if": {"column_id": "Offense Score"},
+                                            "if": {"column_id": "Pregame Offense Elo"},
                                             "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
-                                            "if": {"column_id": "Defense Score"},
+                                            "if": {"column_id": "Pregame Defense Elo"},
                                             "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
@@ -311,7 +419,7 @@ layout = html.Div(
                                             "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
-                                            "if": {"column_id": "Win Probability Punt"},
+                                            "if": {"column_id": "WP Summary"},
                                             "borderRight": "2px solid var(--border-color)",
                                         },
                                     ],
@@ -341,6 +449,14 @@ layout = html.Div(
                                         "Yards to Goal": [
                                             "",
                                             "Distance from the line of scrimmage to the end zone.",
+                                        ],
+                                        "WP Summary": [
+                                            "Model-estimated win probability for each decision option.",
+                                            "Bars are ordered Go / FG / Punt; parentheses show difference from the best option.",
+                                        ],
+                                        "WP Lost": [
+                                            "",
+                                            "Win probability lost for not choosing the model-recommended decision.",
                                         ],
                                     },
                                     markdown_options={"html": True},
@@ -415,6 +531,7 @@ def update_dropdown_options(selected_conference, selected_year):
     Input("week-dropdown", "value"),
     Input("recommendation-dropdown", "value"),
     Input("decision-dropdown", "value"),
+    Input("decision-table", "sort_by"),
 )
 def update_table(
     selected_conference,
@@ -423,6 +540,7 @@ def update_table(
     selected_week,
     selected_recommendation,
     selected_decision,
+    sort_by,
 ):
     dff = df[df["Season"] == selected_year]
     dff = dff[dff["Offense Conference"] == selected_conference]
@@ -455,6 +573,22 @@ def update_table(
             return "go"
         return text
 
+    def recommendation_contains_decision(recommendation_value, decision_value):
+        recommendation_text = str(recommendation_value).strip().lower()
+        decision_text = decision_bucket(decision_value)
+        if decision_text == "go" and "field goal" in recommendation_text:
+            return False
+        recommendation_options = []
+        if "field goal" in recommendation_text:
+            recommendation_options.append("field goal")
+        if "go" in recommendation_text:
+            recommendation_options.append("go")
+        if "punt" in recommendation_text:
+            recommendation_options.append("punt")
+        if recommendation_options:
+            return decision_text in recommendation_options
+        return decision_text == recommendation_text
+
     def decision_bucket(value):
         text = str(value).strip().lower()
         if text == "field goal":
@@ -465,25 +599,118 @@ def update_table(
             return "go"
         return text
 
+    def decision_wp(row, decision_name):
+        bucket = decision_bucket(decision_name)
+        if bucket == "go":
+            return float(row["Win Probability Go"])
+        if bucket == "field goal":
+            return float(row["Win Probability Field Goal"])
+        if bucket == "punt":
+            return float(row["Win Probability Punt"])
+        return None
+
+    def wp_lost_value(row):
+        if decision_bucket(row["Decision"]) == recommendation_bucket(
+            row["Recommendation"]
+        ):
+            return 0.0
+
+        chosen_wp = decision_wp(row, row["Decision"])
+        if chosen_wp is None:
+            return None
+
+        best_wp = max(
+            float(row["Win Probability Go"]),
+            float(row["Win Probability Field Goal"]),
+            float(row["Win Probability Punt"]),
+        )
+        return max(0.0, best_wp - chosen_wp)
+
+    def wp_lost_chip(value):
+        if value is None:
+            return "<span class='wp-lost-chip wp-lost-chip-na'>—</span>"
+        if value <= 0.01:
+            level = "low"
+        elif value < 0.03:
+            level = "medium"
+        else:
+            level = "high"
+        return (
+            f"<span class='wp-lost-chip wp-lost-chip-{level}'>{value * 100:.1f}%</span>"
+        )
+
     dff["_decision_match"] = dff.apply(
         lambda row: (
             "match"
-            if decision_bucket(row["Decision"])
-            == recommendation_bucket(row["Recommendation"])
+            if recommendation_contains_decision(row["Recommendation"], row["Decision"])
             else "mismatch"
         ),
         axis=1,
     )
+    dff["_wp_lost"] = dff.apply(wp_lost_value, axis=1)
+    dff["_wp_max"] = dff[
+        [
+            "Win Probability Go",
+            "Win Probability Field Goal",
+            "Win Probability Punt",
+        ]
+    ].max(axis=1)
 
-    # Convert team names to markdown with logos
+    sort_column_map = {
+        "Week": "Week",
+        "Offense Team": "Offense Abbreviation",
+        "Pregame Offense Elo": "Pregame Offense Elo",
+        "Defense Team": "Defense Abbreviation",
+        "Pregame Defense Elo": "Pregame Defense Elo",
+        "Time": "Time",
+        "Down & Distance": "Down & Distance",
+        "Yards to Goal": "Yards to Goal",
+        "WP Summary": "_wp_max",
+        "Recommendation": "Recommendation",
+        "Decision": "Decision",
+        "WP Lost": "_wp_lost",
+        "Desc": "Desc",
+    }
+
+    if sort_by:
+        for sort in reversed(sort_by):
+            column_id = sort.get("column_id")
+            ascending = sort.get("direction") == "asc"
+            if column_id == "Score":
+                dff = dff.sort_values(
+                    by=["Offense Score", "Defense Score"],
+                    ascending=[ascending, ascending],
+                    kind="stable",
+                )
+            elif column_id in sort_column_map:
+                dff = dff.sort_values(
+                    by=sort_column_map[column_id],
+                    ascending=ascending,
+                    kind="stable",
+                    na_position="last",
+                )
+    else:
+        dff = dff.sort_values(by=["Week"], ascending=True, kind="stable")
+
+    # Convert team abbreviations to markdown with logos and full-name hover text
     dff["Offense Team"] = dff.apply(
-        lambda x: f"<img src='{x['Offense Logo']}' style='height:30px; margin-right:5px;'> {x['Offense Team']}",
+        lambda row: build_team_cell(
+            row["Offense Abbreviation"], row["Offense Team"], row["Offense Logo"]
+        ),
         axis=1,
     )
     dff["Defense Team"] = dff.apply(
-        lambda x: f"<img src='{x['Defense Logo']}' style='height:30px; margin-right:5px;'> {x['Defense Team']}",
+        lambda row: build_team_cell(
+            row["Defense Abbreviation"], row["Defense Team"], row["Defense Logo"]
+        ),
         axis=1,
     )
+    dff["Score"] = dff.apply(
+        lambda row: f"{int(row['Offense Score'])}\u2013{int(row['Defense Score'])}",
+        axis=1,
+    )
+    dff["WP Summary"] = dff.apply(build_wp_summary_cell, axis=1)
+    dff["WP Lost"] = dff["_wp_lost"].apply(wp_lost_chip)
     dff["Decision"] = dff.apply(
         lambda row: (
             f"<span class='decision-chip decision-chip-{row['_decision_match']}'>{row['Decision']}</span>"
