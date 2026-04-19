@@ -1582,6 +1582,7 @@ body * {
 
 .about-section-features {
     padding-top: clamp(6rem, 9vw, 8.5rem);
+    padding-bottom: clamp(6.5rem, 9.5vw, 9rem);
 }
 
 .about-section-heading {
@@ -1735,6 +1736,8 @@ body * {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
+    padding-top: clamp(6.75rem, 10vw, 9.25rem);
+    padding-bottom: clamp(6.75rem, 10vw, 9.25rem);
     background:
         radial-gradient(circle at top left, rgba(230, 126, 34, 0.12), transparent 32%),
         linear-gradient(180deg, rgba(255, 246, 236, 0.98), rgba(247, 241, 235, 0.98));
@@ -1791,6 +1794,10 @@ body * {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     gap: 2.5rem;
     align-items: center;
+}
+
+.about-section-data {
+    padding-top: clamp(6.5rem, 9.5vw, 9rem);
 }
 
 .about-methodology-intro {
@@ -1931,6 +1938,19 @@ body * {
     .about-section {
         padding-top: 4.4rem;
         padding-bottom: 4.4rem;
+    }
+
+    .about-section-features {
+        padding-bottom: 5.2rem;
+    }
+
+    .about-section-metrics {
+        padding-top: 5.4rem;
+        padding-bottom: 5.4rem;
+    }
+
+    .about-section-data {
+        padding-top: 5.2rem;
     }
 
     .about-feature-card {
