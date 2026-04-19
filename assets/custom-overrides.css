@@ -820,10 +820,12 @@ body * {
 .game-decisions-page #decision-table td[data-dash-column="Recommendation"],
 .game-decisions-page #decision-table td[data-dash-column="Decision"],
 .game-decisions-page #decision-table td[data-dash-column="WP Lost"],
-.game-decisions-page #decision-table td[data-dash-column="WP Summary"],
 .game-decisions-page #decision-table td[data-dash-column="Time"],
 .game-decisions-page #decision-table td[data-dash-column="Pregame Offense Elo"],
 .game-decisions-page #decision-table td[data-dash-column="Pregame Defense Elo"],
+.game-decisions-page #decision-table td[data-dash-column="Win Probability Go"],
+.game-decisions-page #decision-table td[data-dash-column="Win Probability Field Goal"],
+.game-decisions-page #decision-table td[data-dash-column="Win Probability Punt"],
 .game-decisions-page #decision-table td[data-dash-column="Situation"],
 .game-decisions-page #decision-table td[data-dash-column="Yards to Goal"],
 .game-decisions-page #decision-table td[data-dash-column="Week"] {
@@ -833,127 +835,16 @@ body * {
 .game-decisions-page #decision-table td[data-dash-column="Recommendation"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="Decision"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="WP Lost"] .dash-cell-value,
-.game-decisions-page #decision-table td[data-dash-column="WP Summary"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="Time"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="Pregame Offense Elo"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="Pregame Defense Elo"] .dash-cell-value,
+.game-decisions-page #decision-table td[data-dash-column="Win Probability Go"] .dash-cell-value,
+.game-decisions-page #decision-table td[data-dash-column="Win Probability Field Goal"] .dash-cell-value,
+.game-decisions-page #decision-table td[data-dash-column="Win Probability Punt"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="Situation"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="Yards to Goal"] .dash-cell-value,
 .game-decisions-page #decision-table td[data-dash-column="Week"] .dash-cell-value {
     text-align: center;
-}
-
-.game-decisions-page #decision-table td[data-dash-column="WP Summary"] {
-    text-align: left;
-}
-
-.game-decisions-page #decision-table td[data-dash-column="WP Summary"] .dash-cell-value {
-    text-align: left;
-}
-
-.wp-summary-cell {
-    display: grid;
-    gap: 0.18rem;
-    min-width: 0;
-}
-
-.wp-summary-row {
-    display: grid;
-    grid-template-columns: 24px minmax(0, 1fr) 80px;
-    align-items: center;
-    gap: 0.14rem;
-    padding: 0.12rem 0.16rem;
-    border-radius: 8px;
-}
-
-.wp-summary-row-best {
-    background-color: rgba(255, 106, 0, 0.08);
-}
-
-.wp-summary-label,
-.wp-summary-value,
-.wp-summary-delta {
-    font-size: 0.7rem;
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-}
-
-.wp-summary-label {
-    color: var(--muted-text-color);
-}
-
-.wp-summary-value {
-    color: var(--text-color);
-}
-
-.wp-summary-value-block {
-    display: inline-flex;
-    justify-content: flex-end;
-    align-items: baseline;
-    gap: 0.12rem;
-    min-width: 0;
-}
-
-.wp-summary-delta::before {
-    content: "(";
-}
-
-.wp-summary-delta::after {
-    content: ")";
-}
-
-.wp-summary-delta {
-    color: var(--muted-text-color);
-    font-size: 0.66rem;
-}
-
-.wp-summary-track {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 0.48rem;
-    overflow: hidden;
-    border-radius: 999px;
-    background-color: rgba(107, 114, 128, 0.16);
-}
-
-.wp-summary-fill {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    opacity: 0.62;
-}
-
-.wp-summary-row-best .wp-summary-label,
-.wp-summary-row-best .wp-summary-value {
-    color: var(--text-color);
-    font-weight: 700;
-}
-
-.wp-summary-row-best .wp-summary-delta {
-    color: var(--accent-strong);
-}
-
-.wp-summary-row-best .wp-summary-track {
-    background-color: rgba(255, 106, 0, 0.14);
-}
-
-.wp-summary-row-best .wp-summary-fill {
-    opacity: 1;
-    box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.14);
-}
-
-.wp-summary-fill-go {
-    background-color: rgba(255, 106, 0, 0.78);
-}
-
-.wp-summary-fill-fg {
-    background-color: rgba(245, 158, 11, 0.72);
-}
-
-.wp-summary-fill-punt {
-    background-color: rgba(217, 105, 6, 0.72);
 }
 
 .score-cell {
@@ -1007,7 +898,6 @@ body * {
     gap: 0.4rem;
 }
 
-.decision-chip,
 .wp-lost-chip {
     display: inline-flex;
     align-items: center;
@@ -1015,6 +905,7 @@ body * {
     min-width: 3.9rem;
     padding: 0.24rem 0.52rem;
     border-radius: 9px;
+    border: 1px solid transparent;
     box-sizing: border-box;
     font-size: 0.72rem;
     font-weight: 600;
@@ -1024,96 +915,60 @@ body * {
     white-space: nowrap;
 }
 
-.decision-chip {
-    min-width: 4.2rem;
-}
-
-.wp-lost-chip-low {
-    background-color: rgba(34, 197, 94, 0.16);
-    color: #166534;
-}
-
-.wp-lost-chip-medium {
-    background-color: rgba(245, 158, 11, 0.2);
-    color: #92400e;
-}
-
-.wp-lost-chip-high {
-    background-color: rgba(239, 68, 68, 0.18);
-    color: #991b1b;
-}
-
 .wp-lost-chip-na {
     background-color: rgba(107, 114, 128, 0.12);
     color: var(--muted-text-color);
 }
 
+.decision-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.34rem;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.15;
+    white-space: nowrap;
+    background: transparent;
+}
+
+.decision-status-icon {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
 .decision-chip-match {
-    background-color: rgba(34, 197, 94, 0.16);
     color: #166534;
 }
 
 .decision-chip-mismatch {
-    background-color: rgba(239, 68, 68, 0.16);
     color: #991b1b;
 }
 
 .theme-dark .decision-chip-match {
-    background-color: rgba(34, 197, 94, 0.2);
-    color: #dcfce7;
+    color: #86efac;
 }
 
 .theme-dark .decision-chip-mismatch {
-    background-color: rgba(239, 68, 68, 0.2);
-    color: #fee2e2;
+    color: #fca5a5;
 }
 
-.theme-dark .wp-lost-chip-low {
-    background-color: rgba(34, 197, 94, 0.2);
-    color: #dcfce7;
+.theme-dark .decision-chip-match .decision-status-icon {
+    color: #4ade80;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.35);
 }
 
-.theme-dark .wp-lost-chip-medium {
-    background-color: rgba(245, 158, 11, 0.22);
-    color: #fde68a;
-}
-
-.theme-dark .wp-lost-chip-high {
-    background-color: rgba(239, 68, 68, 0.22);
-    color: #fecaca;
+.theme-dark .decision-chip-mismatch .decision-status-icon {
+    color: #f87171;
+    text-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
 }
 
 .theme-dark .wp-lost-chip-na {
     background-color: rgba(148, 163, 184, 0.14);
     color: #cbd5e1;
-}
-
-.theme-dark .wp-summary-track {
-    background-color: rgba(148, 163, 184, 0.18);
-}
-
-.theme-dark .wp-summary-label {
-    color: #cbd5e1;
-}
-
-.theme-dark .wp-summary-value {
-    color: #f4f7fb;
-}
-
-.theme-dark .wp-summary-delta {
-    color: #aeb8c5;
-}
-
-.theme-dark .wp-summary-row-best {
-    background-color: rgba(255, 106, 0, 0.12);
-}
-
-.theme-dark .wp-summary-row-best .wp-summary-delta {
-    color: #ffd3ae;
-}
-
-.theme-dark .wp-summary-row-best .wp-summary-track {
-    background-color: rgba(255, 159, 67, 0.18);
 }
 
 .dash-table-tooltip,
@@ -1409,11 +1264,15 @@ body * {
         max-width: 68px !important;
     }
 
-    .game-decisions-page #decision-table td[data-dash-column="WP Summary"],
-    .game-decisions-page #decision-table th[data-dash-column="WP Summary"] {
-        min-width: 162px !important;
-        width: 162px !important;
-        max-width: 174px !important;
+    .game-decisions-page #decision-table td[data-dash-column="Win Probability Go"],
+    .game-decisions-page #decision-table th[data-dash-column="Win Probability Go"],
+    .game-decisions-page #decision-table td[data-dash-column="Win Probability Field Goal"],
+    .game-decisions-page #decision-table th[data-dash-column="Win Probability Field Goal"],
+    .game-decisions-page #decision-table td[data-dash-column="Win Probability Punt"],
+    .game-decisions-page #decision-table th[data-dash-column="Win Probability Punt"] {
+        min-width: 64px !important;
+        width: 64px !important;
+        max-width: 72px !important;
     }
 
     .game-decisions-page #decision-table td[data-dash-column="Recommendation"],

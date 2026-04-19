@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output
 from html import escape
 import pandas as pd
 from dash.dash_table import DataTable
+from dash.dash_table.Format import Format, Scheme
 from config.config import CONFIG
 from components.dropdown_options import build_dropdown_option
 
@@ -23,15 +24,11 @@ all_conferences = sorted(df["Offense Conference"].dropna().unique())
 all_years = sorted(df["Season"].unique(), reverse=True)
 
 
-def format_pct(value):
-    return f"{float(value) * 100:.1f}%"
-
-
 def build_team_cell(abbreviation, team_name, logo_url):
     full_name = "" if pd.isna(team_name) else str(team_name).strip()
     short_name = "" if pd.isna(abbreviation) else str(abbreviation).strip()
-    display_name = short_name or full_name
-    tooltip_name = full_name or display_name
+    display_name = full_name or short_name
+    tooltip_name = full_name or short_name or display_name
     escaped_display_name = escape(display_name)
     escaped_tooltip_name = escape(tooltip_name, quote=True)
 
@@ -53,37 +50,45 @@ def build_team_cell(abbreviation, team_name, logo_url):
     )
 
 
-def build_wp_summary_cell(row):
-    options = [
-        ("Go", float(row["Win Probability Go"]), "go"),
-        ("FG", float(row["Win Probability Field Goal"]), "fg"),
-        ("Punt", float(row["Win Probability Punt"]), "punt"),
-    ]
-    best_value = max(value for _, value, _ in options)
+def interpolate_rgb(start_rgb, end_rgb, ratio):
+    bounded_ratio = max(0.0, min(1.0, float(ratio)))
+    return tuple(
+        round(start + (end - start) * bounded_ratio)
+        for start, end in zip(start_rgb, end_rgb)
+    )
+
+
+def rgba_string(rgb, alpha):
+    return f"rgba({rgb[0]}, {rgb[1]}, {rgb[2]}, {alpha:.3f})"
+
+
+def build_wp_lost_chip(value, max_value):
+    if value is None:
+        return "<span class='wp-lost-chip wp-lost-chip-na'>—</span>"
+
+    scale_max = max(float(max_value or 0.0), 0.0001)
+    ratio = min(max(float(value) / scale_max, 0.0), 1.0)
+    eased_ratio = ratio**0.4
+    color_rgb = interpolate_rgb((34, 197, 94), (239, 68, 68), eased_ratio)
+    background = rgba_string(color_rgb, 0.14 + (0.12 * eased_ratio))
+    border = rgba_string(color_rgb, 0.28 + (0.16 * eased_ratio))
+
     return (
-        "<div class='wp-summary-cell'>"
-        + "".join(
-            [
-                (
-                    (
-                        "<div class='wp-summary-row wp-summary-row-best'>"
-                        if abs(value - best_value) < 1e-9
-                        else "<div class='wp-summary-row'>"
-                    )
-                    + f"<span class='wp-summary-label'>{label}</span>"
-                    + "<span class='wp-summary-track'>"
-                    + f"<span class='wp-summary-fill wp-summary-fill-{css_name}' style='width: {value * 100:.1f}%;'></span>"
-                    + "</span>"
-                    + "<span class='wp-summary-value-block'>"
-                    + f"<span class='wp-summary-value'>{format_pct(value)}</span>"
-                    + f"<span class='wp-summary-delta'>{(value - best_value) * 100:+.1f}</span>"
-                    + "</span>"
-                    + "</div>"
-                )
-                for label, value, css_name in options
-            ]
-        )
-        + "</div>"
+        "<span "
+        f"class='wp-lost-chip' style='background-color: {background}; border: 1px solid {border};'>"
+        f"{value * 100:.1f}%"
+        "</span>"
+    )
+
+
+def build_decision_cell(decision, match_status):
+    escaped_decision = escape(str(decision))
+    icon_class = "bi-check-circle-fill" if match_status == "match" else "bi-x-circle-fill"
+    return (
+        f"<span class='decision-chip decision-chip-{match_status}'>"
+        f"<i class='bi {icon_class} decision-status-icon' aria-hidden='true'></i>"
+        f"<span>{escaped_decision}</span>"
+        "</span>"
     )
 
 
@@ -236,12 +241,28 @@ layout = html.Div(
                                             "type": "numeric",
                                         },
                                         {
-                                            "name": [
-                                                "Expected Win Prob ⓘ",
-                                                "Go / FG / Punt ⓘ",
-                                            ],
-                                            "id": "WP Summary",
-                                            "presentation": "markdown",
+                                            "name": ["Expected Win Prob ⓘ", "Go"],
+                                            "id": "Win Probability Go",
+                                            "type": "numeric",
+                                            "format": Format(
+                                                precision=1, scheme=Scheme.percentage
+                                            ),
+                                        },
+                                        {
+                                            "name": ["Expected Win Prob ⓘ", "FG"],
+                                            "id": "Win Probability Field Goal",
+                                            "type": "numeric",
+                                            "format": Format(
+                                                precision=1, scheme=Scheme.percentage
+                                            ),
+                                        },
+                                        {
+                                            "name": ["Expected Win Prob ⓘ", "Punt"],
+                                            "id": "Win Probability Punt",
+                                            "type": "numeric",
+                                            "format": Format(
+                                                precision=1, scheme=Scheme.percentage
+                                            ),
                                         },
                                         # Play Outcome columns
                                         {
@@ -326,14 +347,14 @@ layout = html.Div(
                                         },
                                         {
                                             "if": {"column_id": "Offense Team"},
-                                            "minWidth": "94px",
-                                            "maxWidth": "112px",
+                                            "minWidth": "138px",
+                                            "maxWidth": "170px",
                                             "textAlign": "left",
                                         },
                                         {
                                             "if": {"column_id": "Defense Team"},
-                                            "minWidth": "94px",
-                                            "maxWidth": "112px",
+                                            "minWidth": "138px",
+                                            "maxWidth": "170px",
                                             "textAlign": "left",
                                         },
                                         {
@@ -348,11 +369,21 @@ layout = html.Div(
                                             "textAlign": "center",
                                         },
                                         {
-                                            "if": {"column_id": "WP Summary"},
-                                            "minWidth": "220px",
-                                            "maxWidth": "236px",
-                                            "textAlign": "left",
-                                            "whiteSpace": "normal",
+                                            "if": {"column_id": "Win Probability Go"},
+                                            "minWidth": "72px",
+                                            "maxWidth": "78px",
+                                        },
+                                        {
+                                            "if": {
+                                                "column_id": "Win Probability Field Goal"
+                                            },
+                                            "minWidth": "72px",
+                                            "maxWidth": "78px",
+                                        },
+                                        {
+                                            "if": {"column_id": "Win Probability Punt"},
+                                            "minWidth": "72px",
+                                            "maxWidth": "78px",
                                         },
                                         {
                                             "if": {
@@ -362,6 +393,9 @@ layout = html.Div(
                                                     "Pregame Defense Elo",
                                                     "Score",
                                                     "Yards to Goal",
+                                                    "Win Probability Go",
+                                                    "Win Probability Field Goal",
+                                                    "Win Probability Punt",
                                                 ]
                                             },
                                             "textAlign": "center",
@@ -419,7 +453,7 @@ layout = html.Div(
                                             "borderRight": "2px solid var(--border-color)",
                                         },
                                         {
-                                            "if": {"column_id": "WP Summary"},
+                                            "if": {"column_id": "Win Probability Punt"},
                                             "borderRight": "2px solid var(--border-color)",
                                         },
                                     ],
@@ -450,9 +484,17 @@ layout = html.Div(
                                             "",
                                             "Distance from the line of scrimmage to the end zone.",
                                         ],
-                                        "WP Summary": [
-                                            "Model-estimated win probability for each decision option.",
-                                            "Bars are ordered Go / FG / Punt; parentheses show difference from the best option.",
+                                        "Win Probability Go": [
+                                            "Expected win probability by decision.",
+                                            "Model-estimated win probability if the offense goes for it.",
+                                        ],
+                                        "Win Probability Field Goal": [
+                                            "Expected win probability by decision.",
+                                            "Model-estimated win probability if the offense attempts a field goal.",
+                                        ],
+                                        "Win Probability Punt": [
+                                            "Expected win probability by decision.",
+                                            "Model-estimated win probability if the offense punts.",
                                         ],
                                         "WP Lost": [
                                             "",
@@ -626,19 +668,6 @@ def update_table(
         )
         return max(0.0, best_wp - chosen_wp)
 
-    def wp_lost_chip(value):
-        if value is None:
-            return "<span class='wp-lost-chip wp-lost-chip-na'>—</span>"
-        if value <= 0.01:
-            level = "low"
-        elif value < 0.03:
-            level = "medium"
-        else:
-            level = "high"
-        return (
-            f"<span class='wp-lost-chip wp-lost-chip-{level}'>{value * 100:.1f}%</span>"
-        )
-
     dff["_decision_match"] = dff.apply(
         lambda row: (
             "match"
@@ -648,24 +677,19 @@ def update_table(
         axis=1,
     )
     dff["_wp_lost"] = dff.apply(wp_lost_value, axis=1)
-    dff["_wp_max"] = dff[
-        [
-            "Win Probability Go",
-            "Win Probability Field Goal",
-            "Win Probability Punt",
-        ]
-    ].max(axis=1)
-
+    wp_lost_max = dff["_wp_lost"].dropna().max()
     sort_column_map = {
         "Week": "Week",
-        "Offense Team": "Offense Abbreviation",
+        "Offense Team": "Offense Team",
         "Pregame Offense Elo": "Pregame Offense Elo",
-        "Defense Team": "Defense Abbreviation",
+        "Defense Team": "Defense Team",
         "Pregame Defense Elo": "Pregame Defense Elo",
         "Time": "Time",
         "Down & Distance": "Down & Distance",
         "Yards to Goal": "Yards to Goal",
-        "WP Summary": "_wp_max",
+        "Win Probability Go": "Win Probability Go",
+        "Win Probability Field Goal": "Win Probability Field Goal",
+        "Win Probability Punt": "Win Probability Punt",
         "Recommendation": "Recommendation",
         "Decision": "Decision",
         "WP Lost": "_wp_lost",
@@ -709,12 +733,11 @@ def update_table(
         lambda row: f"{int(row['Offense Score'])}\u2013{int(row['Defense Score'])}",
         axis=1,
     )
-    dff["WP Summary"] = dff.apply(build_wp_summary_cell, axis=1)
-    dff["WP Lost"] = dff["_wp_lost"].apply(wp_lost_chip)
+    dff["WP Lost"] = dff["_wp_lost"].apply(
+        lambda value: build_wp_lost_chip(value, wp_lost_max)
+    )
     dff["Decision"] = dff.apply(
-        lambda row: (
-            f"<span class='decision-chip decision-chip-{row['_decision_match']}'>{row['Decision']}</span>"
-        ),
+        lambda row: build_decision_cell(row["Decision"], row["_decision_match"]),
         axis=1,
     )
 
