@@ -88,6 +88,33 @@ layout = dbc.Container(
         html.Section(
             [
                 create_section_header(
+                    "Articles",
+                    "Insights",
+                    "Read more on how fourth-down decision-making has shifted across college football.",
+                ),
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            create_model_card(
+                                image_path="/assets/images/rocky_go_for_it.png",
+                                title="The Rise of Fourth Down Aggression",
+                                description="An article on how fourth-down aggression has evolved and what those changes say about decision-making across the sport.",
+                                link="https://lukeneuendorf.substack.com/p/the-rise-of-fourth-down-aggression",
+                            ),
+                            xs=12,
+                            lg=6,
+                            xl=5,
+                            className="mb-3",
+                        ),
+                    ]
+                ),
+            ],
+            className="analysis-section",
+        ),
+        html.Div(className="tendencies-section-divider"),
+        html.Section(
+            [
+                create_section_header(
                     "Process Overview",
                     "Decision Engine",
                     "Understand how the full recommendation system fits together.",
@@ -249,19 +276,6 @@ layout = dbc.Container(
                 ),
             ],
             className="analysis-section",
-        ),
-        html.Div(className="tendencies-section-divider"),
-        html.Section(
-            [
-                html.Div(
-                    [
-                        html.I(className="fas fa-newspaper"),
-                        html.Span("More analysis articles coming soon."),
-                    ],
-                    className="analysis-coming-soon",
-                )
-            ],
-            className="analysis-section analysis-section-last",
         ),
     ],
     fluid=True,
